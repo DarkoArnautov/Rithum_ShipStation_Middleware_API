@@ -64,13 +64,18 @@ router.get('/orders', async (req, res) => {
             });
         }
 
-        const orders = await rithumClient.fetchOrders(req.query);
+        const result = await rithumClient.fetchOrders(req.query);
         
         res.json({
             success: true,
-            message: `Fetched ${orders.length} orders`,
-            data: orders,
-            count: orders.length
+            message: `Fetched ${result.orders?.length || 0} orders`,
+            data: result.orders || [],
+            pagination: {
+                scrollId: result.scrollId || null,
+                hasMore: !!result.scrollId,
+                totalCount: result.orders?.length || 0
+            },
+            count: result.orders?.length || 0
         });
     } catch (error) {
         console.error('Error fetching Rithum orders:', error);

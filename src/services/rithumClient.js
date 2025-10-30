@@ -210,19 +210,27 @@ class RithumClient {
     /**
      * Fetch orders from Rithum API
      * @param {Object} params - Query parameters for orders
-     * @returns {Promise<Array>} Array of orders
+     * @param {string} params.scrollId - Scroll ID for pagination
+     * @param {string} params.consumerOrderNumber - Filter by consumer order number
+     * @param {string} params.ordersCreatedSince - Orders created since this date (ISO 8601)
+     * @param {string} params.ordersUpdatedSince - Orders updated since this date (ISO 8601)
+     * @param {string} params.until - End date for search (ISO 8601, must be at least 5 seconds in past)
+     * @param {string[]} params.status - Filter by status(es): created, shipment_pending, shipped, cancelled
+     * @param {boolean} params.includeTestOrders - Include test orders
+     * @param {number} params.ordersPerPage - Orders per page (default 10, max 100)
+     * @returns {Promise<Object>} Orders response with pagination
      */
     async fetchOrders(params = {}) {
         try {
             console.log('Fetching orders from Rithum API...');
             
-            // Adjust endpoint based on actual Rithum API documentation
-            const response = await this.makeRequest('GET', '/orders', null, params);
+            const response = await this.makeRequest('GET', '/order/page', null, params);
             
-            console.log(`Fetched ${response.length || 0} orders from Rithum`);
+            console.log(`Fetched orders page from Rithum, hasScrollId: ${!!response.scrollId}`);
             return response;
         } catch (error) {
             console.error('Error fetching orders from Rithum:', error.message);
+            console.error('Response:', error.response?.data);
             throw error;
         }
     }
