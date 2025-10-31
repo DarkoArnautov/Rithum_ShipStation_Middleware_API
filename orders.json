@@ -1,0 +1,1404 @@
+{
+    "success": true,
+    "message": "Fetched 10 orders",
+    "data": [
+      {
+        "billTo": {},
+        "buyer": null,
+        "cancelRequested": false,
+        "cancelRequestedCode": null,
+        "channel": "2503FIFDD",
+        "consumerOrderDate": "2025-10-23T17:02:44+00:00",
+        "crossDockFlag": false,
+        "crossDockLocation": null,
+        "customer": null,
+        "deliveryMethod": null,
+        "extendedExpectedCostTotal": 13.58,
+        "giftFlag": false,
+        "giftWrapFlag": false,
+        "invoiceTo": null,
+        "orderType": "dropship",
+        "poNumber": "EDIT.17612466837288963",
+        "requestedShipCarrier": "Generic",
+        "requestedShipMethod": "Ground",
+        "requestedShippingServiceLevelCode": "GCG",
+        "requiredDeliveryDate": "2025-11-13T19:11:23+00:00",
+        "retailerCreateDate": "2025-10-23T19:11:23+00:00",
+        "shipByDate": "2025-11-05T07:59:00+00:00",
+        "shipCarrier": "Generic",
+        "shipMethod": "Ground",
+        "shipping": {
+          "address1": "78161 COUNTRY HEIGHTS DR",
+          "address": [
+            "78161 COUNTRY HEIGHTS DR"
+          ],
+          "city": "KENNEWICK",
+          "country": "US",
+          "firstName": "Hilary",
+          "lastName": "Thurber",
+          "name": "Hilary Thurber",
+          "phone": "15094389954",
+          "postal": "99338",
+          "region": "WA",
+          "state": "WA"
+        },
+        "signatureRequiredFlag": false,
+        "testFlag": false,
+        "dscoCreateDate": "2025-10-23T22:02:19+00:00",
+        "expectedDeliveryDate": "2025-11-13T19:11:23+00:00",
+        "lineItems": [
+          {
+            "rejectedQuantity": 0,
+            "readyForPickup": false,
+            "activity": [
+              {
+                "quantity": 1,
+                "action": "add",
+                "uuid": "460e116bebbd45079e8fc83361bb7a0a",
+                "activityDate": "2025-10-23T22:02:19+00:00",
+                "updateDate": "2025-10-23T22:02:19+00:00"
+              }
+            ],
+            "acceptedQuantity": 1,
+            "title": "Minimalist Spiral Earrings",
+            "extendedExpectedCostTotal": 13.58,
+            "personalization": "10002299",
+            "expectedCost": 13.58,
+            "lineNumber": 1,
+            "cancelRequested": false,
+            "productGroup": "JAX-FA-069-DS",
+            "sku": "JAX-FA-069-DS",
+            "quantity": 1,
+            "expectedCostAdjustmentAllowed": false,
+            "retailerItemIds": [
+              "2503FIFDD"
+            ],
+            "giftFlag": false,
+            "retailerLineId": "200871008",
+            "consumerPrice": 24,
+            "partnerSku": "JAX-FA-069-DS",
+            "cancelledQuantity": 0,
+            "bogoFlag": false,
+            "dscoItemId": "1295639604"
+          }
+        ],
+        "dscoLastUpdate": "2025-10-24T16:59:19+00:00",
+        "dscoLifecycle": "acknowledged",
+        "dscoRetailerId": "1000051226",
+        "dscoShipLateDate": "2025-10-25T06:59:59+00:00",
+        "shippingServiceLevelCode": "GCG",
+        "dscoStatus": "shipment_pending",
+        "dscoOrderId": "1015317881",
+        "dscoSupplierId": "1000062228",
+        "dscoSupplierName": "JaxKelly Inc",
+        "dscoTradingPartnerId": null,
+        "dscoTradingPartnerName": null
+      },
+      {
+        "billTo": {},
+        "buyer": null,
+        "cancelRequested": false,
+        "cancelRequestedCode": null,
+        "channel": "2503FIFDD",
+        "consumerOrderDate": "2025-10-23T17:02:59+00:00",
+        "crossDockFlag": false,
+        "crossDockLocation": null,
+        "customer": null,
+        "deliveryMethod": null,
+        "extendedExpectedCostTotal": 13.58,
+        "giftFlag": false,
+        "giftWrapFlag": false,
+        "invoiceTo": null,
+        "orderType": "dropship",
+        "poNumber": "EDIT.17612466848880343",
+        "requestedShipCarrier": "Generic",
+        "requestedShipMethod": "Ground",
+        "requestedShippingServiceLevelCode": "GCG",
+        "requiredDeliveryDate": "2025-11-13T19:11:24+00:00",
+        "retailerCreateDate": "2025-10-23T19:11:24+00:00",
+        "shipByDate": "2025-11-05T07:59:00+00:00",
+        "shipCarrier": "Generic",
+        "shipMethod": "Ground",
+        "shipping": {
+          "address1": "1241 SOARING WAY",
+          "address": [
+            "1241 SOARING WAY"
+          ],
+          "city": "MAINEVILLE",
+          "country": "US",
+          "firstName": "Madeline",
+          "lastName": "DAmico",
+          "name": "Madeline DAmico",
+          "phone": "4405967101",
+          "postal": "45039",
+          "region": "OH",
+          "state": "OH"
+        },
+        "signatureRequiredFlag": false,
+        "testFlag": false,
+        "dscoCreateDate": "2025-10-23T22:02:18+00:00",
+        "expectedDeliveryDate": "2025-11-13T19:11:24+00:00",
+        "lineItems": [
+          {
+            "rejectedQuantity": 0,
+            "readyForPickup": false,
+            "activity": [
+              {
+                "quantity": 1,
+                "action": "add",
+                "uuid": "34ac99c6e4244ff38534745147903f53",
+                "activityDate": "2025-10-23T22:02:18+00:00",
+                "updateDate": "2025-10-23T22:02:18+00:00"
+              }
+            ],
+            "acceptedQuantity": 1,
+            "title": "Minimalist Spiral Earrings",
+            "extendedExpectedCostTotal": 13.58,
+            "personalization": "10002299",
+            "expectedCost": 13.58,
+            "lineNumber": 1,
+            "cancelRequested": false,
+            "productGroup": "JAX-FA-069-DS",
+            "sku": "JAX-FA-069-DS",
+            "quantity": 1,
+            "expectedCostAdjustmentAllowed": false,
+            "retailerItemIds": [
+              "2503FIFDD"
+            ],
+            "giftFlag": false,
+            "retailerLineId": "200871459",
+            "consumerPrice": 24,
+            "partnerSku": "JAX-FA-069-DS",
+            "cancelledQuantity": 0,
+            "bogoFlag": false,
+            "dscoItemId": "1295639604"
+          }
+        ],
+        "dscoLastUpdate": "2025-10-24T16:59:20+00:00",
+        "dscoLifecycle": "acknowledged",
+        "dscoRetailerId": "1000051226",
+        "dscoShipLateDate": "2025-10-25T06:59:59+00:00",
+        "shippingServiceLevelCode": "GCG",
+        "dscoStatus": "shipment_pending",
+        "dscoOrderId": "1015317812",
+        "dscoSupplierId": "1000062228",
+        "dscoSupplierName": "JaxKelly Inc",
+        "dscoTradingPartnerId": null,
+        "dscoTradingPartnerName": null
+      },
+      {
+        "billTo": {},
+        "buyer": null,
+        "cancelRequested": false,
+        "cancelRequestedCode": null,
+        "channel": "2503FIFDD",
+        "consumerOrderDate": "2025-10-18T21:07:15+00:00",
+        "crossDockFlag": false,
+        "crossDockLocation": null,
+        "customer": null,
+        "deliveryMethod": null,
+        "extendedExpectedCostTotal": 17.36,
+        "giftFlag": false,
+        "giftWrapFlag": false,
+        "invoiceTo": null,
+        "orderType": "dropship",
+        "poNumber": "EDIT.17608698062992390",
+        "requestedShipCarrier": "Generic",
+        "requestedShipMethod": "Ground",
+        "requestedShippingServiceLevelCode": "GCG",
+        "requiredDeliveryDate": "2025-11-09T10:30:06+00:00",
+        "retailerCreateDate": "2025-10-19T10:30:06+00:00",
+        "shipByDate": "2025-10-31T06:59:00+00:00",
+        "shipCarrier": "Generic",
+        "shipMethod": "Ground",
+        "shipping": {
+          "address1": "545 w 127th st",
+          "address": [
+            "545 w 127th st"
+          ],
+          "city": "Los Angeles",
+          "country": "US",
+          "firstName": "Sara",
+          "lastName": "Martin",
+          "name": "Sara Martin",
+          "phone": "3232853691",
+          "postal": "90044",
+          "region": "CA",
+          "state": "CA"
+        },
+        "signatureRequiredFlag": false,
+        "testFlag": false,
+        "dscoCreateDate": "2025-10-21T22:01:12+00:00",
+        "expectedDeliveryDate": "2025-11-09T10:30:06+00:00",
+        "lineItems": [
+          {
+            "rejectedQuantity": 0,
+            "readyForPickup": false,
+            "activity": [
+              {
+                "quantity": 1,
+                "action": "add",
+                "uuid": "a4a2e89d6844498fb9580628d1d95dfc",
+                "activityDate": "2025-10-21T22:01:12+00:00",
+                "updateDate": "2025-10-21T22:01:12+00:00"
+              },
+              {
+                "reason": "Tracking # 9400150899563141984495 added",
+                "quantity": 1,
+                "action": "ship",
+                "uuid": "dbfc46b7375f41608229afc47fa1f431",
+                "activityDate": "2025-10-22T23:12:56+00:00",
+                "updateDate": "2025-10-22T23:12:56+00:00"
+              }
+            ],
+            "acceptedQuantity": 1,
+            "title": "Pave Stud Snake Earrings",
+            "extendedExpectedCostTotal": 17.36,
+            "personalization": "10002299",
+            "expectedCost": 17.36,
+            "lineNumber": 1,
+            "cancelRequested": false,
+            "productGroup": "JAX-FA-071-DS",
+            "sku": "JAX-FA-071-DS",
+            "statusReason": "Tracking # 9400150899563141984495 added",
+            "quantity": 1,
+            "expectedCostAdjustmentAllowed": false,
+            "retailerItemIds": [
+              "2503FIFDD"
+            ],
+            "giftFlag": false,
+            "retailerLineId": "200807753",
+            "consumerPrice": 28,
+            "acceptedReason": "Tracking # 9400150899563141984495 added",
+            "partnerSku": "JAX-FA-071-DS",
+            "cancelledQuantity": 0,
+            "bogoFlag": false,
+            "status": "accepted",
+            "dscoItemId": "1295638587"
+          }
+        ],
+        "dscoLastUpdate": "2025-10-22T23:14:06+00:00",
+        "dscoLifecycle": "completed",
+        "dscoRetailerId": "1000051226",
+        "dscoShipLateDate": "2025-10-23T06:59:59+00:00",
+        "shippingServiceLevelCode": "GCG",
+        "packages": [
+          {
+            "ssccBarcode": null,
+            "trackingNumber": "9400150899563141984495",
+            "untracked": false,
+            "carrierManifestId": "USPS",
+            "returnedFlag": false,
+            "shipCost": 0,
+            "shippingServiceLevelCode": "USGA",
+            "shipDate": "2025-10-22T23:12:34+00:00",
+            "packageShipFrom": {},
+            "dscoPackageId": 2014395095,
+            "shipMethod": "Ground Advantage",
+            "shipWeight": 1,
+            "items": [
+              {
+                "packageSpanFlag": false,
+                "quantity": 1,
+                "retailerItemIds": [
+                  "2503FIFDD"
+                ],
+                "lineNumber": 1,
+                "retailerLineId": "200807753",
+                "partnerSku": "JAX-FA-071-DS",
+                "originalOrderQuantity": 1,
+                "sku": "JAX-FA-071-DS",
+                "dscoItemId": "1295638587"
+              }
+            ],
+            "shipWeightUnits": "LB",
+            "shipCarrier": "USPS",
+            "packageShipTo": {
+              "country": "US",
+              "address": [
+                "545 w 127th st"
+              ],
+              "city": "Los Angeles",
+              "phone": "3232853691",
+              "address1": "545 w 127th st",
+              "name": "Sara Martin",
+              "lastName": "Martin",
+              "postal": "90044",
+              "region": "CA",
+              "firstName": "Sara"
+            },
+            "tracking_url": "tools.usps.com/go/TrackConfirmAction_input?origTrackNum=9400150899563141984495"
+          }
+        ],
+        "dscoStatus": "shipped",
+        "dscoOrderId": "1014208237",
+        "dscoSupplierId": "1000062228",
+        "dscoSupplierName": "JaxKelly Inc",
+        "dscoTradingPartnerId": null,
+        "dscoTradingPartnerName": null
+      },
+      {
+        "billTo": {},
+        "buyer": null,
+        "cancelRequested": false,
+        "cancelRequestedCode": null,
+        "channel": "2503FIFDD",
+        "consumerOrderDate": "2025-10-18T13:56:51+00:00",
+        "crossDockFlag": false,
+        "crossDockLocation": null,
+        "customer": null,
+        "deliveryMethod": null,
+        "extendedExpectedCostTotal": 16.1,
+        "giftFlag": false,
+        "giftWrapFlag": false,
+        "invoiceTo": null,
+        "orderType": "dropship",
+        "poNumber": "EDIT.17608146169788766",
+        "requestedShipCarrier": "Generic",
+        "requestedShipMethod": "Ground",
+        "requestedShippingServiceLevelCode": "GCG",
+        "requiredDeliveryDate": "2025-11-08T19:10:17+00:00",
+        "retailerCreateDate": "2025-10-18T19:10:17+00:00",
+        "shipByDate": "2025-10-31T06:59:00+00:00",
+        "shipCarrier": "Generic",
+        "shipMethod": "Ground",
+        "shipping": {
+          "address1": "5475 Arbrook",
+          "address": [
+            "5475 Arbrook"
+          ],
+          "city": "Columbus",
+          "country": "US",
+          "firstName": "Melanie",
+          "lastName": "Yoder",
+          "name": "Melanie Yoder",
+          "phone": "6145176919",
+          "postal": "43228",
+          "region": "OH",
+          "state": "OH"
+        },
+        "signatureRequiredFlag": false,
+        "testFlag": false,
+        "dscoCreateDate": "2025-10-21T22:01:10+00:00",
+        "expectedDeliveryDate": "2025-11-08T19:10:17+00:00",
+        "lineItems": [
+          {
+            "rejectedQuantity": 0,
+            "readyForPickup": false,
+            "activity": [
+              {
+                "quantity": 1,
+                "action": "add",
+                "uuid": "d514ce03656e4cff92c5d8b258aee0b7",
+                "activityDate": "2025-10-21T22:01:10+00:00",
+                "updateDate": "2025-10-21T22:01:10+00:00"
+              },
+              {
+                "reason": "Tracking # 9400150899561133989336 added",
+                "quantity": 1,
+                "action": "ship",
+                "uuid": "57fb8d8c73404ada83275408e053cf42",
+                "activityDate": "2025-10-22T23:14:22+00:00",
+                "updateDate": "2025-10-22T23:14:22+00:00"
+              }
+            ],
+            "acceptedQuantity": 1,
+            "title": "Mini Energy Gem Earrings,Gold / Fire Opal",
+            "extendedExpectedCostTotal": 16.1,
+            "personalization": "10002299",
+            "expectedCost": 16.1,
+            "lineNumber": 1,
+            "cancelRequested": false,
+            "productGroup": "JAX-FA-066-DS",
+            "sku": "JAX-FA-066-DS",
+            "statusReason": "Tracking # 9400150899561133989336 added",
+            "quantity": 1,
+            "expectedCostAdjustmentAllowed": false,
+            "retailerItemIds": [
+              "2503FIFDD"
+            ],
+            "giftFlag": false,
+            "retailerLineId": "200806275",
+            "consumerPrice": 26,
+            "acceptedReason": "Tracking # 9400150899561133989336 added",
+            "partnerSku": "JAX-FA-066-DS",
+            "cancelledQuantity": 0,
+            "bogoFlag": false,
+            "status": "accepted",
+            "dscoItemId": "1295638556"
+          }
+        ],
+        "dscoLastUpdate": "2025-10-22T23:15:43+00:00",
+        "dscoLifecycle": "completed",
+        "dscoRetailerId": "1000051226",
+        "dscoShipLateDate": "2025-10-23T06:59:59+00:00",
+        "shippingServiceLevelCode": "GCG",
+        "packages": [
+          {
+            "ssccBarcode": null,
+            "trackingNumber": "9400150899561133989336",
+            "untracked": false,
+            "carrierManifestId": "USPS",
+            "returnedFlag": false,
+            "shipCost": 0,
+            "shippingServiceLevelCode": "USGA",
+            "shipDate": "2025-10-22T23:14:05+00:00",
+            "packageShipFrom": {},
+            "dscoPackageId": 2014395616,
+            "shipMethod": "Ground Advantage",
+            "shipWeight": 1,
+            "items": [
+              {
+                "packageSpanFlag": false,
+                "quantity": 1,
+                "retailerItemIds": [
+                  "2503FIFDD"
+                ],
+                "lineNumber": 1,
+                "retailerLineId": "200806275",
+                "partnerSku": "JAX-FA-066-DS",
+                "originalOrderQuantity": 1,
+                "sku": "JAX-FA-066-DS",
+                "dscoItemId": "1295638556"
+              }
+            ],
+            "shipWeightUnits": "LB",
+            "shipCarrier": "USPS",
+            "packageShipTo": {
+              "country": "US",
+              "address": [
+                "5475 Arbrook"
+              ],
+              "city": "Columbus",
+              "phone": "6145176919",
+              "address1": "5475 Arbrook",
+              "name": "Melanie Yoder",
+              "lastName": "Yoder",
+              "postal": "43228",
+              "region": "OH",
+              "firstName": "Melanie"
+            },
+            "tracking_url": "tools.usps.com/go/TrackConfirmAction_input?origTrackNum=9400150899561133989336"
+          }
+        ],
+        "dscoStatus": "shipped",
+        "dscoOrderId": "1014207845",
+        "dscoSupplierId": "1000062228",
+        "dscoSupplierName": "JaxKelly Inc",
+        "dscoTradingPartnerId": null,
+        "dscoTradingPartnerName": null
+      },
+      {
+        "billTo": {},
+        "buyer": null,
+        "cancelRequested": false,
+        "cancelRequestedCode": null,
+        "channel": "2503FIFDD",
+        "consumerOrderDate": "2025-10-19T00:22:19+00:00",
+        "crossDockFlag": false,
+        "crossDockLocation": null,
+        "customer": null,
+        "deliveryMethod": null,
+        "extendedExpectedCostTotal": 16.1,
+        "giftFlag": false,
+        "giftWrapFlag": false,
+        "invoiceTo": null,
+        "orderType": "dropship",
+        "poNumber": "EDIT.17608698063456963",
+        "requestedShipCarrier": "Generic",
+        "requestedShipMethod": "Ground",
+        "requestedShippingServiceLevelCode": "GCG",
+        "requiredDeliveryDate": "2025-11-09T10:30:06+00:00",
+        "retailerCreateDate": "2025-10-19T10:30:06+00:00",
+        "shipByDate": "2025-10-31T06:59:00+00:00",
+        "shipCarrier": "Generic",
+        "shipMethod": "Ground",
+        "shipping": {
+          "address1": "40274 Bosque Rd",
+          "address": [
+            "40274 Bosque Rd"
+          ],
+          "city": "Hempstead",
+          "country": "US",
+          "firstName": "Melinda",
+          "lastName": "Gulledge",
+          "name": "Melinda Gulledge",
+          "phone": "17138780733",
+          "postal": "77445",
+          "region": "TX",
+          "state": "TX"
+        },
+        "signatureRequiredFlag": false,
+        "testFlag": false,
+        "dscoCreateDate": "2025-10-21T22:01:08+00:00",
+        "expectedDeliveryDate": "2025-11-09T10:30:06+00:00",
+        "lineItems": [
+          {
+            "rejectedQuantity": 0,
+            "readyForPickup": false,
+            "activity": [
+              {
+                "quantity": 1,
+                "action": "add",
+                "uuid": "e14f2690ad6940188da9fcbdb7a8ff23",
+                "activityDate": "2025-10-21T22:01:08+00:00",
+                "updateDate": "2025-10-21T22:01:08+00:00"
+              },
+              {
+                "reason": "Tracking # 9400150899561133989961 added",
+                "quantity": 1,
+                "action": "ship",
+                "uuid": "b559ca2449df414f9f152953808e665c",
+                "activityDate": "2025-10-22T23:15:27+00:00",
+                "updateDate": "2025-10-22T23:15:27+00:00"
+              }
+            ],
+            "acceptedQuantity": 1,
+            "title": "Pave Link Drop Earrings",
+            "extendedExpectedCostTotal": 16.1,
+            "personalization": "10002299",
+            "expectedCost": 16.1,
+            "lineNumber": 1,
+            "cancelRequested": false,
+            "productGroup": "JAX-FA-070-DS",
+            "sku": "JAX-FA-070-DS",
+            "statusReason": "Tracking # 9400150899561133989961 added",
+            "quantity": 1,
+            "expectedCostAdjustmentAllowed": false,
+            "retailerItemIds": [
+              "2503FIFDD"
+            ],
+            "giftFlag": false,
+            "retailerLineId": "200807771",
+            "consumerPrice": 26,
+            "acceptedReason": "Tracking # 9400150899561133989961 added",
+            "partnerSku": "JAX-FA-070-DS",
+            "cancelledQuantity": 0,
+            "bogoFlag": false,
+            "status": "accepted",
+            "dscoItemId": "1295638613"
+          }
+        ],
+        "dscoLastUpdate": "2025-10-22T23:16:47+00:00",
+        "dscoLifecycle": "completed",
+        "dscoRetailerId": "1000051226",
+        "dscoShipLateDate": "2025-10-23T06:59:59+00:00",
+        "shippingServiceLevelCode": "GCG",
+        "packages": [
+          {
+            "ssccBarcode": null,
+            "trackingNumber": "9400150899561133989961",
+            "untracked": false,
+            "carrierManifestId": "USPS",
+            "returnedFlag": false,
+            "shipCost": 0,
+            "shippingServiceLevelCode": "USGA",
+            "shipDate": "2025-10-22T23:15:12+00:00",
+            "packageShipFrom": {},
+            "dscoPackageId": 2014396033,
+            "shipMethod": "Ground Advantage",
+            "shipWeight": 1,
+            "items": [
+              {
+                "packageSpanFlag": false,
+                "quantity": 1,
+                "retailerItemIds": [
+                  "2503FIFDD"
+                ],
+                "lineNumber": 1,
+                "retailerLineId": "200807771",
+                "partnerSku": "JAX-FA-070-DS",
+                "originalOrderQuantity": 1,
+                "sku": "JAX-FA-070-DS",
+                "dscoItemId": "1295638613"
+              }
+            ],
+            "shipWeightUnits": "LB",
+            "shipCarrier": "USPS",
+            "packageShipTo": {
+              "country": "US",
+              "address": [
+                "40274 Bosque Rd"
+              ],
+              "city": "Hempstead",
+              "phone": "17138780733",
+              "address1": "40274 Bosque Rd",
+              "name": "Melinda Gulledge",
+              "lastName": "Gulledge",
+              "postal": "77445",
+              "region": "TX",
+              "firstName": "Melinda"
+            },
+            "tracking_url": "tools.usps.com/go/TrackConfirmAction_input?origTrackNum=9400150899561133989961"
+          }
+        ],
+        "dscoStatus": "shipped",
+        "dscoOrderId": "1014207730",
+        "dscoSupplierId": "1000062228",
+        "dscoSupplierName": "JaxKelly Inc",
+        "dscoTradingPartnerId": null,
+        "dscoTradingPartnerName": null
+      },
+      {
+        "billTo": {},
+        "buyer": null,
+        "cancelRequested": false,
+        "cancelRequestedCode": null,
+        "channel": "2503FIFDD",
+        "consumerOrderDate": "2025-10-18T07:31:38+00:00",
+        "crossDockFlag": false,
+        "crossDockLocation": null,
+        "customer": null,
+        "deliveryMethod": null,
+        "extendedExpectedCostTotal": 17.36,
+        "giftFlag": false,
+        "giftWrapFlag": false,
+        "invoiceTo": null,
+        "orderType": "dropship",
+        "poNumber": "EDIT.17607834184665148",
+        "requestedShipCarrier": "Generic",
+        "requestedShipMethod": "Ground",
+        "requestedShippingServiceLevelCode": "GCG",
+        "requiredDeliveryDate": "2025-11-08T10:30:18+00:00",
+        "retailerCreateDate": "2025-10-18T10:30:18+00:00",
+        "shipByDate": "2025-10-31T06:59:00+00:00",
+        "shipCarrier": "Generic",
+        "shipMethod": "Ground",
+        "shipping": {
+          "address1": "56 BEAU LN",
+          "address": [
+            "56 BEAU LN"
+          ],
+          "city": "ROCHESTER",
+          "country": "US",
+          "firstName": "Tammy",
+          "lastName": "Anderson",
+          "name": "Tammy Anderson",
+          "phone": "(585) 576-5078",
+          "postal": "14624",
+          "region": "NY",
+          "state": "NY"
+        },
+        "signatureRequiredFlag": false,
+        "testFlag": false,
+        "dscoCreateDate": "2025-10-21T22:01:07+00:00",
+        "expectedDeliveryDate": "2025-11-08T10:30:18+00:00",
+        "lineItems": [
+          {
+            "rejectedQuantity": 0,
+            "readyForPickup": false,
+            "activity": [
+              {
+                "quantity": 1,
+                "action": "add",
+                "uuid": "26bdfa34a8c241e58a8c96ce5a16a2f3",
+                "activityDate": "2025-10-21T22:01:07+00:00",
+                "updateDate": "2025-10-21T22:01:07+00:00"
+              },
+              {
+                "reason": "Tracking # 9400150899562133968796 added",
+                "quantity": 1,
+                "action": "ship",
+                "uuid": "991dc4e45dee4aa7bf670b0746926230",
+                "activityDate": "2025-10-22T23:16:15+00:00",
+                "updateDate": "2025-10-22T23:16:15+00:00"
+              }
+            ],
+            "acceptedQuantity": 1,
+            "title": "Pave Stud Snake Earrings",
+            "extendedExpectedCostTotal": 17.36,
+            "personalization": "10002299",
+            "expectedCost": 17.36,
+            "lineNumber": 1,
+            "cancelRequested": false,
+            "productGroup": "JAX-FA-071-DS",
+            "sku": "JAX-FA-071-DS",
+            "statusReason": "Tracking # 9400150899562133968796 added",
+            "quantity": 1,
+            "expectedCostAdjustmentAllowed": false,
+            "retailerItemIds": [
+              "2503FIFDD"
+            ],
+            "giftFlag": false,
+            "retailerLineId": "200804638",
+            "consumerPrice": 28,
+            "acceptedReason": "Tracking # 9400150899562133968796 added",
+            "partnerSku": "JAX-FA-071-DS",
+            "cancelledQuantity": 0,
+            "bogoFlag": false,
+            "status": "accepted",
+            "dscoItemId": "1295638587"
+          }
+        ],
+        "dscoLastUpdate": "2025-10-22T23:17:20+00:00",
+        "dscoLifecycle": "completed",
+        "dscoRetailerId": "1000051226",
+        "dscoShipLateDate": "2025-10-23T06:59:59+00:00",
+        "shippingServiceLevelCode": "GCG",
+        "packages": [
+          {
+            "ssccBarcode": null,
+            "trackingNumber": "9400150899562133968796",
+            "untracked": false,
+            "carrierManifestId": "USPS",
+            "returnedFlag": false,
+            "shipCost": 0,
+            "shippingServiceLevelCode": "USGA",
+            "shipDate": "2025-10-22T23:16:04+00:00",
+            "packageShipFrom": {},
+            "dscoPackageId": 2014396345,
+            "shipMethod": "Ground Advantage",
+            "shipWeight": 1,
+            "items": [
+              {
+                "packageSpanFlag": false,
+                "quantity": 1,
+                "retailerItemIds": [
+                  "2503FIFDD"
+                ],
+                "lineNumber": 1,
+                "retailerLineId": "200804638",
+                "partnerSku": "JAX-FA-071-DS",
+                "originalOrderQuantity": 1,
+                "sku": "JAX-FA-071-DS",
+                "dscoItemId": "1295638587"
+              }
+            ],
+            "shipWeightUnits": "LB",
+            "shipCarrier": "USPS",
+            "packageShipTo": {
+              "country": "US",
+              "address": [
+                "56 BEAU LN"
+              ],
+              "city": "ROCHESTER",
+              "phone": "(585) 576-5078",
+              "address1": "56 BEAU LN",
+              "name": "Tammy Anderson",
+              "lastName": "Anderson",
+              "postal": "14624",
+              "region": "NY",
+              "firstName": "Tammy"
+            },
+            "tracking_url": "tools.usps.com/go/TrackConfirmAction_input?origTrackNum=9400150899562133968796"
+          }
+        ],
+        "dscoStatus": "shipped",
+        "dscoOrderId": "1014207490",
+        "dscoSupplierId": "1000062228",
+        "dscoSupplierName": "JaxKelly Inc",
+        "dscoTradingPartnerId": null,
+        "dscoTradingPartnerName": null
+      },
+      {
+        "billTo": {},
+        "buyer": null,
+        "cancelRequested": false,
+        "cancelRequestedCode": null,
+        "channel": "2503FIFDD",
+        "consumerOrderDate": "2025-10-18T07:28:14+00:00",
+        "crossDockFlag": false,
+        "crossDockLocation": null,
+        "customer": null,
+        "deliveryMethod": null,
+        "extendedExpectedCostTotal": 13.58,
+        "giftFlag": false,
+        "giftWrapFlag": false,
+        "invoiceTo": null,
+        "orderType": "dropship",
+        "poNumber": "EDIT.17607834201403644",
+        "requestedShipCarrier": "Generic",
+        "requestedShipMethod": "Ground",
+        "requestedShippingServiceLevelCode": "GCG",
+        "requiredDeliveryDate": "2025-11-08T10:30:20+00:00",
+        "retailerCreateDate": "2025-10-18T10:30:20+00:00",
+        "shipByDate": "2025-10-31T06:59:00+00:00",
+        "shipCarrier": "Generic",
+        "shipMethod": "Ground",
+        "shipping": {
+          "address1": "44 DALTON RD",
+          "address": [
+            "44 DALTON RD"
+          ],
+          "city": "MOUNT VERNON",
+          "country": "US",
+          "firstName": "Taylor",
+          "lastName": "Risner",
+          "name": "Taylor Risner",
+          "phone": "(501) 269-8811",
+          "postal": "72111",
+          "region": "AR",
+          "state": "AR"
+        },
+        "signatureRequiredFlag": false,
+        "testFlag": false,
+        "dscoCreateDate": "2025-10-21T22:01:07+00:00",
+        "expectedDeliveryDate": "2025-11-08T10:30:20+00:00",
+        "lineItems": [
+          {
+            "rejectedQuantity": 0,
+            "readyForPickup": false,
+            "activity": [
+              {
+                "quantity": 1,
+                "action": "add",
+                "uuid": "6df30cf2196d49ac93636bf70db6c451",
+                "activityDate": "2025-10-21T22:01:07+00:00",
+                "updateDate": "2025-10-21T22:01:07+00:00"
+              },
+              {
+                "reason": "Tracking # 9400150899562133969083 added",
+                "quantity": 1,
+                "action": "ship",
+                "uuid": "55bd1db39e044ecaba492dd2c34c9b67",
+                "activityDate": "2025-10-22T23:17:00+00:00",
+                "updateDate": "2025-10-22T23:17:00+00:00"
+              }
+            ],
+            "acceptedQuantity": 1,
+            "title": "Minimalist Spiral Earrings",
+            "extendedExpectedCostTotal": 13.58,
+            "personalization": "10002299",
+            "expectedCost": 13.58,
+            "lineNumber": 1,
+            "cancelRequested": false,
+            "productGroup": "JAX-FA-069-DS",
+            "sku": "JAX-FA-069-DS",
+            "statusReason": "Tracking # 9400150899562133969083 added",
+            "quantity": 1,
+            "expectedCostAdjustmentAllowed": false,
+            "retailerItemIds": [
+              "2503FIFDD"
+            ],
+            "giftFlag": false,
+            "retailerLineId": "200805414",
+            "consumerPrice": 24,
+            "acceptedReason": "Tracking # 9400150899562133969083 added",
+            "partnerSku": "JAX-FA-069-DS",
+            "cancelledQuantity": 0,
+            "bogoFlag": false,
+            "status": "accepted",
+            "dscoItemId": "1295639604"
+          }
+        ],
+        "dscoLastUpdate": "2025-10-22T23:18:15+00:00",
+        "dscoLifecycle": "completed",
+        "dscoRetailerId": "1000051226",
+        "dscoShipLateDate": "2025-10-23T06:59:59+00:00",
+        "shippingServiceLevelCode": "GCG",
+        "packages": [
+          {
+            "ssccBarcode": null,
+            "trackingNumber": "9400150899562133969083",
+            "untracked": false,
+            "carrierManifestId": "USPS",
+            "returnedFlag": false,
+            "shipCost": 0,
+            "shippingServiceLevelCode": "USGA",
+            "shipDate": "2025-10-22T23:16:48+00:00",
+            "packageShipFrom": {},
+            "dscoPackageId": 2014396604,
+            "shipMethod": "Ground Advantage",
+            "shipWeight": 1,
+            "items": [
+              {
+                "packageSpanFlag": false,
+                "quantity": 1,
+                "retailerItemIds": [
+                  "2503FIFDD"
+                ],
+                "lineNumber": 1,
+                "retailerLineId": "200805414",
+                "partnerSku": "JAX-FA-069-DS",
+                "originalOrderQuantity": 1,
+                "sku": "JAX-FA-069-DS",
+                "dscoItemId": "1295639604"
+              }
+            ],
+            "shipWeightUnits": "LB",
+            "shipCarrier": "USPS",
+            "packageShipTo": {
+              "country": "US",
+              "address": [
+                "44 DALTON RD"
+              ],
+              "city": "MOUNT VERNON",
+              "phone": "(501) 269-8811",
+              "address1": "44 DALTON RD",
+              "name": "Taylor Risner",
+              "lastName": "Risner",
+              "postal": "72111",
+              "region": "AR",
+              "firstName": "Taylor"
+            },
+            "tracking_url": "tools.usps.com/go/TrackConfirmAction_input?origTrackNum=9400150899562133969083"
+          }
+        ],
+        "dscoStatus": "shipped",
+        "dscoOrderId": "1014207552",
+        "dscoSupplierId": "1000062228",
+        "dscoSupplierName": "JaxKelly Inc",
+        "dscoTradingPartnerId": null,
+        "dscoTradingPartnerName": null
+      },
+      {
+        "billTo": {},
+        "buyer": null,
+        "cancelRequested": false,
+        "cancelRequestedCode": null,
+        "channel": "2503FIFDD",
+        "consumerOrderDate": "2025-10-18T07:29:11+00:00",
+        "crossDockFlag": false,
+        "crossDockLocation": null,
+        "customer": null,
+        "deliveryMethod": null,
+        "extendedExpectedCostTotal": 17.36,
+        "giftFlag": false,
+        "giftWrapFlag": false,
+        "invoiceTo": null,
+        "orderType": "dropship",
+        "poNumber": "EDIT.17607834189835559",
+        "requestedShipCarrier": "Generic",
+        "requestedShipMethod": "Ground",
+        "requestedShippingServiceLevelCode": "GCG",
+        "requiredDeliveryDate": "2025-11-08T10:30:19+00:00",
+        "retailerCreateDate": "2025-10-18T10:30:19+00:00",
+        "shipByDate": "2025-10-31T06:59:00+00:00",
+        "shipCarrier": "Generic",
+        "shipMethod": "Ground",
+        "shipping": {
+          "address1": "7326 SIERRA CT",
+          "address": [
+            "7326 SIERRA CT"
+          ],
+          "city": "COLUMBUS",
+          "country": "US",
+          "firstName": "Nancy",
+          "lastName": "Anderson",
+          "name": "Nancy Anderson",
+          "phone": "7063936009",
+          "postal": "31904",
+          "region": "GA",
+          "state": "GA"
+        },
+        "signatureRequiredFlag": false,
+        "testFlag": false,
+        "dscoCreateDate": "2025-10-21T22:01:06+00:00",
+        "expectedDeliveryDate": "2025-11-08T10:30:19+00:00",
+        "lineItems": [
+          {
+            "rejectedQuantity": 0,
+            "readyForPickup": false,
+            "activity": [
+              {
+                "quantity": 1,
+                "action": "add",
+                "uuid": "fae967042f2147cd814a538dcc45892a",
+                "activityDate": "2025-10-21T22:01:06+00:00",
+                "updateDate": "2025-10-21T22:01:06+00:00"
+              },
+              {
+                "reason": "Tracking # 9400150899561133990950 added",
+                "quantity": 1,
+                "action": "ship",
+                "uuid": "20706f1b5f5945a79cd20778132a0616",
+                "activityDate": "2025-10-22T23:18:07+00:00",
+                "updateDate": "2025-10-22T23:18:07+00:00"
+              }
+            ],
+            "acceptedQuantity": 1,
+            "title": "Pave Stud Snake Earrings",
+            "extendedExpectedCostTotal": 17.36,
+            "personalization": "10002299",
+            "expectedCost": 17.36,
+            "lineNumber": 1,
+            "cancelRequested": false,
+            "productGroup": "JAX-FA-071-DS",
+            "sku": "JAX-FA-071-DS",
+            "statusReason": "Tracking # 9400150899561133990950 added",
+            "quantity": 1,
+            "expectedCostAdjustmentAllowed": false,
+            "retailerItemIds": [
+              "2503FIFDD"
+            ],
+            "giftFlag": false,
+            "retailerLineId": "200804995",
+            "consumerPrice": 28,
+            "acceptedReason": "Tracking # 9400150899561133990950 added",
+            "partnerSku": "JAX-FA-071-DS",
+            "cancelledQuantity": 0,
+            "bogoFlag": false,
+            "status": "accepted",
+            "dscoItemId": "1295638587"
+          }
+        ],
+        "dscoLastUpdate": "2025-10-22T23:19:21+00:00",
+        "dscoLifecycle": "completed",
+        "dscoRetailerId": "1000051226",
+        "dscoShipLateDate": "2025-10-23T06:59:59+00:00",
+        "shippingServiceLevelCode": "GCG",
+        "packages": [
+          {
+            "ssccBarcode": null,
+            "trackingNumber": "9400150899561133990950",
+            "untracked": false,
+            "carrierManifestId": "USPS",
+            "returnedFlag": false,
+            "shipCost": 0,
+            "shippingServiceLevelCode": "USGA",
+            "shipDate": "2025-10-22T23:17:53+00:00",
+            "packageShipFrom": {},
+            "dscoPackageId": 2014397062,
+            "shipMethod": "Ground Advantage",
+            "shipWeight": 1,
+            "items": [
+              {
+                "packageSpanFlag": false,
+                "quantity": 1,
+                "retailerItemIds": [
+                  "2503FIFDD"
+                ],
+                "lineNumber": 1,
+                "retailerLineId": "200804995",
+                "partnerSku": "JAX-FA-071-DS",
+                "originalOrderQuantity": 1,
+                "sku": "JAX-FA-071-DS",
+                "dscoItemId": "1295638587"
+              }
+            ],
+            "shipWeightUnits": "LB",
+            "shipCarrier": "USPS",
+            "packageShipTo": {
+              "country": "US",
+              "address": [
+                "7326 SIERRA CT"
+              ],
+              "city": "COLUMBUS",
+              "phone": "7063936009",
+              "address1": "7326 SIERRA CT",
+              "name": "Nancy Anderson",
+              "lastName": "Anderson",
+              "postal": "31904",
+              "region": "GA",
+              "firstName": "Nancy"
+            },
+            "tracking_url": "tools.usps.com/go/TrackConfirmAction_input?origTrackNum=9400150899561133990950"
+          }
+        ],
+        "dscoStatus": "shipped",
+        "dscoOrderId": "1014207431",
+        "dscoSupplierId": "1000062228",
+        "dscoSupplierName": "JaxKelly Inc",
+        "dscoTradingPartnerId": null,
+        "dscoTradingPartnerName": null
+      },
+      {
+        "billTo": {},
+        "buyer": null,
+        "cancelRequested": false,
+        "cancelRequestedCode": null,
+        "channel": "2503FIFDD",
+        "consumerOrderDate": "2025-10-18T07:30:28+00:00",
+        "crossDockFlag": false,
+        "crossDockLocation": null,
+        "customer": null,
+        "deliveryMethod": null,
+        "extendedExpectedCostTotal": 16.73,
+        "giftFlag": false,
+        "giftWrapFlag": false,
+        "invoiceTo": null,
+        "orderType": "dropship",
+        "poNumber": "EDIT.17607834183695367",
+        "requestedShipCarrier": "Generic",
+        "requestedShipMethod": "Ground",
+        "requestedShippingServiceLevelCode": "GCG",
+        "requiredDeliveryDate": "2025-11-08T10:30:18+00:00",
+        "retailerCreateDate": "2025-10-18T10:30:18+00:00",
+        "shipByDate": "2025-10-31T06:59:00+00:00",
+        "shipCarrier": "Generic",
+        "shipMethod": "Ground",
+        "shipping": {
+          "address1": "329 HILLMAN TRAIL DR",
+          "address": [
+            "329 HILLMAN TRAIL DR"
+          ],
+          "city": "MONCKS CORNER",
+          "country": "US",
+          "firstName": "Catherine",
+          "lastName": "Kirby",
+          "name": "Catherine Kirby",
+          "phone": "8437083622",
+          "postal": "29461",
+          "region": "SC",
+          "state": "SC"
+        },
+        "signatureRequiredFlag": false,
+        "testFlag": false,
+        "dscoCreateDate": "2025-10-21T22:01:04+00:00",
+        "expectedDeliveryDate": "2025-11-08T10:30:18+00:00",
+        "lineItems": [
+          {
+            "rejectedQuantity": 0,
+            "readyForPickup": false,
+            "activity": [
+              {
+                "quantity": 1,
+                "action": "add",
+                "uuid": "0c58d791ee08400fb0c2db42ea4f3898",
+                "activityDate": "2025-10-21T22:01:04+00:00",
+                "updateDate": "2025-10-21T22:01:04+00:00"
+              },
+              {
+                "reason": "Tracking # 9400150899563141986635 added",
+                "quantity": 1,
+                "action": "ship",
+                "uuid": "45492f4c2bac4d50b81efe7b3964ff63",
+                "activityDate": "2025-10-22T23:19:11+00:00",
+                "updateDate": "2025-10-22T23:19:11+00:00"
+              }
+            ],
+            "acceptedQuantity": 1,
+            "title": "Sun Ray White Opal Earrings",
+            "extendedExpectedCostTotal": 16.73,
+            "personalization": "10002299",
+            "expectedCost": 16.73,
+            "lineNumber": 1,
+            "cancelRequested": false,
+            "productGroup": "JAX-FA-074-DS",
+            "sku": "JAX-FA-074-DS",
+            "statusReason": "Tracking # 9400150899563141986635 added",
+            "quantity": 1,
+            "expectedCostAdjustmentAllowed": false,
+            "retailerItemIds": [
+              "2503FIFDD"
+            ],
+            "giftFlag": false,
+            "retailerLineId": "200804570",
+            "consumerPrice": 28,
+            "acceptedReason": "Tracking # 9400150899563141986635 added",
+            "partnerSku": "JAX-FA-074-DS",
+            "cancelledQuantity": 0,
+            "bogoFlag": false,
+            "status": "accepted",
+            "dscoItemId": "1295638571"
+          }
+        ],
+        "dscoLastUpdate": "2025-10-22T23:20:27+00:00",
+        "dscoLifecycle": "completed",
+        "dscoRetailerId": "1000051226",
+        "dscoShipLateDate": "2025-10-23T06:59:59+00:00",
+        "shippingServiceLevelCode": "GCG",
+        "packages": [
+          {
+            "ssccBarcode": null,
+            "trackingNumber": "9400150899563141986635",
+            "untracked": false,
+            "carrierManifestId": "USPS",
+            "returnedFlag": false,
+            "shipCost": 0,
+            "shippingServiceLevelCode": "USGA",
+            "shipDate": "2025-10-22T23:18:58+00:00",
+            "packageShipFrom": {},
+            "dscoPackageId": 2014397571,
+            "shipMethod": "Ground Advantage",
+            "shipWeight": 1,
+            "items": [
+              {
+                "packageSpanFlag": false,
+                "quantity": 1,
+                "retailerItemIds": [
+                  "2503FIFDD"
+                ],
+                "lineNumber": 1,
+                "retailerLineId": "200804570",
+                "partnerSku": "JAX-FA-074-DS",
+                "originalOrderQuantity": 1,
+                "sku": "JAX-FA-074-DS",
+                "dscoItemId": "1295638571"
+              }
+            ],
+            "shipWeightUnits": "LB",
+            "shipCarrier": "USPS",
+            "packageShipTo": {
+              "country": "US",
+              "address": [
+                "329 HILLMAN TRAIL DR"
+              ],
+              "city": "MONCKS CORNER",
+              "phone": "8437083622",
+              "address1": "329 HILLMAN TRAIL DR",
+              "name": "Catherine Kirby",
+              "lastName": "Kirby",
+              "postal": "29461",
+              "region": "SC",
+              "firstName": "Catherine"
+            },
+            "tracking_url": "tools.usps.com/go/TrackConfirmAction_input?origTrackNum=9400150899563141986635"
+          }
+        ],
+        "dscoStatus": "shipped",
+        "dscoOrderId": "1014207319",
+        "dscoSupplierId": "1000062228",
+        "dscoSupplierName": "JaxKelly Inc",
+        "dscoTradingPartnerId": null,
+        "dscoTradingPartnerName": null
+      },
+      {
+        "billTo": {},
+        "buyer": null,
+        "cancelRequested": false,
+        "cancelRequestedCode": null,
+        "channel": "2503FIFDD",
+        "consumerOrderDate": "2025-10-18T07:31:09+00:00",
+        "crossDockFlag": false,
+        "crossDockLocation": null,
+        "customer": null,
+        "deliveryMethod": null,
+        "extendedExpectedCostTotal": 13.58,
+        "giftFlag": false,
+        "giftWrapFlag": false,
+        "invoiceTo": null,
+        "orderType": "dropship",
+        "poNumber": "EDIT.17607834186761739",
+        "requestedShipCarrier": "Generic",
+        "requestedShipMethod": "Ground",
+        "requestedShippingServiceLevelCode": "GCG",
+        "requiredDeliveryDate": "2025-11-08T10:30:18+00:00",
+        "retailerCreateDate": "2025-10-18T10:30:18+00:00",
+        "shipByDate": "2025-10-31T06:59:00+00:00",
+        "shipCarrier": "Generic",
+        "shipMethod": "Ground",
+        "shipping": {
+          "address1": "25597 AMERICA SQ",
+          "address": [
+            "25597 AMERICA SQ"
+          ],
+          "city": "CHANTILLY",
+          "country": "US",
+          "firstName": "Kara",
+          "lastName": "Maunes",
+          "name": "Kara Maunes",
+          "phone": "14435282435",
+          "postal": "20152",
+          "region": "VA",
+          "state": "VA"
+        },
+        "signatureRequiredFlag": false,
+        "testFlag": false,
+        "dscoCreateDate": "2025-10-21T22:01:04+00:00",
+        "expectedDeliveryDate": "2025-11-08T10:30:18+00:00",
+        "lineItems": [
+          {
+            "rejectedQuantity": 0,
+            "readyForPickup": false,
+            "activity": [
+              {
+                "quantity": 1,
+                "action": "add",
+                "uuid": "84c6293ea2d6457cb4f6695792684e0b",
+                "activityDate": "2025-10-21T22:01:04+00:00",
+                "updateDate": "2025-10-21T22:01:04+00:00"
+              },
+              {
+                "reason": "Tracking # 9400150899561133991421 added",
+                "quantity": 1,
+                "action": "ship",
+                "uuid": "e74d83e4cd1d47a5a86452a7869ec683",
+                "activityDate": "2025-10-22T23:20:03+00:00",
+                "updateDate": "2025-10-22T23:20:03+00:00"
+              }
+            ],
+            "acceptedQuantity": 1,
+            "title": "Minimalist Spiral Earrings",
+            "extendedExpectedCostTotal": 13.58,
+            "personalization": "10002299",
+            "expectedCost": 13.58,
+            "lineNumber": 1,
+            "cancelRequested": false,
+            "productGroup": "JAX-FA-069-DS",
+            "sku": "JAX-FA-069-DS",
+            "statusReason": "Tracking # 9400150899561133991421 added",
+            "quantity": 1,
+            "expectedCostAdjustmentAllowed": false,
+            "retailerItemIds": [
+              "2503FIFDD"
+            ],
+            "giftFlag": false,
+            "retailerLineId": "200804783",
+            "consumerPrice": 24,
+            "acceptedReason": "Tracking # 9400150899561133991421 added",
+            "partnerSku": "JAX-FA-069-DS",
+            "cancelledQuantity": 0,
+            "bogoFlag": false,
+            "status": "accepted",
+            "dscoItemId": "1295639604"
+          }
+        ],
+        "dscoLastUpdate": "2025-10-22T23:21:17+00:00",
+        "dscoLifecycle": "completed",
+        "dscoRetailerId": "1000051226",
+        "dscoShipLateDate": "2025-10-23T06:59:59+00:00",
+        "shippingServiceLevelCode": "GCG",
+        "packages": [
+          {
+            "ssccBarcode": null,
+            "trackingNumber": "9400150899561133991421",
+            "untracked": false,
+            "carrierManifestId": "USPS",
+            "returnedFlag": false,
+            "shipCost": 0,
+            "shippingServiceLevelCode": "USGA",
+            "shipDate": "2025-10-22T23:19:49+00:00",
+            "packageShipFrom": {},
+            "dscoPackageId": 2014398042,
+            "shipMethod": "Ground Advantage",
+            "shipWeight": 1,
+            "items": [
+              {
+                "packageSpanFlag": false,
+                "quantity": 1,
+                "retailerItemIds": [
+                  "2503FIFDD"
+                ],
+                "lineNumber": 1,
+                "retailerLineId": "200804783",
+                "partnerSku": "JAX-FA-069-DS",
+                "originalOrderQuantity": 1,
+                "sku": "JAX-FA-069-DS",
+                "dscoItemId": "1295639604"
+              }
+            ],
+            "shipWeightUnits": "LB",
+            "shipCarrier": "USPS",
+            "packageShipTo": {
+              "country": "US",
+              "address": [
+                "25597 AMERICA SQ"
+              ],
+              "city": "CHANTILLY",
+              "phone": "14435282435",
+              "address1": "25597 AMERICA SQ",
+              "name": "Kara Maunes",
+              "lastName": "Maunes",
+              "postal": "20152",
+              "region": "VA",
+              "firstName": "Kara"
+            },
+            "tracking_url": "tools.usps.com/go/TrackConfirmAction_input?origTrackNum=9400150899561133991421"
+          }
+        ],
+        "dscoStatus": "shipped",
+        "dscoOrderId": "1014207323",
+        "dscoSupplierId": "1000062228",
+        "dscoSupplierName": "JaxKelly Inc",
+        "dscoTradingPartnerId": null,
+        "dscoTradingPartnerName": null
+      }
+    ],
+    "pagination": {
+      "scrollId": "eyJwYWdpbmF0aW9uX2tleSI6WzE3NjEwODQwNjQwMDAsMTAxNDIwNzMyM10sInBhcnNlZF90ZXJtcyI6eyJ1cGRhdGVkX3NpbmNlIjoiMjAyNS0xMC0xNlQxNToxOToyNloiLCJ1cGRhdGVkX3NpbmNlX2VuZCI6IjIwMjUtMTAtMzBUMTU6MTQ6MjZaIiwic3RhdHVzIjpbXSwiaW5jbHVkZV90ZXN0X29yZGVycyI6dHJ1ZSwiZnVsbF9kZXRhaWwiOnRydWUsImxpbWl0IjoxMCwic29ydCI6ImNyZWF0ZV9kYXRlIiwic3VwcGxpZXJfaWQiOiIxMDAwMDYyMjI4In19",
+      "hasMore": true,
+      "totalCount": 10
+    },
+    "count": 10
+  }

@@ -1,15 +1,21 @@
 const axios = require('axios');
+const fs = require('fs').promises;
+const path = require('path');
 
 class RithumClient {
-    constructor(apiUrl, clientId, clientSecret, accountId) {
+    constructor(apiUrl, clientId, clientSecret) {
         this.apiUrl = apiUrl;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
-        this.accountId = accountId;
         this.maxRetries = 3;
         this.retryDelay = 1000; // 1 second base delay
         this.accessToken = null;
         this.tokenExpiresAt = 0; // epoch ms
+        
+        // Stream state management
+        this.streamConfigFile = path.join(__dirname, '../../.stream-config.json');
+        this.streamId = null;
+        this.lastPosition = null;
         
         // Create axios instance with default config
         this.client = axios.create({
@@ -187,25 +193,7 @@ class RithumClient {
      * Test connection to Rithum API
      * @returns {Promise<Object>} Connection test result
      */
-    async testConnection() {
-        try {
-            console.log('Testing Rithum API connection...');
-            // Validate token fetch only (health endpoint may not exist)
-            await this.refreshAccessToken();
-            return {
-                success: true,
-                message: 'Access token retrieved successfully',
-                expiresAt: this.tokenExpiresAt
-            };
-        } catch (error) {
-            return {
-                success: false,
-                message: 'Connection failed',
-                error: error.message,
-                status: error.response?.status
-            };
-        }
-    }
+
 
     /**
      * Fetch orders from Rithum API
@@ -252,6 +240,246 @@ class RithumClient {
         } catch (error) {
             console.error(`Error updating Rithum order ${orderId}:`, error.message);
             throw error;
+        }
+    }
+
+    /**
+     * Create an event stream for orders
+     * @param {string} description - Description of the stream
+     * @returns {Promise<Object>} Created stream object
+     */
+    async createOrderStream(description = 'Order event stream for new orders') {
+        try {
+            console.log('Creating order event stream...');
+            
+            const streamData = {
+                objectType: 'order',
+                description: description,
+                query: {
+                    queryType: 'order'
+                }
+            };
+            
+            const response = await this.makeRequest('POST', '/stream', streamData);
+            
+            console.log('Order stream created:', response.id);
+            return response;
+        } catch (error) {
+            console.error('Error creating order stream:', error.message);
+            throw error;
+        }
+    }
+
+    /**
+     * Get stream by ID
+     * @param {string} streamId - Stream ID
+     * @returns {Promise<Object>} Stream object
+     */
+    async getStream(streamId) {
+        try {
+            const response = await this.makeRequest('GET', '/stream', null, { id: streamId });
+            if (Array.isArray(response) && response.length > 0) {
+                return response[0];
+            }
+            throw new Error(`Stream ${streamId} not found`);
+        } catch (error) {
+            console.error(`Error getting stream ${streamId}:`, error.message);
+            throw error;
+        }
+    }
+
+    /**
+     * Get stream events from a specific position
+     * @param {string} streamId - Stream ID
+     * @param {number} partitionId - Partition ID (usually 0 for single partition)
+     * @param {string} position - Position to start from (use stream's position property)
+     * @returns {Promise<Object>} Stream events
+     */
+    async getStreamEventsFromPosition(streamId, partitionId, position) {
+        try {
+            console.log(`Getting stream events from position ${position}...`);
+            await this.ensureAccessToken();
+            const encodedPosition = encodeURIComponent(position);
+            const endpoint = `/stream/${streamId}/${partitionId}/${encodedPosition}`;
+            
+            const response = await this.makeRequest('GET', endpoint);
+            return response;
+        } catch (error) {
+            console.error('Error getting stream events:', error.message);
+            throw error;
+        }
+    }
+
+    /**
+     * Load stream configuration from file
+     */
+    async loadStreamConfig() {
+        try {
+            const data = await fs.readFile(this.streamConfigFile, 'utf8');
+            const config = JSON.parse(data);
+            this.streamId = config.streamId;
+            this.lastPosition = config.lastPosition;
+            return config;
+        } catch (error) {
+            if (error.code === 'ENOENT') {
+                return null;
+            }
+            throw error;
+        }
+    }
+
+    /**
+     * Save stream configuration to file
+     */
+    async saveStreamConfig() {
+        const config = {
+            streamId: this.streamId,
+            lastPosition: this.lastPosition,
+            updatedAt: new Date().toISOString()
+        };
+        await fs.writeFile(this.streamConfigFile, JSON.stringify(config, null, 2), 'utf8');
+    }
+
+    /**
+     * Initialize or get existing order stream with state management
+     * @param {string} description - Description for new stream
+     * @returns {Promise<Object>} Stream configuration
+     */
+    async initializeOrderStream(description = 'Order stream for ShipStation integration - new orders') {
+        // Try to load existing stream
+        const existingConfig = await this.loadStreamConfig();
+        
+        if (existingConfig && existingConfig.streamId) {
+            // Verify stream still exists
+            try {
+                const stream = await this.getStream(existingConfig.streamId);
+                this.streamId = existingConfig.streamId;
+                this.lastPosition = existingConfig.lastPosition;
+                console.log('Using existing order stream:', this.streamId);
+                return stream;
+            } catch (error) {
+                console.warn('Existing stream not found, creating new one...');
+            }
+        }
+
+        // Create new stream
+        try {
+            const stream = await this.createOrderStream(description);
+            this.streamId = stream.id;
+            this.lastPosition = null; // Start from beginning
+            await this.saveStreamConfig();
+            console.log('Created new order stream:', this.streamId);
+            return stream;
+        } catch (error) {
+            console.error('Failed to create order stream:', error.message);
+            throw error;
+        }
+    }
+
+    /**
+     * Check for new orders from stream with state management
+     * @returns {Promise<Object>} New orders and metadata
+     */
+    async checkForNewOrders() {
+        try {
+            // Ensure stream is initialized
+            if (!this.streamId) {
+                await this.initializeOrderStream();
+            }
+
+            // Load current position if available
+            await this.loadStreamConfig();
+
+            // Get stream to find current position
+            const stream = await this.getStream(this.streamId);
+            
+            if (!stream || !stream.partitions || stream.partitions.length === 0) {
+                throw new Error('Stream not found or has no partitions');
+            }
+
+            const partition = stream.partitions[0];
+            const partitionId = partition.partitionId;
+            const currentPosition = this.lastPosition || partition.position || '0';
+
+            // Get events from current position
+            const eventsResponse = await this.getStreamEventsFromPosition(
+                this.streamId,
+                partitionId,
+                currentPosition
+            );
+
+            // Filter for create events (new orders)
+            const newOrderEvents = (eventsResponse.events || []).filter(
+                event => event.eventReason === 'create'
+            );
+
+            // Extract order IDs from create events
+            const newOrderIds = newOrderEvents.map(event => event.objectId);
+
+            // Update last position if we processed events
+            const lastEventId = eventsResponse.events?.length > 0 
+                ? eventsResponse.events[eventsResponse.events.length - 1].id 
+                : currentPosition;
+
+            if (lastEventId && lastEventId !== this.lastPosition) {
+                this.lastPosition = lastEventId;
+                await this.saveStreamConfig();
+            }
+
+            return {
+                success: true,
+                newOrderCount: newOrderEvents.length,
+                newOrderIds: newOrderIds,
+                events: newOrderEvents,
+                lastPosition: this.lastPosition,
+                streamId: this.streamId
+            };
+        } catch (error) {
+            console.error('Error checking for new orders:', error.message);
+            return {
+                success: false,
+                error: error.message,
+                newOrderCount: 0,
+                newOrderIds: []
+            };
+        }
+    }
+
+    /**
+     * Get stream status with state
+     * @returns {Promise<Object>} Stream status
+     */
+    async getOrderStreamStatus() {
+        try {
+            await this.loadStreamConfig();
+            if (!this.streamId) {
+                return {
+                    initialized: false,
+                    message: 'Stream not initialized. Call initializeOrderStream() first.'
+                };
+            }
+
+            const stream = await this.getStream(this.streamId);
+            return {
+                initialized: true,
+                streamId: this.streamId,
+                lastPosition: this.lastPosition,
+                stream: {
+                    id: stream.id,
+                    description: stream.description,
+                    objectType: stream.objectType,
+                    partitions: stream.partitions?.map(p => ({
+                        partitionId: p.partitionId,
+                        position: p.position,
+                        status: p.status
+                    }))
+                }
+            };
+        } catch (error) {
+            return {
+                initialized: false,
+                error: error.message
+            };
         }
     }
 }

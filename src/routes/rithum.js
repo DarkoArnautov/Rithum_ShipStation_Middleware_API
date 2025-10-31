@@ -13,42 +13,36 @@ try {
         rithumConfig.apiUrl,
         rithumConfig.clientId,
         rithumConfig.clientSecret,
-        rithumConfig.accountId
     );
 } catch (error) {
     console.warn('Rithum client not initialized:', error.message);
 }
-
 /**
- * GET /api/rithum/test
- * Test connection to Rithum API
+ * GET /api/rithum/token
+ * Get token status (masked)
  */
-router.get('/test', async (req, res) => {
+router.get('/token', async (req, res) => {
     try {
         if (!rithumClient) {
             return res.status(503).json({
                 success: false,
                 message: 'Rithum client not configured',
-                error: 'Missing OAuth2 credentials (Client ID, Secret Key, Account ID)'
+                error: 'Missing OAuth2 credentials (Client ID, Secret Key)'
             });
         }
-
-        const result = await rithumClient.testConnection();
-        
-        if (result.success) {
-            res.json(result);
-        } else {
-            res.status(500).json(result);
-        }
-    } catch (error) {
-        console.error('Rithum test connection error:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Test connection failed',
-            error: error.message
+        await rithumClient.ensureAccessToken();
+        const secondsLeft = Math.max(0, Math.floor((rithumClient.tokenExpiresAt - Date.now()) / 1000));
+        res.json({
+            success: true,
+            tokenPresent: !!rithumClient.accessToken,
+            expiresAt: rithumClient.tokenExpiresAt,
+            secondsLeft
         });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Failed to fetch token', error: error.message });
     }
 });
+
 
 /**
  * GET /api/rithum/orders
@@ -60,7 +54,7 @@ router.get('/orders', async (req, res) => {
             return res.status(503).json({
                 success: false,
                 message: 'Rithum client not configured',
-                error: 'Missing OAuth2 credentials (Client ID, Secret Key, Account ID)'
+                error: 'Missing OAuth2 credentials (Client ID, Secret Key)'
             });
         }
 
@@ -97,7 +91,7 @@ router.put('/orders/:id', async (req, res) => {
             return res.status(503).json({
                 success: false,
                 message: 'Rithum client not configured',
-                error: 'Missing OAuth2 credentials (Client ID, Secret Key, Account ID)'
+                error: 'Missing OAuth2 credentials (Client ID, Secret Key)'
             });
         }
 
@@ -131,33 +125,105 @@ router.get('/status', (req, res) => {
         apiUrl: rithumConfig.apiUrl,
         hasClientId: !!rithumConfig.clientId,
         hasClientSecret: !!rithumConfig.clientSecret,
-        hasAccountId: !!rithumConfig.accountId
     });
 });
 
+
+
 /**
- * GET /api/rithum/token
- * Get token status (masked)
+ * POST /api/rithum/stream/initialize
+ * Initialize or create order event stream for detecting new orders
  */
-router.get('/token', async (req, res) => {
+router.post('/stream/initialize', async (req, res) => {
     try {
         if (!rithumClient) {
             return res.status(503).json({
                 success: false,
                 message: 'Rithum client not configured',
-                error: 'Missing OAuth2 credentials (Client ID, Secret Key, Account ID)'
+                error: 'Missing OAuth2 credentials'
             });
         }
-        await rithumClient.ensureAccessToken();
-        const secondsLeft = Math.max(0, Math.floor((rithumClient.tokenExpiresAt - Date.now()) / 1000));
+
+        const stream = await rithumClient.initializeOrderStream();
+        
         res.json({
             success: true,
-            tokenPresent: !!rithumClient.accessToken,
-            expiresAt: rithumClient.tokenExpiresAt,
-            secondsLeft
+            message: 'Order stream initialized successfully',
+            stream: {
+                id: stream.id,
+                description: stream.description,
+                objectType: stream.objectType
+            }
         });
     } catch (error) {
-        res.status(500).json({ success: false, message: 'Failed to fetch token', error: error.message });
+        console.error('Error initializing order stream:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to initialize order stream',
+            error: error.message
+        });
+    }
+});
+
+/**
+ * GET /api/rithum/stream/status
+ * Get order stream status
+ */
+router.get('/stream/status', async (req, res) => {
+    try {
+        if (!rithumClient) {
+            return res.status(503).json({
+                success: false,
+                message: 'Rithum client not configured'
+            });
+        }
+
+        const status = await rithumClient.getOrderStreamStatus();
+        res.json(status);
+    } catch (error) {
+        console.error('Error getting stream status:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to get stream status',
+            error: error.message
+        });
+    }
+});
+
+/**
+ * GET /api/rithum/stream/new-orders
+ * Check for new orders from the event stream
+ */
+router.get('/stream/new-orders', async (req, res) => {
+    try {
+        if (!rithumClient) {
+            return res.status(503).json({
+                success: false,
+                message: 'Rithum client not configured'
+            });
+        }
+
+        const result = await rithumClient.checkForNewOrders();
+        
+        res.json({
+            success: result.success,
+            message: result.success 
+                ? `Found ${result.newOrderCount} new order(s)`
+                : 'Failed to check for new orders',
+            newOrderCount: result.newOrderCount || 0,
+            newOrderIds: result.newOrderIds || [],
+            events: result.events || [],
+            streamId: result.streamId,
+            lastPosition: result.lastPosition,
+            error: result.error
+        });
+    } catch (error) {
+        console.error('Error checking for new orders:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to check for new orders',
+            error: error.message
+        });
     }
 });
 
