@@ -377,10 +377,26 @@ class RithumClient {
     }
 
     /**
+     * Get order by ID
+     * @param {string} orderId - Order ID
+     * @returns {Promise<Object>} Order details
+     */
+    async getOrderById(orderId) {
+        try {
+            const response = await this.makeRequest('GET', `/orders/${orderId}`);
+            return response;
+        } catch (error) {
+            console.error(`Error fetching order ${orderId}:`, error.message);
+            throw error;
+        }
+    }
+
+    /**
      * Check for new orders from stream with state management
+     * @param {boolean} includeOrderDetails - Whether to fetch full order details
      * @returns {Promise<Object>} New orders and metadata
      */
-    async checkForNewOrders() {
+    async checkForNewOrders(includeOrderDetails = false) {
         try {
             // Ensure stream is initialized
             if (!this.streamId) {
@@ -401,36 +417,135 @@ class RithumClient {
             const partitionId = partition.partitionId;
             const currentPosition = this.lastPosition || partition.position || '0';
 
+            console.log(`[checkForNewOrders] Using position: ${currentPosition}`);
+            console.log(`[checkForNewOrders] Partition position: ${partition.position}`);
+            console.log(`[checkForNewOrders] Config lastPosition: ${this.lastPosition}`);
+
             // Get events from current position
             const eventsResponse = await this.getStreamEventsFromPosition(
                 this.streamId,
                 partitionId,
                 currentPosition
             );
+            
+            console.log(`[checkForNewOrders] Received ${(eventsResponse.events || []).length} events`);
+
+            // Get all events for display
+            const allEvents = eventsResponse.events || [];
 
             // Filter for create events (new orders)
-            const newOrderEvents = (eventsResponse.events || []).filter(
-                event => event.eventReason === 'create'
+            // Note: eventReasons is an array, and order ID is in payload.dscoOrderId
+            const newOrderEvents = allEvents.filter(
+                event => event.eventReasons && event.eventReasons.includes('create')
             );
 
             // Extract order IDs from create events
-            const newOrderIds = newOrderEvents.map(event => event.objectId);
+            const newOrderIds = newOrderEvents.map(event => {
+                // Order ID is in payload.dscoOrderId
+                return event.payload?.dscoOrderId || event.objectId || null;
+            }).filter(id => id !== null);
 
-            // Update last position if we processed events
-            const lastEventId = eventsResponse.events?.length > 0 
-                ? eventsResponse.events[eventsResponse.events.length - 1].id 
-                : currentPosition;
-
-            if (lastEventId && lastEventId !== this.lastPosition) {
-                this.lastPosition = lastEventId;
-                await this.saveStreamConfig();
+            // Get order details from event payloads (already included in stream events)
+            // This avoids making separate API calls which may result in 403 errors
+            let orderDetails = [];
+            if (includeOrderDetails && newOrderEvents.length > 0) {
+                try {
+                    // Extract order data directly from event payloads
+                    orderDetails = newOrderEvents.map(event => {
+                        const orderId = event.payload?.dscoOrderId || event.objectId || null;
+                        if (event.payload) {
+                            // Return the full order payload with the order ID
+                            return {
+                                id: orderId,
+                                ...event.payload
+                            };
+                        } else {
+                            // Fallback: if payload is missing, try to fetch via API
+                            return { id: orderId, error: 'Payload not available in event' };
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error extracting order details from events:', error.message);
+                    // Fallback to API fetching if payload extraction fails
+                    if (newOrderIds.length > 0) {
+                        try {
+                            const orderPromises = newOrderIds.map(orderId => 
+                                this.getOrderById(orderId).catch(error => {
+                                    console.warn(`Failed to fetch order ${orderId}:`, error.message);
+                                    return { id: orderId, error: error.message };
+                                })
+                            );
+                            orderDetails = await Promise.all(orderPromises);
+                        } catch (fetchError) {
+                            console.error('Error fetching order details via API:', fetchError.message);
+                        }
+                    }
+                }
             }
+
+            // Update last position after processing events
+            // Use the last event's ID as the new position marker (event IDs are position markers)
+            let newPosition = currentPosition;
+            if (allEvents.length > 0) {
+                // Get the last event's ID to use as the new position
+                const lastEvent = allEvents[allEvents.length - 1];
+                if (lastEvent && lastEvent.id) {
+                    newPosition = lastEvent.id;
+                    console.log(`[checkForNewOrders] Updating position to last event ID: ${newPosition}`);
+                } else {
+                    // Fallback: try to get updated partition position
+                    try {
+                        const updatedStream = await this.getStream(this.streamId);
+                        if (updatedStream && updatedStream.partitions && updatedStream.partitions.length > 0) {
+                            const updatedPartition = updatedStream.partitions.find(p => p.partitionId === partitionId);
+                            if (updatedPartition && updatedPartition.position) {
+                                newPosition = updatedPartition.position;
+                                console.log(`[checkForNewOrders] Using partition position: ${newPosition}`);
+                            }
+                        }
+                        // Check if response has a position field
+                        if (newPosition === currentPosition && eventsResponse.position) {
+                            newPosition = eventsResponse.position;
+                            console.log(`[checkForNewOrders] Using response position: ${newPosition}`);
+                        }
+                    } catch (error) {
+                        console.warn('Could not fetch updated partition position:', error.message);
+                        // Keep current position if we can't get updated one
+                    }
+                }
+            }
+
+            // Always update position if we processed events (to avoid re-processing)
+            if (newPosition && newPosition !== this.lastPosition) {
+                this.lastPosition = newPosition;
+                await this.saveStreamConfig();
+                console.log(`[checkForNewOrders] Position saved: ${newPosition}`);
+            } else if (allEvents.length === 0) {
+                console.log(`[checkForNewOrders] No events found, position unchanged: ${currentPosition}`);
+            }
+
+            // Format events for response (for backward compatibility and display)
+            const formattedEvents = newOrderEvents.map(event => ({
+                eventReason: event.eventReasons?.[0] || 'create',
+                objectId: event.payload?.dscoOrderId || event.objectId,
+                id: event.id,
+                payload: event.payload
+            }));
+
+            const formattedAllEvents = allEvents.map(event => ({
+                eventReason: event.eventReasons?.[0] || 'unknown',
+                objectId: event.payload?.dscoOrderId || event.objectId,
+                id: event.id,
+                payload: event.payload
+            }));
 
             return {
                 success: true,
                 newOrderCount: newOrderEvents.length,
                 newOrderIds: newOrderIds,
-                events: newOrderEvents,
+                events: formattedEvents,
+                allEvents: formattedAllEvents, // Include all events for visibility
+                orderDetails: orderDetails,
                 lastPosition: this.lastPosition,
                 streamId: this.streamId
             };
@@ -440,7 +555,9 @@ class RithumClient {
                 success: false,
                 error: error.message,
                 newOrderCount: 0,
-                newOrderIds: []
+                newOrderIds: [],
+                events: [],
+                allEvents: []
             };
         }
     }

@@ -193,6 +193,9 @@ router.get('/stream/status', async (req, res) => {
 /**
  * GET /api/rithum/stream/new-orders
  * Check for new orders from the event stream
+ * Query params:
+ *   - includeDetails: boolean (default: true) - Include full order details
+ *   - showAllEvents: boolean (default: false) - Show all events, not just create events
  */
 router.get('/stream/new-orders', async (req, res) => {
     try {
@@ -203,20 +206,43 @@ router.get('/stream/new-orders', async (req, res) => {
             });
         }
 
-        const result = await rithumClient.checkForNewOrders();
+        const includeDetails = req.query.includeDetails !== 'false'; // Default to true
+        const showAllEvents = req.query.showAllEvents === 'true'; // Default to false
+
+        const result = await rithumClient.checkForNewOrders(includeDetails);
         
-        res.json({
+        // Build response
+        const response = {
             success: result.success,
             message: result.success 
                 ? `Found ${result.newOrderCount} new order(s)`
                 : 'Failed to check for new orders',
             newOrderCount: result.newOrderCount || 0,
             newOrderIds: result.newOrderIds || [],
-            events: result.events || [],
             streamId: result.streamId,
             lastPosition: result.lastPosition,
             error: result.error
-        });
+        };
+
+        // Include events
+        if (showAllEvents) {
+            response.allEvents = result.allEvents || [];
+            response.eventsSummary = {
+                total: result.allEvents?.length || 0,
+                create: result.allEvents?.filter(e => e.eventReason === 'create').length || 0,
+                update: result.allEvents?.filter(e => e.eventReason === 'update').length || 0,
+                delete: result.allEvents?.filter(e => e.eventReason === 'delete').length || 0
+            };
+        } else {
+            response.events = result.events || [];
+        }
+
+        // Include order details if available
+        if (result.orderDetails && result.orderDetails.length > 0) {
+            response.orders = result.orderDetails;
+        }
+
+        res.json(response);
     } catch (error) {
         console.error('Error checking for new orders:', error);
         res.status(500).json({
