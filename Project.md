@@ -64,7 +64,7 @@ RITHUM_CLIENT_SECRET=your_client_secret
 # ShipStation Configuration (v2 API)
 SHIPSTATION_API_KEY=your_api_key
 SHIPSTATION_BASE_URL=https://api.shipstation.com
-SHIPSTATION_WEBHOOK_URL=https://your-domain.com/api/shipstation/webhooks/order-notify
+# Note: SHIPSTATION_API_URL is also supported as an alias for SHIPSTATION_BASE_URL
 
 # ShipStation Warehouse Configuration (required for order creation)
 # Option 1: Use Warehouse ID (recommended)
@@ -108,28 +108,73 @@ SKIP_TEST_ORDERS=false
    curl http://localhost:8000/api/shipstation/status
    ```
 
-3. **Configure ShipStation Webhooks**:
-   - Log into ShipStation
-   - Go to Settings → Integrations → Webhooks
-   - Add webhook: Event = "Order Notify", URL = your webhook URL
+3. **Configure ShipStation Webhooks** (Recommended - V2 Webhooks):
+   - **Option A: Using API (Recommended)**:
+     ```bash
+     curl -X POST http://localhost:3000/api/shipstation/webhooks \
+       -H "Content-Type: application/json" \
+       -d '{
+         "name": "Rithum Tracking Updates",
+         "event": "fulfillment_shipped_v2",
+         "url": "https://your-domain.com/api/shipstation/webhooks/v2"
+       }'
+     ```
+   - **Option B: Using ShipStation UI**:
+     - Log into ShipStation
+     - Go to Settings → Integrations → Webhooks
+     - Add webhook: Event = "Fulfillment Shipped (v2)", URL = `https://your-domain.com/api/shipstation/webhooks/v2`
+   - **Legacy V1 Webhook** (if needed):
+     - Event = "Order Notify", URL = `https://your-domain.com/api/shipstation/webhooks/order-notify`
 
 ## API Endpoints
 
 ### Rithum Endpoints
 
+**Status & Authentication:**
 - `GET /api/rithum/test` - Test Rithum connection
 - `GET /api/rithum/status` - Get Rithum client status
-- `GET /api/rithum/orders` - Fetch orders from Rithum
+- `GET /api/rithum/token` - Get current OAuth2 token status
+
+**Orders:**
+- `GET /api/rithum/orders` - Fetch orders from Rithum (with optional query parameters)
+- `PUT /api/rithum/orders/:id` - Update order in Rithum (e.g., with tracking information)
+
+**Stream Management:**
 - `POST /api/rithum/stream/initialize` - Initialize order event stream
-- `GET /api/rithum/stream/status` - Get stream status
-- `GET /api/rithum/stream/new-orders` - Check for new orders
+- `GET /api/rithum/stream/status` - Get stream status and position
+- `GET /api/rithum/stream/new-orders` - Check for new orders from stream
+  - Query parameter: `includeDetails=true` to fetch full order details (default: false)
 
 ### ShipStation Endpoints
 
+**Health & Status:**
 - `GET /api/shipstation/ping` - Health check
 - `GET /api/shipstation/test` - Test ShipStation connection
 - `GET /api/shipstation/status` - Get ShipStation status
-- `POST /api/shipstation/webhooks/order-notify` - Webhook for tracking updates
+- `GET /api/shipstation/warehouses` - List available warehouses
+
+**Tracking:**
+- `GET /api/shipstation/tracking/shipment/:shipmentId` - Get tracking by shipment ID
+- `GET /api/shipstation/tracking/order/:orderNumber` - Get tracking by order number
+- `GET /api/shipstation/tracking/tracking-number/:trackingNumber` - Get tracking by tracking number
+
+**Shipments & Orders:**
+- `GET /api/shipstation/shipments` - List shipments with optional filtering and position tracking
+- `GET /api/shipstation/fulfillments` - List fulfillments (fully shipped orders)
+- `GET /api/shipstation/shipped-orders` - Get shipped orders with complete order and tracking information
+  - Query parameter: `use_stream=true` to enable position tracking (only new orders since last call)
+- `GET /api/shipstation/shipped-orders/position` - Get current position tracking status for shipped orders
+- `POST /api/shipstation/shipped-orders/position/reset` - Reset position tracking for shipped orders
+
+**Webhooks:**
+- `POST /api/shipstation/webhooks/order-notify` - V1 webhook endpoint (legacy)
+- `POST /api/shipstation/webhooks/v2` - V2 webhook endpoint (recommended)
+  - Handles: `fulfillment_shipped_v2`, `label_created_v2`, `shipment_created_v2`, `track_event_v2`, etc.
+- `GET /api/shipstation/webhooks` - List all registered webhooks
+- `POST /api/shipstation/webhooks` - Create a new webhook
+- `GET /api/shipstation/webhooks/:webhookId` - Get webhook details
+- `PUT /api/shipstation/webhooks/:webhookId` - Update webhook URL
+- `DELETE /api/shipstation/webhooks/:webhookId` - Delete a webhook
 
 ### Sync Endpoints
 
@@ -138,15 +183,49 @@ SKIP_TEST_ORDERS=false
 
 ## Order Detection & Synchronization
 
+### Architecture: Cron Job + Webhook Strategy
+
+The system uses a **hybrid approach** combining cron jobs and webhooks for optimal reliability and efficiency:
+
+**Step 1: Cron Job (Rithum → ShipStation)**
+- Fetches new orders from Rithum using event streams
+- Creates orders in ShipStation
+- Uses position tracking via `.stream-config.json`
+
+**Step 2: Webhook (ShipStation → Rithum)**
+- Receives real-time notifications when orders ship
+- Updates Rithum with tracking information
+- No position tracking needed (push-based)
+
 ### How It Works
 
-The system uses **Rithum Event Streams** to detect new orders (webhooks not available):
+#### Step 1: Fetch & Create Orders (Cron Job)
+
+The system uses **Rithum Event Streams** to detect new orders:
 
 1. **Event Stream**: Creates a stream that captures order events
-2. **Cron Job**: Periodically polls the stream for new orders (default: every 5 minutes)
+2. **Cron Job**: Periodically polls the stream for new orders (default: every 1 hour)
 3. **Filter**: Identifies `create` events (new orders)
 4. **Fetch Details**: Gets full order information from Rithum
 5. **Map & Send**: Converts format and sends to ShipStation
+6. **Position Tracking**: Stream position saved to `.stream-config.json` to avoid duplicates
+
+**Why Cron Job for Step 1?**
+- ✅ Rithum has excellent stream API with position tracking
+- ✅ Position tracking works reliably with `.stream-config.json`
+- ✅ Predictable, scheduled execution
+
+### Comparison: Polling vs Webhook for Step 2
+
+| Aspect | Polling (Position Tracking) | Webhook |
+|--------|----------------------------|---------|
+| **Timing** | Runs every hour (even if no new orders) | Real-time (only when order ships) |
+| **Position Risk** | Can get duplicates if position lost | No position needed |
+| **Missed Orders** | Possible if position is wrong | Guaranteed delivery |
+| **Efficiency** | Checks even when nothing changed | Only processes actual events |
+| **Setup** | Need to maintain position state | Just register webhook URL |
+
+**Recommendation:** Use webhooks for Step 2 (shipped orders) to avoid position tracking challenges.
 
 ### Manual Operations
 
@@ -165,31 +244,136 @@ curl -X POST http://localhost:8000/api/sync/orders
 curl http://localhost:8000/api/sync/status
 ```
 
-### Cron Schedule
+### Cron Schedule Setup
 
-The `ORDER_SYNC_SCHEDULE` uses standard cron format:
+The cron job runs `fetch-and-map-orders.js` to fetch new orders from Rithum and create them in ShipStation.
 
-- `*/5 * * * *` - Every 5 minutes (default)
-- `*/10 * * * *` - Every 10 minutes
-- `0 * * * *` - Every hour
-- `0 0 * * *` - Once daily at midnight
+**Setup Cron Job:**
+```bash
+# Edit crontab
+crontab -e
+
+# Add this line (runs every hour at minute 0)
+0 * * * * cd /path/to/Rithum_ShipStation_Middleware_API && node fetch-and-map-orders.js
+```
+
+**Cron Schedule Examples:**
+```
+0 * * * *    # Every hour at minute 0 (recommended)
+*/30 * * * * # Every 30 minutes
+0 */2 * * *  # Every 2 hours
+0 0 * * *    # Every day at midnight
+```
+
+**Note:** The `ORDER_SYNC_SCHEDULE` environment variable (if used) follows standard cron format, but the recommended approach is to use system crontab with `fetch-and-map-orders.js` (Step 1 runs by default).
+
+### Complete Workflow
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Hourly Cron Job                          │
+│  ┌──────────────────────────────────────────────────┐      │
+│  │ 1. Check .stream-config.json for last position   │      │
+│  │ 2. Get new orders from Rithum since last position │      │
+│  │ 3. Map to ShipStation format                     │      │
+│  │ 4. Create orders in ShipStation                  │      │
+│  │ 5. Update .stream-config.json with new position  │      │
+│  └──────────────────────────────────────────────────┘      │
+└─────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────┐
+│              Webhook (Real-time, 24/7)                      │
+│  ┌──────────────────────────────────────────────────┐      │
+│  │ 1. ShipStation ships an order                     │      │
+│  │ 2. ShipStation sends fulfillment_shipped_v2     │      │
+│  │ 3. Your webhook receives the event                │      │
+│  │ 4. Extract tracking info                         │      │
+│  │ 5. Update Rithum order status                    │      │
+│  └──────────────────────────────────────────────────┘      │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Benefits of Cron + Webhook Strategy
+
+1. **Separation of Concerns:**
+   - Cron job: One-way flow (Rithum → ShipStation)
+   - Webhook: One-way flow (ShipStation → Rithum)
+
+2. **Reliability:**
+   - Cron job uses Rithum stream position (works perfectly)
+   - Webhook doesn't need position tracking (push-based)
+
+3. **Efficiency:**
+   - Cron job: Runs on schedule (predictable)
+   - Webhook: Only processes when events occur (efficient)
+
+4. **No Position Tracking Issues:**
+   - Rithum: Stream API with position tracking ✅
+   - ShipStation: Webhooks eliminate need for position tracking ✅
 
 ## Webhooks (ShipStation → Rithum)
 
-When ShipStation ships an order, it sends a webhook to:
+### Step 2: Update Shipped Orders (Webhook)
 
-`POST /api/shipstation/webhooks/order-notify`
+When ShipStation ships an order, it sends a webhook notification. The webhook handler automatically updates Rithum with tracking information.
 
-The middleware:
-1. Receives the webhook notification
-2. Fetches full order details from ShipStation
-3. Extracts tracking information (tracking number, carrier, ship date)
-4. Updates the Rithum order with tracking information
+**Why Webhook for Step 2?**
+- ✅ **Real-time**: Get notified immediately when order ships
+- ✅ **No position tracking needed**: ShipStation only sends NEW events
+- ✅ **No duplicates**: Each event is sent once
+- ✅ **No missed orders**: ShipStation guarantees delivery
+- ✅ **Efficient**: Only processes when something actually happens
 
-**Webhook Configuration in ShipStation**:
+### Webhook Endpoints
+
+**V1 Webhook (Legacy):**
+- `POST /api/shipstation/webhooks/order-notify` - Receives v1 ORDER_NOTIFY events
+
+**V2 Webhook (Recommended):**
+- `POST /api/shipstation/webhooks/v2` - Receives v2 webhook events
+  - Supports: `fulfillment_shipped_v2`, `label_created_v2`, `shipment_created_v2`, `track_event_v2`, etc.
+
+### Webhook Configuration in ShipStation
+
+**V2 Webhook Setup (Recommended):**
+```bash
+# Create webhook for fulfillment_shipped_v2 events
+curl -X POST http://localhost:3000/api/shipstation/webhooks \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Rithum Tracking Updates",
+    "event": "fulfillment_shipped_v2",
+    "url": "https://your-domain.com/api/shipstation/webhooks/v2"
+  }'
+```
+
+**V1 Webhook (Legacy):**
 - Event: Order Notify
 - URL: `https://your-domain.com/api/shipstation/webhooks/order-notify`
 - Format: JSON
+
+### Webhook Processing Flow
+
+1. ShipStation ships an order
+2. ShipStation sends `fulfillment_shipped_v2` webhook event
+3. Your webhook endpoint receives the event
+4. Extracts tracking information (tracking number, carrier, ship date)
+5. Finds Rithum order ID from shipment tags/customField2
+6. Updates Rithum order with tracking information
+
+### Why Webhooks Solve Position Tracking Challenges
+
+**Problem with Position Tracking for Shipped Orders:**
+- ❌ If position gets reset or lost, you get ALL shipped orders (duplicates)
+- ❌ If position is wrong, you miss orders or get duplicates
+- ❌ Need to maintain state between runs
+- ❌ Polling overhead (checking every hour even if nothing changed)
+
+**Solution with Webhooks:**
+- ✅ **No position tracking needed**: ShipStation pushes events when they happen
+- ✅ **Guaranteed delivery**: ShipStation ensures webhook delivery
+- ✅ **Real-time updates**: Immediate notification when order ships
+- ✅ **No duplicates**: Each event sent once
 
 ## Data Mapping
 
@@ -1805,8 +1989,10 @@ src/
 │   ├── rithumConfig.js       # Rithum configuration
 │   └── shipstationConfig.js  # ShipStation configuration
 ├── services/
-│   ├── rithumClient.js       # Rithum API client (currently handles all Rithum operations)
-│   └── shipstationClient.js  # ShipStation API client
+│   ├── rithumClient.js       # Rithum API client (handles all Rithum operations)
+│   ├── shipstationClient.js  # ShipStation API client
+│   ├── orderMapper.js        # Order mapping service (Rithum → ShipStation format)
+│   └── positionTracker.js   # Position tracking service for ShipStation API calls
 │   # Planned services (not yet implemented):
 │   # ├── orderStreamService.js # Order stream management (future separation)
 │   # └── orderSyncService.js   # Sync service with cron (future separation)
@@ -1827,7 +2013,20 @@ Currently, the architecture is simpler than described in the structure above. He
 - **Stream management**: `createOrderStream()`, `initializeOrderStream()`, `checkForNewOrders()`, `getOrderStreamStatus()`
 - **State persistence**: Stream position tracking via `.stream-config.json`
 
-**Current State**: All Rithum-related functionality is in one service.
+**`orderMapper.js`** - Order transformation service:
+- **Mapping**: Transforms Rithum orders to ShipStation v2 format
+- **Validation**: Validates required fields before mapping
+- **Business logic**: Determines which orders to process (`shouldProcess()`)
+- **Address mapping**: Converts to ShipStation v2 address format
+- **Line items mapping**: Maps products with SKU fallbacks
+
+**`positionTracker.js`** - Position tracking service:
+- **State management**: Tracks last processed timestamp for ShipStation API calls
+- **File-based storage**: Saves position to `.api-positions.json`
+- **Position operations**: Get, update, reset positions for different API call types
+- **Used for**: `getShippedOrders()` and `getShipmentsWithTracking()` with position tracking
+
+**Current State**: All Rithum-related functionality is in one service. Order mapping and ShipStation position tracking are separate services.
 
 #### Planned Architecture (Separation of Concerns)
 
