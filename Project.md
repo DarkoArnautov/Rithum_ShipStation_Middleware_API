@@ -61,11 +61,25 @@ RITHUM_API_URL=https://api.dsco.io/api/v3
 RITHUM_CLIENT_ID=your_client_id
 RITHUM_CLIENT_SECRET=your_client_secret
 
-# ShipStation Configuration
+# ShipStation Configuration (v2 API)
 SHIPSTATION_API_KEY=your_api_key
-SHIPSTATION_API_SECRET=your_api_secret
-SHIPSTATION_BASE_URL=https://ssapi.shipstation.com
+SHIPSTATION_BASE_URL=https://api.shipstation.com
 SHIPSTATION_WEBHOOK_URL=https://your-domain.com/api/shipstation/webhooks/order-notify
+
+# ShipStation Warehouse Configuration (required for order creation)
+# Option 1: Use Warehouse ID (recommended)
+SHIPSTATION_WAREHOUSE_ID=your_warehouse_id
+
+# Option 2: Use Ship From Address (alternative to warehouse_id)
+SHIPSTATION_SHIP_FROM_NAME=Your Company Name
+SHIPSTATION_SHIP_FROM_ADDRESS=123 Main Street
+SHIPSTATION_SHIP_FROM_ADDRESS2=Suite 100 (optional)
+SHIPSTATION_SHIP_FROM_CITY=Your City
+SHIPSTATION_SHIP_FROM_STATE=CA
+SHIPSTATION_SHIP_FROM_POSTAL=12345
+SHIPSTATION_SHIP_FROM_COUNTRY=US
+SHIPSTATION_SHIP_FROM_PHONE=555-555-5555
+SHIPSTATION_SHIP_FROM_COMPANY=Your Company Inc (optional)
 
 # Sync Schedule (Cron format, default: every 5 minutes)
 ORDER_SYNC_SCHEDULE=*/5 * * * *
@@ -73,7 +87,13 @@ ORDER_SYNC_SCHEDULE=*/5 * * * *
 # Server Configuration
 PORT=8000
 NODE_ENV=production
+API_URL=http://localhost:8000
+
+# Optional: Skip test orders
+SKIP_TEST_ORDERS=false
 ```
+
+**Note**: You must configure either `SHIPSTATION_WAREHOUSE_ID` or the `SHIPSTATION_SHIP_FROM_*` variables for order creation to work. The system will attempt to use a default warehouse if neither is configured, but this may fail.
 
 ### Initial Setup
 
@@ -175,20 +195,20 @@ The middleware:
 
 ### Overview
 
-Orders from Rithum must be transformed to ShipStation's format before being sent. This requires a mapping service that handles field transformations, data validation, and format conversions.
+Orders from Rithum are transformed to ShipStation's format using the `OrderMapper` service (`src/services/orderMapper.js`). This service handles field transformations, data validation, and format conversions.
 
-**Current Status**: ⚠️ Mapping documentation exists but **no implementation yet**. A mapping service needs to be created.
+**Current Status**: ✅ **Fully Implemented** - The mapping service is complete and actively used.
 
 ### Order Mapping Service Implementation
 
-**Recommended Service**: Create `src/services/orderMapper.js` to handle all transformations.
+**Service**: `src/services/orderMapper.js`
 
 **Key Responsibilities**:
-1. Transform Rithum order format → ShipStation order format
-2. Handle field mappings and data type conversions
-3. Validate required fields
-4. Apply business rules (status mapping, defaults)
-5. Handle edge cases and missing data
+1. ✅ Transform Rithum order format → ShipStation order format
+2. ✅ Handle field mappings and data type conversions
+3. ✅ Validate required fields
+4. ✅ Apply business rules (status mapping, defaults)
+5. ✅ Handle edge cases and missing data
 
 ### Order Field Mapping
 
@@ -207,19 +227,23 @@ Orders from Rithum must be transformed to ShipStation's format before being sent
 
 ### Shipping Address Mapping
 
-| ShipStation Field (v1) | ShipStation Field (v2) | Rithum Field | Notes | Required |
-|-------------|--------|-------|-------|----------|
-| `name` | `name` | `shipping.name` or `shipping.firstName + lastName` | Combine if name missing | ✅ Yes |
-| `street1` | `address_line1` | `shipping.address1` | First line of address | ✅ Yes |
-| `street2` | `address_line2` | `shipping.address[1]` | Second address line if exists | ❌ No |
-| `city` | `city_locality` | `shipping.city` | City name | ✅ Yes |
-| `state` | `state_province` | `shipping.state` or `shipping.region` | State code | ✅ Yes |
-| `postalCode` | `postal_code` | `shipping.postal` | ZIP/postal code | ✅ Yes |
-| `country` | `country_code` | `shipping.country` | Country code (default: "US") | ✅ Yes |
-| `phone` | `phone` | `shipping.phone` | Phone number (required in v2, optional in v1) | ⚠️ v2: Required, v1: Optional |
-| N/A | `address_residential_indicator` | N/A | v2 only: "yes", "no", "unknown" | ⚠️ v2: Required |
+**Current Implementation**: Uses **ShipStation API v2 format**
 
-**Note**: Current implementation uses **v1 format**. The `openapi.yaml` file contains v2 API spec (different field names).
+| ShipStation Field (v2) | Rithum Field | Notes | Required |
+|-------------|--------|-------|----------|
+| `name` | `shipping.name` or `shipping.firstName + lastName` | Combine if name missing | ✅ Yes |
+| `address_line1` | `shipping.address1` | First line of address | ✅ Yes |
+| `address_line2` | `shipping.address2` or `shipping.address[1]` | Second address line if exists | ❌ No |
+| `city_locality` | `shipping.city` | City name | ✅ Yes |
+| `state_province` | `shipping.state` or `shipping.region` | State code | ✅ Yes |
+| `postal_code` | `shipping.postal` | ZIP/postal code | ✅ Yes |
+| `country_code` | `shipping.country` | Country code (default: "US") | ✅ Yes |
+| `phone` | `shipping.phone` | Phone number (defaults to placeholder if missing) | ✅ Yes |
+| `email` | `shipping.email` | Email address | ❌ No |
+| `company_name` | `shipping.companyName` or `shipping.company` | Company name | ❌ No |
+| `address_residential_indicator` | N/A | v2 required: "yes", "no", "unknown" (defaults to "unknown") | ✅ Yes |
+
+**Note**: The implementation uses **ShipStation API v2 format** with field names like `address_line1`, `city_locality`, `state_province`, `postal_code`, `country_code`, and `address_residential_indicator`.
 
 ### Line Items Mapping
 
@@ -246,275 +270,74 @@ Each Rithum `lineItem` maps to ShipStation `item`:
 
 **Important**: Only process orders with status `created` or `shipment_pending` for new orders. Skip `shipped` and `cancelled`.
 
-### API Version Note
+### API Version
 
-⚠️ **Important**: The codebase uses **ShipStation v1 API** (`/orders/createorder`), not v2.
+✅ **Current Implementation**: Uses **ShipStation API v2**
 
-- **v1 Format** (currently used): `street1`, `city`, `state`, `postalCode`, `country`
-- **v2 Format** (in openapi.yaml): `address_line1`, `city_locality`, `state_province`, `postal_code`, `country_code`, `address_residential_indicator`
+**Important Notes**:
+- **Base URL**: `https://api.shipstation.com` (not `https://ssapi.shipstation.com`)
+- **Authentication**: Uses `api-key` header (not Basic Auth)
+- **Endpoint**: `/v2/shipments` (NOT `/v2/orders/createorder` which doesn't exist in v2)
+- **Order Creation Method**: Orders are created by creating shipments with `create_sales_order: true`
 
-The mapper implementation uses **v1 format**. If migrating to v2 API, the mapper will need updates.
+**How Orders Are Created in v2**:
+1. Convert order data to shipment format using `convertOrderToShipment()`
+2. Set `create_sales_order: true` in the shipment
+3. POST to `/v2/shipments` endpoint
+4. ShipStation creates both the shipment and the associated sales order
 
-### How to Check Which API Version You Can Use
+**Address Format**: Uses v2 format:
+- `address_line1`, `address_line2` (not `street1`, `street2`)
+- `city_locality` (not `city`)
+- `state_province` (not `state`)
+- `postal_code` (not `postalCode`)
+- `country_code` (not `country`)
+- `address_residential_indicator` (required, defaults to "unknown")
 
-**Quick Test** (Recommended):
-```bash
-# Run the test script to check both API versions
-node test-shipstation-api-version.js
-```
+**Key Differences from v1**:
+- No `/v2/orders/createorder` endpoint exists
+- Orders must be created via shipments endpoint
+- Different field names for addresses
+- `address_residential_indicator` is required
+- Phone number is required in shipping address
 
-This script will:
-- Test v1 API endpoint
-- Test v2 API endpoint
-- Show which version(s) are available
-- Provide recommendations
+### Implementation Details
 
-**1. Check ShipStation Account Settings**:
-   - Log into ShipStation web interface (https://ss.shipstation.com)
-   - Go to **Settings** → **Account** → **API Settings** (or **API** section)
-   - Check which API version is enabled/available
-   - Look for API documentation links or version indicators
-   - Note: API access might need to be enabled in your account settings
+**Service**: `src/services/orderMapper.js` (✅ Fully Implemented)
 
-**2. Test via API Endpoints**:
+**Key Methods**:
+- `mapToShipStation(rithumOrder)` - Maps Rithum order to ShipStation v2 format
+- `mapShippingAddress(shipping)` - Maps address to v2 format (address_line1, city_locality, etc.)
+- `mapLineItems(lineItems)` - Maps line items with SKU fallbacks
+- `validate(rithumOrder)` - Validates required fields before mapping
+- `shouldProcess(rithumOrder)` - Business logic for which orders to process
+- `mapAndValidate(rithumOrder)` - Combined mapping and validation
 
-   **Test v1 API** (current):
-   ```bash
-   # Test v1 endpoint
-   curl -u "YOUR_API_KEY:YOUR_API_SECRET" \
-     "https://ssapi.shipstation.com/orders?pageSize=1"
-   
-   # If 200 OK → v1 is available
-   # If 404 → v1 might not be available
-   ```
-
-   **Test v2 API**:
-   ```bash
-   # Test v2 endpoint
-   curl -u "YOUR_API_KEY:YOUR_API_SECRET" \
-     "https://api.shipstation.com/v2/orders?page_size=1"
-   
-   # If 200 OK → v2 is available
-   # If 404 → v2 might not be available for your account
-   ```
-
-**3. Check API Documentation Access**:
-   - In ShipStation account, look for **API Documentation** section
-   - See which version's documentation is available
-   - Check for any migration notices or deprecation warnings
-
-**4. Review Account Plan/Features**:
-   - Some API versions might be tied to account tier
-   - Enterprise accounts may have access to v2
-   - Check your plan details for API access
-
-**5. Test Current Implementation**:
-   ```bash
-   # Using the test endpoint in your codebase
-   curl http://localhost:8000/api/shipstation/test
-   
-   # Or test directly with curl
-   curl -u "YOUR_API_KEY:YOUR_API_SECRET" \
-     "https://ssapi.shipstation.com/orders?pageSize=1"
-   
-   # If 200 OK → v1 is active
-   # If 401 → Check credentials or API access enabled
-   # If 404 → v1 endpoint might not be available
-   ```
-
-**6. Check ShipStation Dashboard/Announcements**:
-   - Look for any announcements about API version changes
-   - Check for migration guides
-   - Review recent emails from ShipStation about API updates
-
-**Recommended Approach**:
-1. Start with your current v1 implementation (already working)
-2. Test v1 endpoint to confirm it's active
-3. If v1 works, continue using it
-4. If v1 is deprecated/unavailable, migrate to v2
-5. Update mapper and client when migrating to v2
-
-**Migration Checklist** (if moving to v2):
-- Update `shipstationClient.js` base URL to `https://api.shipstation.com`
-- Update endpoint from `/orders/createorder` to `/v2/orders` (check exact v2 endpoint)
-- Update `orderMapper.js` field names (street1 → address_line1, etc.)
-- Add `address_residential_indicator` field
-- Test thoroughly before deploying
-
-### Implementation Example
-
-**Service Structure** (`src/services/orderMapper.js`):
+### Usage in Fetch and Map Scripts
 
 ```javascript
-class OrderMapper {
-    /**
-     * Map Rithum order to ShipStation order format
-     * @param {Object} rithumOrder - Order from Rithum API
-     * @returns {Object} ShipStation order format
-     */
-    mapToShipStation(rithumOrder) {
-        return {
-            orderNumber: rithumOrder.poNumber,
-            orderDate: this.mapOrderDate(rithumOrder),
-            orderStatus: this.mapOrderStatus(rithumOrder.dscoStatus),
-            amountPaid: rithumOrder.extendedExpectedCostTotal,
-            currencyCode: "USD",
-            customerUsername: this.getCustomerName(rithumOrder.shipping),
-            shipByDate: rithumOrder.shipByDate || null,
-            orderKey: rithumOrder.dscoOrderId,
-            customField1: rithumOrder.channel || null,
-            customField2: rithumOrder.dscoOrderId, // Required for tracking
-            shipTo: this.mapShippingAddress(rithumOrder.shipping),
-            items: this.mapLineItems(rithumOrder.lineItems || []),
-            // Optional fields
-            advancedOptions: {
-                customField1: rithumOrder.channel
-            }
-        };
-    }
-
-    mapOrderDate(rithumOrder) {
-        return rithumOrder.consumerOrderDate || 
-               rithumOrder.retailerCreateDate || 
-               new Date().toISOString();
-    }
-
-    mapOrderStatus(rithumStatus) {
-        const statusMap = {
-            'created': 'awaiting_shipment',
-            'shipment_pending': 'awaiting_shipment',
-            'shipped': 'shipped',
-            'cancelled': 'cancelled'
-        };
-        return statusMap[rithumStatus] || 'awaiting_shipment';
-    }
-
-    getCustomerName(shipping) {
-        if (shipping?.name) return shipping.name;
-        if (shipping?.firstName && shipping?.lastName) {
-            return `${shipping.firstName} ${shipping.lastName}`;
-        }
-        return 'Customer';
-    }
-
-    mapShippingAddress(shipping) {
-        if (!shipping) {
-            throw new Error('Shipping address is required');
-        }
-
-        return {
-            name: this.getCustomerName(shipping),
-            street1: shipping.address1 || '',
-            street2: shipping.address?.[1] || null,
-            city: shipping.city || '',
-            state: shipping.state || shipping.region || '',
-            postalCode: shipping.postal || '',
-            country: shipping.country || 'US',
-            phone: shipping.phone || null
-        };
-    }
-
-    mapLineItems(lineItems) {
-        return lineItems.map((item, index) => ({
-            sku: item.sku || item.partnerSku || `ITEM-${index}`,
-            name: item.title || 'Unknown Item',
-            quantity: item.acceptedQuantity || item.quantity || 1,
-            unitPrice: item.expectedCost || item.consumerPrice || 0,
-            ...(item.personalization && {
-                options: [{
-                    name: 'Personalization',
-                    value: item.personalization
-                }]
-            })
-        }));
-    }
-
-    /**
-     * Validate that order can be mapped
-     * @param {Object} rithumOrder - Order from Rithum
-     * @returns {Object} Validation result
-     */
-    validate(rithumOrder) {
-        const errors = [];
-
-        if (!rithumOrder.poNumber) {
-            errors.push('Missing poNumber');
-        }
-        if (!rithumOrder.shipping) {
-            errors.push('Missing shipping address');
-        } else {
-            if (!rithumOrder.shipping.address1) errors.push('Missing address1');
-            if (!rithumOrder.shipping.city) errors.push('Missing city');
-            if (!rithumOrder.shipping.state && !rithumOrder.shipping.region) {
-                errors.push('Missing state/region');
-            }
-            if (!rithumOrder.shipping.postal) errors.push('Missing postal code');
-        }
-        if (!rithumOrder.lineItems || rithumOrder.lineItems.length === 0) {
-            errors.push('Missing line items');
-        }
-        if (!rithumOrder.dscoOrderId) {
-            errors.push('Missing dscoOrderId');
-        }
-
-        return {
-            isValid: errors.length === 0,
-            errors
-        };
-    }
-
-    /**
-     * Check if order should be processed
-     * @param {Object} rithumOrder - Order from Rithum
-     * @returns {boolean} Should process
-     */
-    shouldProcess(rithumOrder) {
-        // Skip test orders if configured
-        if (process.env.SKIP_TEST_ORDERS === 'true' && rithumOrder.testFlag) {
-            return false;
-        }
-
-        // Only process certain statuses
-        const processableStatuses = ['created', 'shipment_pending'];
-        return processableStatuses.includes(rithumOrder.dscoStatus);
-
-        // Skip cancelled orders
-        if (rithumOrder.dscoStatus === 'cancelled') {
-            return false;
-        }
-
-        return true;
-    }
-}
-
-module.exports = OrderMapper;
-```
-
-### Usage in Sync Service
-
-```javascript
-const OrderMapper = require('./services/orderMapper');
+const OrderMapper = require('./src/services/orderMapper');
 const mapper = new OrderMapper();
 
-// In sync workflow:
-const shipstationOrder = mapper.mapToShipStation(rithumOrder);
+// Map and validate in one step
+const mappingResult = mapper.mapAndValidate(rithumOrder);
 
-// Validate before sending
-const validation = mapper.validate(rithumOrder);
-if (!validation.isValid) {
-    console.error('Order validation failed:', validation.errors);
-    // Handle error
+if (mappingResult.success) {
+    // Order is valid and mapped
+    const shipstationOrder = mappingResult.mappedOrder;
+    
+    // Create in ShipStation (via /v2/shipments endpoint)
+    await shipstationClient.createOrder(shipstationOrder);
+} else {
+    // Handle validation errors
+    console.error('Validation failed:', mappingResult.errors);
 }
-
-// Check if should process
-if (!mapper.shouldProcess(rithumOrder)) {
-    console.log('Skipping order:', rithumOrder.dscoOrderId);
-    return;
-}
-
-// Send to ShipStation
-await shipstationClient.createOrder(shipstationOrder);
 ```
+
+**Order Creation Flow**:
+1. `OrderMapper.mapToShipStation()` - Converts Rithum order to ShipStation format
+2. `ShipStationClient.createOrder()` - Converts to shipment format with `create_sales_order: true`
+3. POST to `/v2/shipments` - Creates order in ShipStation
 
 ### Edge Cases to Handle
 
@@ -583,15 +406,18 @@ sampleOrders.data.forEach((rithumOrder, index) => {
 3. **Stream Processing**: Transform new orders from stream
 4. **Retry Logic**: Transform failed orders for retry
 
-**Next Steps for Implementation**:
-1. ✅ Create `src/services/orderMapper.js` with mapping logic
-2. ✅ Add validation and error handling
-3. ✅ Create unit tests with sample data
-4. ✅ Integrate with sync service
-5. ✅ Add logging for mapping operations
-6. ✅ Handle edge cases and missing data
+**Implementation Status**: ✅ **Complete**
+- ✅ Order mapping service implemented
+- ✅ Validation and error handling
+- ✅ Integrated with order creation flow
+- ✅ Logging for mapping operations
+- ✅ Edge cases and missing data handled
+- ✅ ShipStation v2 API format support
 
-**Note**: Rithum order ID (`dscoOrderId`) must be stored in ShipStation's `customField2` for tracking and updates.
+**Note**: 
+- Rithum order ID (`dscoOrderId`) is stored in ShipStation's `customField2` for tracking
+- Channel information is stored in `customField1`
+- Orders are created via `/v2/shipments` endpoint with `create_sales_order: true`
 
 ## Error Handling & Resilience
 

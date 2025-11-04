@@ -2,13 +2,10 @@
  * Order Mapper Service
  * Transforms Rithum orders to ShipStation order format
  * 
- * Note: Uses ShipStation v1 API format
- * - Address fields: street1, city, state, postalCode, country
- * - Endpoint: /orders/createorder
- * 
- * If migrating to v2 API, update field mappings:
- * - address_line1, city_locality, state_province, postal_code, country_code
- * - address_residential_indicator (required in v2)
+ * Uses ShipStation API v2 format
+ * - Address fields: address_line1, city_locality, state_province, postal_code, country_code
+ * - Endpoint: /v2/shipments (with create_sales_order: true to create an order)
+ * - address_residential_indicator is required (defaults to "unknown" if not specified)
  */
 class OrderMapper {
     /**
@@ -123,11 +120,9 @@ class OrderMapper {
     }
 
     /**
-     * Map shipping address from Rithum to ShipStation format
-     * Note: Using ShipStation v1 API format (street1, city, state, postalCode)
-     * If using v2 API, fields would be: address_line1, city_locality, state_province, postal_code
+     * Map shipping address from Rithum to ShipStation v2 API format
      * @param {Object} shipping - Shipping address from Rithum
-     * @returns {Object} ShipStation shipping address (v1 format)
+     * @returns {Object} ShipStation shipping address (v2 format)
      */
     mapShippingAddress(shipping) {
         if (!shipping) {
@@ -136,23 +131,31 @@ class OrderMapper {
 
         const address = {
             name: this.getCustomerName(shipping),
-            street1: shipping.address1 || '',
-            street2: this.getStreet2(shipping),
-            city: shipping.city || '',
-            state: shipping.state || shipping.region || '',
-            postalCode: shipping.postal || '',
-            country: shipping.country || 'US'
+            address_line1: shipping.address1 || '',
+            city_locality: shipping.city || '',
+            state_province: shipping.state || shipping.region || '',
+            postal_code: shipping.postal || '',
+            country_code: shipping.country || 'US',
+            address_residential_indicator: this.getAddressResidentialIndicator(shipping)
         };
 
-        // Phone is required for ShipStation (based on OpenAPI spec)
-        // If missing, use a placeholder or make it optional based on API version
-        if (shipping.phone) {
-            address.phone = shipping.phone;
+        // Phone is required for ShipStation v2 API
+        address.phone = shipping.phone || '000-000-0000';
+
+        // Address line 2 (optional)
+        const addressLine2 = this.getStreet2(shipping);
+        if (addressLine2) {
+            address.address_line2 = addressLine2;
         }
 
-        // Remove null/empty street2 to avoid issues
-        if (!address.street2) {
-            delete address.street2;
+        // Email (optional)
+        if (shipping.email) {
+            address.email = shipping.email;
+        }
+
+        // Company name (optional)
+        if (shipping.companyName || shipping.company) {
+            address.company_name = shipping.companyName || shipping.company;
         }
 
         return address;
@@ -164,10 +167,32 @@ class OrderMapper {
      * @returns {string|null} Second address line
      */
     getStreet2(shipping) {
+        if (shipping.address2) {
+            return shipping.address2;
+        }
         if (shipping.address && Array.isArray(shipping.address) && shipping.address.length > 1) {
             return shipping.address[1];
         }
         return null;
+    }
+
+    /**
+     * Determine address residential indicator
+     * @param {Object} shipping - Shipping address
+     * @returns {string} "yes", "no", or "unknown"
+     */
+    getAddressResidentialIndicator(shipping) {
+        // If explicitly provided, use it
+        if (shipping.addressResidentialIndicator) {
+            const indicator = shipping.addressResidentialIndicator.toLowerCase();
+            if (['yes', 'no', 'unknown'].includes(indicator)) {
+                return indicator;
+            }
+        }
+
+        // Default to "unknown" if not specified
+        // This is required by ShipStation v2 API
+        return 'unknown';
     }
 
     /**
@@ -265,23 +290,23 @@ class OrderMapper {
             errors.push('Missing poNumber (required for orderNumber)');
         }
 
-        // Validate shipping address
+        // Validate shipping address (v2 API requirements)
         if (!rithumOrder.shipping) {
             errors.push('Missing shipping address');
         } else {
             if (!rithumOrder.shipping.address1) {
-                errors.push('Missing shipping.address1');
+                errors.push('Missing shipping.address1 (required for address_line1)');
             }
             if (!rithumOrder.shipping.city) {
-                errors.push('Missing shipping.city');
+                errors.push('Missing shipping.city (required for city_locality)');
             }
             if (!rithumOrder.shipping.state && !rithumOrder.shipping.region) {
-                errors.push('Missing shipping.state or shipping.region');
+                errors.push('Missing shipping.state or shipping.region (required for state_province)');
             }
             if (!rithumOrder.shipping.postal) {
-                errors.push('Missing shipping.postal');
+                errors.push('Missing shipping.postal (required for postal_code)');
             }
-            // Note: phone is recommended but not always required depending on API version
+            // Phone is required in v2 API (will use placeholder if missing)
             // Country is optional, default to US
         }
 

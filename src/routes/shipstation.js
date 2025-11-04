@@ -14,8 +14,9 @@ try {
     validateConfig();
     shipstationClient = new ShipStationClient(
         shipstationConfig.apiKey,
-        shipstationConfig.apiSecret,
-        shipstationConfig.baseUrl
+        shipstationConfig.baseUrl,
+        shipstationConfig.warehouseId,
+        shipstationConfig.shipFrom
     );
 } catch (error) {
     console.warn('ShipStation client not initialized:', error.message);
@@ -207,8 +208,39 @@ router.get('/status', (req, res) => {
         configured: !!shipstationClient,
         baseUrl: shipstationConfig.baseUrl,
         hasApiKey: !!shipstationConfig.apiKey,
-        hasApiSecret: !!shipstationConfig.apiSecret
+        warehouseId: shipstationConfig.warehouseId || null
     });
+});
+
+/**
+ * GET /api/shipstation/warehouses
+ * List all warehouses in ShipStation
+ */
+router.get('/warehouses', async (req, res) => {
+    try {
+        if (!shipstationClient) {
+            return res.status(503).json({
+                success: false,
+                message: 'ShipStation client not configured'
+            });
+        }
+
+        const warehouses = await shipstationClient.getWarehouses();
+        
+        res.json({
+            success: true,
+            warehouses: warehouses,
+            count: warehouses.length,
+            defaultWarehouse: warehouses.find(w => w.is_default) || warehouses[0] || null
+        });
+    } catch (error) {
+        console.error('Error fetching warehouses:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to fetch warehouses',
+            error: error.message
+        });
+    }
 });
 
 module.exports = router;
