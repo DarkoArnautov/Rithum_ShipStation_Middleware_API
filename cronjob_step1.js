@@ -507,6 +507,11 @@ async function saveOutput(data) {
     }
 }
 
-// Run the script
-fetchAndMapOrders();
+// Export the function for use in scheduled versions
+module.exports = { fetchAndMapOrders };
+
+// Run the script if called directly (not imported)
+if (require.main === module) {
+    fetchAndMapOrders();
+}
 

@@ -1,0 +1,46 @@
+# Render Blueprint Configuration
+# This file defines the services needed for the Rithum-ShipStation Middleware API
+
+services:
+  # Web Service - Main API server for webhooks and API endpoints
+  - type: web
+    name: rithum-shipstation-api
+    env: node
+    plan: starter  # Change to 'standard' or 'pro' for production
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 8000
+      # Add your environment variables from .env:
+      # - key: SHIPSTATION_API_KEY
+      #   sync: false  # Set to false and add value in Render dashboard
+      # - key: SHIPSTATION_BASE_URL
+      #   value: https://api.shipstation.com
+      # - key: RITHUM_API_URL
+      #   value: https://api.dsco.io/api/v3
+      # - key: RITHUM_CLIENT_ID
+      #   sync: false
+      # - key: RITHUM_CLIENT_SECRET
+      #   sync: false
+      # Add all other .env variables here
+
+  # Background Worker - Cron job for Step 1 (fetch orders from Rithum → ShipStation)
+  - type: worker
+    name: rithum-shipstation-cronjob
+    env: node
+    plan: starter  # Change to 'standard' or 'pro' for production
+    buildCommand: npm install
+    startCommand: node cronjob_step1_render.js
+    # Optional: Set custom schedule via environment variable
+    # envVars:
+    #   - key: CRON_SCHEDULE
+    #     value: "0 * * * *"  # Every hour at minute 0
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Add the same environment variables as the web service
+      # All env vars from .env should be added here too
+
