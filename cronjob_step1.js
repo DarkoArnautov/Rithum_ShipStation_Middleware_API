@@ -48,23 +48,8 @@ const { rithumConfig, validateConfig: validateRithumConfig } = require('./src/co
 const OUTPUT_FILE = path.join(__dirname, 'output.json');
 
 async function fetchAndMapOrders() {
+    console.log(`\n🔄 [${new Date().toISOString()}] fetchAndMapOrders() called - Starting order fetch and mapping process...\n`);
     try {
-        console.log('📦 Step 1: Fetch Orders from Rithum → Create in ShipStation\n');
-        console.log('='.repeat(80) + '\n');
-        
-        console.log('📋 Flow (Step 1 - Cron Job per Project.md):');
-        console.log('   1. Fetch new orders from Rithum Event Stream (using .stream-config.json for position tracking)');
-        console.log('   2. Filter for "create" events (new orders)');
-        console.log('   3. Extract order details from event payloads');
-        console.log('   4. Map Rithum orders to ShipStation v2 format (using OrderMapper)');
-        console.log('   5. Create orders in ShipStation via /v2/shipments endpoint with create_sales_order: true');
-        console.log('   6. Update stream position to avoid duplicates');
-        console.log('\nℹ️  Step 2 (shipped orders) is handled by WEBHOOKS, not this script.');
-        console.log('   Webhook endpoint: POST /api/shipstation/webhooks/v2');
-        console.log('   Register webhook for "fulfillment_shipped_v2" event in ShipStation.\n');
-        
-        console.log('ℹ️  Using ShipStation API v2: Creating orders via /v2/shipments endpoint with create_sales_order: true\n');
-
         // Initialize Rithum client
         let rithumClient = null;
         try {
