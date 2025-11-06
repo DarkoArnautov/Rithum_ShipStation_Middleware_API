@@ -97,17 +97,72 @@ class ShipStationClient {
     }
 
     /**
+     * Convert item from camelCase to snake_case format for ShipStation API v2
+     * @param {Object} item - Item in camelCase format
+     * @returns {Object} Item in snake_case format
+     */
+    convertItemToShipmentFormat(item) {
+        const convertedItem = {
+            sku: item.sku,
+            name: item.name,
+            quantity: item.quantity
+        };
+
+        // Convert unitPrice to unit_price (required by ShipStation API v2)
+        // Always set unit_price - if not provided, default to 0
+        if (item.unitPrice !== undefined && item.unitPrice !== null) {
+            const price = parseFloat(item.unitPrice);
+            convertedItem.unit_price = isNaN(price) ? 0 : price;
+        } else {
+            // Default to 0 if unitPrice is not provided
+            convertedItem.unit_price = 0;
+        }
+
+        // Copy options if present
+        if (item.options && Array.isArray(item.options)) {
+            convertedItem.options = item.options;
+        }
+
+        // Copy other fields that might be present
+        if (item.sales_order_id !== undefined) {
+            convertedItem.sales_order_id = item.sales_order_id;
+        }
+        if (item.sales_order_item_id !== undefined) {
+            convertedItem.sales_order_item_id = item.sales_order_item_id;
+        }
+        if (item.tax_amount !== undefined || item.taxAmount !== undefined) {
+            convertedItem.tax_amount = parseFloat(item.tax_amount || item.taxAmount) || 0;
+        }
+        if (item.shipping_amount !== undefined || item.shippingAmount !== undefined) {
+            convertedItem.shipping_amount = parseFloat(item.shipping_amount || item.shippingAmount) || 0;
+        }
+        if (item.weight !== undefined) {
+            convertedItem.weight = item.weight;
+        }
+        if (item.image_url !== undefined || item.imageUrl !== undefined) {
+            convertedItem.image_url = item.image_url || item.imageUrl;
+        }
+
+        return convertedItem;
+    }
+
+    /**
      * Convert order data to shipment format for v2 API
      * @param {Object} orderData - Order data in ShipStation format
      * @returns {Object} Shipment data for v2 API
      */
     convertOrderToShipment(orderData) {
+        // Convert items from camelCase to snake_case format
+        const convertedItems = (orderData.items || []).map(item => 
+            this.convertItemToShipmentFormat(item)
+        );
+
         const shipment = {
             create_sales_order: true, // This creates an order in ShipStation
             shipment_number: orderData.orderNumber,
             external_shipment_id: orderData.orderNumber,
             ship_to: orderData.shipTo,
-            items: orderData.items || []
+            items: convertedItems
         };
 
         // Note: Shipments require either warehouse_id or ship_from address
@@ -116,9 +171,11 @@ class ShipStationClient {
         
         // Add optional fields
         if (orderData.amountPaid !== undefined && orderData.amountPaid !== null) {
+            // Convert currency to lowercase as required by ShipStation API (e.g., "usd" not "USD")
+            const currency = (orderData.currencyCode || 'USD').toLowerCase();
             shipment.amount_paid = {
                 amount: parseFloat(orderData.amountPaid) || 0,
-                currency: orderData.currencyCode || 'USD'
+                currency: currency
             };
         }
 
@@ -246,6 +303,21 @@ class ShipStationClient {
             const requestBody = {
                 shipments: [shipment]
             };
+            
+            // Debug: Log the shipment payload to verify item prices are being sent correctly
+            console.log('📦 Shipment payload being sent to ShipStation:');
+            console.log(JSON.stringify({
+                create_sales_order: shipment.create_sales_order,
+                shipment_number: shipment.shipment_number,
+                items: shipment.items.map(item => ({
+                    sku: item.sku,
+                    name: item.name,
+                    quantity: item.quantity,
+                    unit_price: item.unit_price,
+                    options: item.options
+                })),
+                amount_paid: shipment.amount_paid
+            }, null, 2));
             
             // POST to /v2/shipments (NOT /v2/orders/createorder which doesn't exist in v2)
             const response = await this.client.post('/v2/shipments', requestBody);
