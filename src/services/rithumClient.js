@@ -30,7 +30,7 @@ class RithumClient {
         this.client.interceptors.request.use(
             async (config) => {
                 const token = await this.ensureAccessToken();
-                config.headers['Authorization'] = `Bearer ${token}`;
+                config.headers['Authorization'] = `bearer ${token}`;
                 // Set JSON content-type only when sending a body
                 if (config.data && !config.headers['Content-Type']) {
                     config.headers['Content-Type'] = 'application/json';
@@ -196,6 +196,43 @@ class RithumClient {
             return response;
         } catch (error) {
             console.error(`Error updating Rithum order ${orderId}:`, error.message);
+            throw error;
+        }
+    }
+
+    async createShipments(orderShipments) {
+        try {
+            const payload = Array.isArray(orderShipments) ? orderShipments : [orderShipments];
+            console.log(`Submitting shipment batch to Rithum (orders: ${payload.length})...`);
+            const response = await this.makeRequest('POST', '/order/shipment/batch/small', payload);
+            console.log('Successfully submitted shipment batch to Rithum');
+            return response;
+        } catch (error) {
+            console.error('Error submitting shipments to Rithum:', error.message);
+            throw error;
+        }
+    }
+
+    async submitOrderUpdates(updates) {
+        try {
+            const payload = Array.isArray(updates) ? updates : [updates];
+            console.log(`Submitting order update batch to Rithum (updates: ${payload.length})...`);
+            const response = await this.makeRequest('POST', '/orderupdate/batch/small', payload);
+            console.log('Successfully submitted order update batch to Rithum');
+            return response;
+        } catch (error) {
+            console.error('Error submitting order updates to Rithum:', error.message);
+            throw error;
+        }
+    }
+
+    async getOrderChangeLog(params = {}) {
+        try {
+            console.log('Fetching Rithum order change log...', params);
+            const response = await this.makeRequest('GET', '/order/changelog', null, params);
+            return response;
+        } catch (error) {
+            console.error('Error fetching order change log:', error.message);
             throw error;
         }
     }
