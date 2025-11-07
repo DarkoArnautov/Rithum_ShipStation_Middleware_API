@@ -18,14 +18,25 @@ class OrderMapper {
             throw new Error('Rithum order is required');
         }
 
+        // Use dscoOrderId as the primary unique identifier (for external_shipment_id)
+        // This is required for reliable order retrieval from ShipStation
+        // poNumber will be used as shipment_number for display purposes
+        const externalOrderId = rithumOrder.dscoOrderId;
+        const shipmentNumber = rithumOrder.poNumber || rithumOrder.dscoOrderId;
+
+        if (!externalOrderId) {
+            throw new Error('dscoOrderId is required for order identification');
+        }
+
         const shipstationOrder = {
-            orderNumber: rithumOrder.poNumber,
+            orderNumber: externalOrderId, // Used as external_shipment_id (must be unique)
+            shipmentNumber: shipmentNumber, // Used as shipment_number (for display, can use poNumber)
             orderDate: this.mapOrderDate(rithumOrder),
             orderStatus: this.mapOrderStatus(rithumOrder.dscoStatus),
-            amountPaid: rithumOrder.extendedExpectedCostTotal || 0,
-            currencyCode: "USD",
+            amountPaid: this.calculateAmountPaid(rithumOrder),
+            currencyCode: this.getCurrencyCode(rithumOrder),
             customerUsername: this.getCustomerName(rithumOrder.shipping),
-            shipTo: this.mapShippingAddress(rithumOrder.shipping),
+            shipTo: this.mapShippingAddress(rithumOrder.shipping || rithumOrder.shipTo),
             items: this.mapLineItems(rithumOrder.lineItems || [])
         };
 
@@ -34,8 +45,43 @@ class OrderMapper {
             shipstationOrder.shipByDate = rithumOrder.shipByDate;
         }
 
+        // Store original order identifiers for tracking
         if (rithumOrder.dscoOrderId) {
             shipstationOrder.orderKey = rithumOrder.dscoOrderId;
+        }
+
+        // Financial breakdown (separate shipping and tax as shown in ShipStation UI)
+        if (rithumOrder.shippingSurcharge !== null && rithumOrder.shippingSurcharge !== undefined) {
+            shipstationOrder.shippingPaid = parseFloat(rithumOrder.shippingSurcharge) || 0;
+        }
+
+        if (rithumOrder.amountOfSalesTaxCollected !== null && rithumOrder.amountOfSalesTaxCollected !== undefined) {
+            shipstationOrder.taxPaid = parseFloat(rithumOrder.amountOfSalesTaxCollected) || 0;
+        }
+
+        // Gift flag (shown in ShipStation UI)
+        if (rithumOrder.giftFlag !== null && rithumOrder.giftFlag !== undefined) {
+            shipstationOrder.isGift = rithumOrder.giftFlag;
+        }
+
+        // Shipping instructions (maps to notes_from_buyer in ShipStation)
+        if (rithumOrder.shipInstructions) {
+            shipstationOrder.notesFromBuyer = rithumOrder.shipInstructions;
+        }
+
+        // Gift message
+        if (rithumOrder.giftMessage) {
+            shipstationOrder.notesForGift = rithumOrder.giftMessage;
+        }
+
+        // Shipping service information (for display in ShipStation UI)
+        // Map Rithum shipping service to ShipStation format
+        if (rithumOrder.requestedShippingServiceLevelCode || rithumOrder.shippingServiceLevelCode) {
+            shipstationOrder.requestedShippingService = this.mapShippingService(
+                rithumOrder.requestedShippingServiceLevelCode || rithumOrder.shippingServiceLevelCode,
+                rithumOrder.requestedShipCarrier || rithumOrder.shipCarrier,
+                rithumOrder.requestedShipMethod || rithumOrder.shipMethod
+            );
         }
 
         // Custom fields for tracking
@@ -48,6 +94,11 @@ class OrderMapper {
             shipstationOrder.customField2 = rithumOrder.dscoOrderId;
         }
 
+        // Store PO number in custom field for reference
+        if (rithumOrder.poNumber) {
+            shipstationOrder.customField3 = rithumOrder.poNumber;
+        }
+
         // Advanced options
         if (rithumOrder.channel) {
             shipstationOrder.advancedOptions = {
@@ -56,6 +107,92 @@ class OrderMapper {
         }
 
         return shipstationOrder;
+    }
+
+    /**
+     * Calculate total amount paid for the order
+     * @param {Object} rithumOrder - Order from Rithum
+     * @returns {number} Total amount paid
+     */
+    calculateAmountPaid(rithumOrder) {
+        // Use extendedExpectedCostTotal as base (product cost)
+        let amount = parseFloat(rithumOrder.extendedExpectedCostTotal) || 0;
+        
+        // Add shipping if available
+        if (rithumOrder.shippingSurcharge !== null && rithumOrder.shippingSurcharge !== undefined) {
+            amount += parseFloat(rithumOrder.shippingSurcharge) || 0;
+        }
+        
+        // Add tax if available
+        if (rithumOrder.amountOfSalesTaxCollected !== null && rithumOrder.amountOfSalesTaxCollected !== undefined) {
+            amount += parseFloat(rithumOrder.amountOfSalesTaxCollected) || 0;
+        }
+        
+        // Fallback to orderTotalAmount if available
+        if (amount === 0 && rithumOrder.orderTotalAmount !== null && rithumOrder.orderTotalAmount !== undefined) {
+            amount = parseFloat(rithumOrder.orderTotalAmount) || 0;
+        }
+        
+        return amount;
+    }
+
+    /**
+     * Get currency code for the order
+     * @param {Object} rithumOrder - Order from Rithum
+     * @returns {string} Currency code (default: USD)
+     */
+    getCurrencyCode(rithumOrder) {
+        if (rithumOrder.currencyCode) {
+            return rithumOrder.currencyCode.toUpperCase();
+        }
+        if (rithumOrder.consumerOrderCurrencyCode) {
+            return rithumOrder.consumerOrderCurrencyCode.toUpperCase();
+        }
+        return 'USD';
+    }
+
+    /**
+     * Map Rithum shipping service level code to ShipStation service format
+     * @param {string} serviceLevelCode - Service level code from Rithum (e.g., "GCG")
+     * @param {string} carrier - Carrier name from Rithum (e.g., "Generic")
+     * @param {string} method - Shipping method from Rithum (e.g., "Ground")
+     * @returns {string} ShipStation service code or display name
+     */
+    mapShippingService(serviceLevelCode, carrier, method) {
+        if (!serviceLevelCode) {
+            return null;
+        }
+
+        // Map common service level codes to ShipStation service codes
+        // GCG (Generic Carrier Ground) typically maps to USPS Ground Advantage
+        const serviceMap = {
+            'GCG': 'usps_ground_advantage', // Generic Carrier Ground -> USPS Ground Advantage
+            'GCP': 'usps_priority_mail',    // Generic Carrier Priority
+            'GCE': 'usps_priority_mail_express', // Generic Carrier Express
+            'FEDEX_GROUND': 'fedex_ground',
+            'FEDEX_2_DAY': 'fedex_2_day',
+            'FEDEX_OVERNIGHT': 'fedex_overnight',
+            'UPS_GROUND': 'ups_ground',
+            'UPS_2ND_DAY': 'ups_2nd_day_air',
+            'UPS_NEXT_DAY': 'ups_next_day_air'
+        };
+
+        // Try to find mapping by service level code
+        if (serviceMap[serviceLevelCode.toUpperCase()]) {
+            return serviceMap[serviceLevelCode.toUpperCase()];
+        }
+
+        // Fallback: construct service name from carrier and method
+        // This will be used as a tag or in notes if service code mapping isn't available
+        const carrierName = (carrier || 'Generic').toLowerCase();
+        const methodName = (method || 'Ground').toLowerCase();
+        
+        // Return a display-friendly service name
+        if (carrierName === 'generic' && methodName === 'ground') {
+            return 'usps_ground_advantage'; // Default assumption for Generic Ground
+        }
+
+        return `${carrierName}_${methodName}`;
     }
 
     /**
@@ -208,16 +345,22 @@ class OrderMapper {
         return lineItems
             .filter(item => {
                 // Filter out items with zero or negative quantity
-                const quantity = item.acceptedQuantity || item.quantity || 0;
+                // Use quantity if acceptedQuantity is 0 or not set (for new orders)
+                const quantity = this.getItemQuantity(item);
                 return quantity > 0;
             })
             .map((item, index) => {
                 const mappedItem = {
                     sku: this.getItemSku(item, index),
                     name: item.title || 'Unknown Item',
-                    quantity: item.acceptedQuantity || item.quantity || 1,
+                    quantity: this.getItemQuantity(item),
                     unitPrice: this.getItemPrice(item)
                 };
+
+                // Add external order item ID for tracking
+                if (item.dscoItemId) {
+                    mappedItem.externalOrderItemId = String(item.dscoItemId);
+                }
 
                 // Add personalization as option if present
                 if (item.personalization) {
@@ -227,8 +370,28 @@ class OrderMapper {
                     }];
                 }
 
+                // Add tax amount if available
+                if (item.taxAmount !== null && item.taxAmount !== undefined) {
+                    mappedItem.taxAmount = parseFloat(item.taxAmount) || 0;
+                }
+
                 return mappedItem;
             });
+    }
+
+    /**
+     * Get quantity for line item with proper fallback logic
+     * @param {Object} item - Line item from Rithum
+     * @returns {number} Quantity
+     */
+    getItemQuantity(item) {
+        // For new orders, acceptedQuantity may be 0, so use quantity instead
+        // If acceptedQuantity is > 0, use it (order has been accepted)
+        // Otherwise, use quantity (original order quantity)
+        if (item.acceptedQuantity !== null && item.acceptedQuantity !== undefined && item.acceptedQuantity > 0) {
+            return item.acceptedQuantity;
+        }
+        return item.quantity || 0;
     }
 
     /**
@@ -286,24 +449,27 @@ class OrderMapper {
         }
 
         // Validate required order fields
-        if (!rithumOrder.poNumber) {
-            errors.push('Missing poNumber (required for orderNumber)');
+        // poNumber or dscoOrderId is required for orderNumber
+        if (!rithumOrder.poNumber && !rithumOrder.dscoOrderId) {
+            errors.push('Missing poNumber or dscoOrderId (required for orderNumber)');
         }
 
         // Validate shipping address (v2 API requirements)
-        if (!rithumOrder.shipping) {
-            errors.push('Missing shipping address');
+        // Check both shipping and shipTo fields
+        const shippingAddress = rithumOrder.shipping || rithumOrder.shipTo;
+        if (!shippingAddress) {
+            errors.push('Missing shipping address (shipping or shipTo required)');
         } else {
-            if (!rithumOrder.shipping.address1) {
+            if (!shippingAddress.address1) {
                 errors.push('Missing shipping.address1 (required for address_line1)');
             }
-            if (!rithumOrder.shipping.city) {
+            if (!shippingAddress.city) {
                 errors.push('Missing shipping.city (required for city_locality)');
             }
-            if (!rithumOrder.shipping.state && !rithumOrder.shipping.region) {
+            if (!shippingAddress.state && !shippingAddress.region) {
                 errors.push('Missing shipping.state or shipping.region (required for state_province)');
             }
-            if (!rithumOrder.shipping.postal) {
+            if (!shippingAddress.postal) {
                 errors.push('Missing shipping.postal (required for postal_code)');
             }
             // Phone is required in v2 API (will use placeholder if missing)

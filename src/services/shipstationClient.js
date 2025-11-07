@@ -133,6 +133,11 @@ class ShipStationClient {
         if (item.tax_amount !== undefined || item.taxAmount !== undefined) {
             convertedItem.tax_amount = parseFloat(item.tax_amount || item.taxAmount) || 0;
         }
+
+        // Add external_order_item_id if present
+        if (item.externalOrderItemId !== undefined) {
+            convertedItem.external_order_item_id = String(item.externalOrderItemId);
+        }
         if (item.shipping_amount !== undefined || item.shippingAmount !== undefined) {
             convertedItem.shipping_amount = parseFloat(item.shipping_amount || item.shippingAmount) || 0;
         }
@@ -159,8 +164,10 @@ class ShipStationClient {
 
         const shipment = {
             create_sales_order: true, // This creates an order in ShipStation
-            shipment_number: orderData.orderNumber,
+            // external_shipment_id must be unique - use orderNumber (dscoOrderId)
             external_shipment_id: orderData.orderNumber,
+            // shipment_number is for display - use shipmentNumber if provided, otherwise fallback to orderNumber
+            shipment_number: orderData.shipmentNumber || orderData.orderNumber,
             ship_to: orderData.shipTo,
             items: convertedItems
         };
@@ -170,17 +177,49 @@ class ShipStationClient {
         // If you have a warehouse_id, you can add it to the order data
         
         // Add optional fields
+        const currency = (orderData.currencyCode || 'USD').toLowerCase();
+        
+        // Amount paid (total order amount)
         if (orderData.amountPaid !== undefined && orderData.amountPaid !== null) {
-            // Convert currency to lowercase as required by ShipStation API (e.g., "usd" not "USD")
-            const currency = (orderData.currencyCode || 'USD').toLowerCase();
             shipment.amount_paid = {
                 amount: parseFloat(orderData.amountPaid) || 0,
                 currency: currency
             };
         }
 
+        // Shipping paid (separate from amount_paid)
+        if (orderData.shippingPaid !== undefined && orderData.shippingPaid !== null) {
+            shipment.shipping_paid = {
+                amount: parseFloat(orderData.shippingPaid) || 0,
+                currency: currency
+            };
+        }
+
+        // Tax paid (separate from amount_paid)
+        if (orderData.taxPaid !== undefined && orderData.taxPaid !== null) {
+            shipment.tax_paid = {
+                amount: parseFloat(orderData.taxPaid) || 0,
+                currency: currency
+            };
+        }
+
         if (orderData.shipByDate) {
             shipment.ship_date = orderData.shipByDate;
+        }
+
+        // Gift flag
+        if (orderData.isGift !== undefined && orderData.isGift !== null) {
+            shipment.is_gift = Boolean(orderData.isGift);
+        }
+
+        // Notes from buyer (shipping instructions)
+        if (orderData.notesFromBuyer) {
+            shipment.notes_from_buyer = String(orderData.notesFromBuyer);
+        }
+
+        // Gift notes
+        if (orderData.notesForGift) {
+            shipment.notes_for_gift = String(orderData.notesForGift);
         }
 
         // Add ship_from address if provided (per OpenAPI spec: either ship_from OR warehouse_id must be set)
@@ -203,15 +242,30 @@ class ShipStationClient {
             }
         }
 
-        // Add custom fields as tags (tags must be objects with name property)
-        if (orderData.customField1 || orderData.customField2) {
-            shipment.tags = [];
-            if (orderData.customField1) {
-                shipment.tags.push({ name: String(orderData.customField1) });
-            }
-            if (orderData.customField2) {
-                shipment.tags.push({ name: String(orderData.customField2) });
-            }
+        // Add tags (tags must be objects with name property)
+        // Combine custom fields and shipping service into tags
+        shipment.tags = [];
+        
+        // Add custom fields as tags
+        if (orderData.customField1) {
+            shipment.tags.push({ name: String(orderData.customField1) });
+        }
+        if (orderData.customField2) {
+            shipment.tags.push({ name: String(orderData.customField2) });
+        }
+        
+        // Add shipping service as a tag for easy filtering/display
+        if (orderData.requestedShippingService) {
+            shipment.tags.push({ name: `Service: ${orderData.requestedShippingService}` });
+            
+            // Try to set requested_shipment_service if the API accepts it
+            // Some ShipStation API versions may accept this field
+            shipment.requested_shipment_service = orderData.requestedShippingService;
+        }
+        
+        // Only include tags array if it has items
+        if (shipment.tags.length === 0) {
+            delete shipment.tags;
         }
 
         // Note: Packages are not required when create_sales_order is true
@@ -304,11 +358,13 @@ class ShipStationClient {
                 shipments: [shipment]
             };
             
-            // Debug: Log the shipment payload to verify item prices are being sent correctly
+            // Debug: Log the shipment payload to verify item prices and tags are being sent correctly
             console.log('📦 Shipment payload being sent to ShipStation:');
             console.log(JSON.stringify({
                 create_sales_order: shipment.create_sales_order,
                 shipment_number: shipment.shipment_number,
+                external_shipment_id: shipment.external_shipment_id,
+                tags: shipment.tags || [],
                 items: shipment.items.map(item => ({
                     sku: item.sku,
                     name: item.name,
@@ -330,6 +386,24 @@ class ShipStationClient {
                 }
                 
                 console.log('Order created in ShipStation via shipment:', createdShipment.shipment_id);
+                console.log('   Created shipment tags:', createdShipment.tags || []);
+                
+                // Always ensure tags are set after shipment creation
+                // ShipStation may not persist tags during creation with create_sales_order: true
+                // This ensures customField2 (dscoOrderId) is stored for later retrieval in webhooks
+                if (shipment.tags && shipment.tags.length > 0) {
+                    try {
+                        console.log('   🔄 Ensuring tags are set on shipment...');
+                        await this.updateShipmentTags(createdShipment.shipment_id, shipment.tags);
+                        console.log('   ✅ Shipment tags confirmed/updated successfully');
+                        console.log(`      Tags: ${shipment.tags.map(t => t.name).join(', ')}`);
+                    } catch (tagError) {
+                        console.warn('   ⚠️  Could not update shipment tags:', tagError.message);
+                        console.warn('   Note: Tags may not be available in webhook. Webhook handler will fallback to PO NUMBER lookup.');
+                    }
+                } else {
+                    console.warn('   ⚠️  No tags to set on shipment. customField2 (dscoOrderId) may not be available in webhook.');
+                }
                 
                 // Return shipment details including ship_from if available in response
                 const result = {
@@ -534,6 +608,39 @@ class ShipStationClient {
         } catch (error) {
             console.error('Error getting shipment from ShipStation:', error.message);
             throw error;
+        }
+    }
+
+    /**
+     * Update shipment tags by adding tags to the shipment
+     * @param {string} shipmentId - ShipStation shipment ID
+     * @param {Array} tags - Array of tag objects with name property: [{ name: "tag1" }, { name: "tag2" }]
+     * @returns {Promise<void>}
+     */
+    async updateShipmentTags(shipmentId, tags) {
+        if (!tags || !Array.isArray(tags) || tags.length === 0) {
+            return;
+        }
+
+        // Add each tag one by one using POST /v2/shipments/{shipment_id}/tags/{tag_name}
+        // Note: Tag names may need URL encoding for special characters
+        for (const tag of tags) {
+            const tagName = tag.name || tag;
+            if (!tagName) continue;
+
+            try {
+                // URL encode the tag name to handle special characters
+                const encodedTagName = encodeURIComponent(String(tagName));
+                await this.client.post(`/v2/shipments/${shipmentId}/tags/${encodedTagName}`);
+            } catch (error) {
+                // If tag already exists, that's okay - continue
+                if (error.response?.status === 400 || error.response?.status === 409) {
+                    console.log(`   Tag "${tagName}" may already exist on shipment`);
+                    continue;
+                }
+                // Re-throw other errors
+                throw error;
+            }
         }
     }
 
@@ -941,7 +1048,8 @@ class ShipStationClient {
     async listWebhooks() {
         try {
             const response = await this.client.get('/v2/environment/webhooks');
-            return response.data?.webhooks || [];
+            // API returns array directly, not wrapped in webhooks property
+            return Array.isArray(response.data) ? response.data : (response.data?.webhooks || []);
         } catch (error) {
             console.error('Error listing webhooks:', error.message);
             throw error;

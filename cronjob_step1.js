@@ -1,41 +1,3 @@
-/**
- * Step 1 Cron Job: Fetch new orders from Rithum and create them in ShipStation
- * 
- * This script implements Step 1 of the Rithum-ShipStation integration:
- * - Fetches new orders from Rithum using Event Streams (uses .stream-config.json for position tracking)
- * - Maps Rithum orders to ShipStation v2 format (using OrderMapper)
- * - Creates orders in ShipStation via /v2/shipments endpoint with create_sales_order: true
- * - Saves results to output.json
- * 
- * Architecture (per Project.md):
- * - Step 1: Rithum → Middleware (Cron Job) → ShipStation ✅ This script
- * - Step 2: ShipStation → Middleware (Webhook) → Rithum (NOT this script, use webhooks!)
- * 
- * Flow (Step 1):
- *   1. Event Stream: Creates/uses stream that captures order events
- *   2. Cron Job: Polls the stream for new orders (default: every 1 hour)
- *   3. Filter: Identifies 'create' events (new orders)
- *   4. Fetch Details: Gets full order information from Rithum (from event payloads)
- *   5. Map & Send: Converts format and sends to ShipStation
- *   6. Position Tracking: Stream position saved to .stream-config.json to avoid duplicates
- * 
- * Usage:
- *   node cronjob_step1.js                    # Run Step 1 (default for cron)
- * 
- * Cron Setup:
- *   # Run every hour at minute 0 (recommended)
- *   0 * * * * cd /path/to/project && node cronjob_step1.js
- * 
- *   # Run every 30 minutes
- *   0,30 * * * * cd /path/to/project && node cronjob_step1.js
- * 
- * Important Notes:
- * - Step 2 (shipped orders) should be handled by WEBHOOKS, not this script
- * - Webhook endpoint: POST /api/shipstation/webhooks/v2
- * - Register webhook for "fulfillment_shipped_v2" event in ShipStation
- * - Position tracking is handled by rithumClient.checkForNewOrders()
- * - For bulk orders (300+), consider implementing batching (see Project.md Error Handling section)
- */
 require('dotenv').config();
 const fs = require('fs').promises;
 const path = require('path');
@@ -48,9 +10,7 @@ const { rithumConfig, validateConfig: validateRithumConfig } = require('./src/co
 const OUTPUT_FILE = path.join(__dirname, 'output.json');
 
 async function fetchAndMapOrders() {
-    console.log(`\n🔄 [${new Date().toISOString()}] fetchAndMapOrders() called - Starting order fetch and mapping process...\n`);
     try {
-        // Initialize Rithum client
         let rithumClient = null;
         try {
             validateRithumConfig();
@@ -62,11 +22,9 @@ async function fetchAndMapOrders() {
             console.log('✅ Rithum client initialized\n');
         } catch (error) {
             console.error('❌ Failed to initialize Rithum client:', error.message);
-            console.error('⚠️  Cannot fetch orders from Rithum.\n');
             process.exit(1);
         }
 
-        // Initialize ShipStation client
         let shipstationClient = null;
         let shipFromAddress = null;
         let warehouseId = null;
@@ -156,16 +114,13 @@ async function fetchAndMapOrders() {
             console.error('⚠️  Will map orders but not create them in ShipStation.\n');
         }
 
-        // Step 1: Fetch new orders from Rithum Event Stream
         console.log('📥 Fetching new orders from Rithum Event Stream...\n');
         const rithumResponse = await rithumClient.checkForNewOrders(true); // includeOrderDetails = true
 
         if (!rithumResponse.success) {
             console.error('❌ Failed to fetch orders from Rithum:', rithumResponse.error || 'Unknown error');
-            console.error('⚠️  Check Rithum API connectivity and stream configuration.');
             process.exit(1);
         }
-
         const orders = rithumResponse.orderDetails || [];
         const newOrderCount = rithumResponse.newOrderCount || 0;
         const newOrderIds = rithumResponse.newOrderIds || [];
@@ -176,7 +131,6 @@ async function fetchAndMapOrders() {
         console.log(`📊 Total events processed: ${allEvents.length}`);
         console.log(`📍 Current stream position: ${rithumResponse.lastPosition || 'N/A'}\n`);
 
-        // Warn about bulk orders (per Project.md Error Handling section)
         if (newOrderCount > 50) {
             console.log('⚠️  WARNING: Large number of orders detected (>50).');
             console.log('   Consider implementing batching for bulk order scenarios (see Project.md).');
@@ -274,6 +228,42 @@ async function fetchAndMapOrders() {
                     // Create order in ShipStation
                     if (shipstationClient) {
                         try {
+                            // Check if order already exists in ShipStation before creating
+                            const orderNumber = mappingResult.mappedOrder.orderNumber;
+                            let existingShipment = null;
+                            
+                            try {
+                                console.log(`   🔍 Checking if order already exists in ShipStation (order number: ${orderNumber})...`);
+                                existingShipment = await shipstationClient.getShipmentByExternalId(orderNumber);
+                                if (existingShipment && existingShipment.shipment_id) {
+                                    console.log(`   ⏭️  Order already exists in ShipStation (Shipment ID: ${existingShipment.shipment_id})`);
+                                    console.log(`      Status: ${existingShipment.shipment_status || 'N/A'}`);
+                                    console.log(`      Skipping creation to avoid duplicates.`);
+                                    
+                                    results.summary.skipped++;
+                                    mappedOrderData.shipstationCreated = false;
+                                    mappedOrderData.shipstationSkipped = true;
+                                    mappedOrderData.shipstationOrderId = existingShipment.sales_order_id || existingShipment.shipment_id || 'N/A';
+                                    mappedOrderData.shipstationOrderNumber = existingShipment.shipment_number || existingShipment.external_shipment_id || orderNumber;
+                                    mappedOrderData.shipstationShipmentId = existingShipment.shipment_id || 'N/A';
+                                    mappedOrderData.existingShipmentStatus = existingShipment.shipment_status || 'N/A';
+                                    mappedOrderData.skippedAt = new Date().toISOString();
+                                    
+                                    // Still add to mappedOrders but mark as skipped
+                                    results.mappedOrders.push(mappedOrderData);
+                                    continue; // Skip to next order
+                                }
+                            } catch (checkError) {
+                                // If 404 or not found, order doesn't exist - proceed with creation
+                                if (checkError.response && checkError.response.status === 404) {
+                                    console.log(`   ✅ Order does not exist - proceeding with creation...`);
+                                } else {
+                                    // Log warning but continue (might be network issue)
+                                    console.log(`   ⚠️  Could not verify if order exists: ${checkError.message}`);
+                                    console.log(`      Proceeding with creation anyway...`);
+                                }
+                            }
+                            
                             console.log(`   🚀 Creating order in ShipStation via /v2/shipments endpoint...`);
                             console.log(`      (Using create_sales_order: true to create order)`);
                             
@@ -422,7 +412,13 @@ async function fetchAndMapOrders() {
         }
         
         console.log(`   ❌ Mapping Failed: ${results.summary.failed}`);
-        console.log(`   ⏭️  Skipped: ${results.summary.skipped}`);
+        console.log(`   ⏭️  Skipped: ${results.summary.skipped} (includes duplicates and business logic skips)`);
+        
+        // Count how many were skipped due to duplicates
+        const duplicateCount = results.mappedOrders.filter(o => o.shipstationSkipped === true).length;
+        if (duplicateCount > 0) {
+            console.log(`   🔄 Duplicates Found (already exist in ShipStation): ${duplicateCount}`);
+        }
         
         if (results.processingTimeMs) {
             console.log(`   ⏱️  Processing Time: ${results.processingTimeMs}ms`);
