@@ -51,9 +51,7 @@ async function updateRithumOrderTracking(rithumClient, rithumOrderId, shipment, 
     }
 
     const trackingNumber = trackingInfo?.tracking_number || shipment.tracking_number;
-    if (!trackingNumber) {
-        throw new Error('Missing tracking number for Rithum update');
-    }
+    const hasTrackingNumber = !!trackingNumber;
 
     const carrier = trackingInfo?.carrier_name || trackingInfo?.carrier_id || shipment.carrier_name || shipment.carrier_id || null;
     const shipDate = trackingInfo?.ship_date || shipment.ship_date || new Date().toISOString();
@@ -94,40 +92,31 @@ async function updateRithumOrderTracking(rithumClient, rithumOrderId, shipment, 
 
     const dscoOrderId = String(rithumOrderId);
 
-    const shipmentPayload = {
-        dscoOrderId,
-        shipments: [
-            {
-                trackingNumber,
-                trackingUrl: trackingInfo?.tracking_url || trackingInfo?.trackingUrl || null,
-                shipCarrier: carrier || undefined,
-                shipMethod: shipment.service_code || shipment.requested_shipment_service || undefined,
-                shipDate,
-                numberOfLineItems: lineItems.length,
-                lineItems
-            }
-        ]
-    };
-
-    const shipmentResponse = await rithumClient.createShipments(shipmentPayload);
-
     const statusUpdate = {
         dscoOrderId,
         updateType: 'STATUS',
-        status: 'shipped',
-        payload: lineItems.map(item => ({
+        status: 'shipped'
+    };
+
+    if (lineItems.length > 0) {
+        statusUpdate.payload = lineItems.map(item => ({
             ...(item.dscoItemId ? { dscoItemId: item.dscoItemId } : {}),
             ...(item.sku ? { sku: item.sku } : {}),
             ...(item.partnerSku ? { partnerSku: item.partnerSku } : {}),
             ...(item.upc ? { upc: item.upc } : {}),
             acceptedQuantity: item.quantity,
             status: 'accepted'
-        }))
-    };
+        }));
+    }
 
     const statusResponse = await rithumClient.submitOrderUpdates(statusUpdate);
 
-    return { shipmentResponse, statusResponse };
+    return {
+        shipmentResponse: null,
+        statusResponse,
+        usedShipmentEndpoint: false,
+        trackingNumber
+    };
 }
 
 /**
@@ -293,7 +282,7 @@ async function processFulfillmentShippedWebhook(webhookData, shipstationClient, 
         // Attempt to update Rithum with tracking information
         if (rithumClient && rithumOrderId) {
             try {
-                const { shipmentResponse, statusResponse } = await updateRithumOrderTracking(
+                const { statusResponse, usedShipmentEndpoint, trackingNumber: submittedTracking } = await updateRithumOrderTracking(
                     rithumClient,
                     rithumOrderId,
                     shipment,
@@ -303,15 +292,21 @@ async function processFulfillmentShippedWebhook(webhookData, shipstationClient, 
                 trackedOrder.rithumUpdated = true;
                 trackedOrder.rithumUpdate.success = true;
                 trackedOrder.rithumUpdate.updatedAt = new Date().toISOString();
-                trackedOrder.rithumUpdate.trackingNumber = trackedOrder.tracking.tracking_number;
+                trackedOrder.rithumUpdate.trackingNumber = submittedTracking;
                 trackedOrder.rithumUpdate.carrier = trackedOrder.tracking.carrier_name || trackedOrder.tracking.carrier_id || null;
                 trackedOrder.rithumUpdate.responses = {
-                    shipment: shipmentResponse,
                     status: statusResponse
                 };
-                trackedOrder.note = 'Tracking captured and sent to Rithum';
 
-                console.log(`   ✅ Updated Rithum order ${rithumOrderId} with tracking ${trackedOrder.tracking.tracking_number}`);
+                trackedOrder.note = submittedTracking
+                    ? 'Tracking recorded locally - order status updated in Rithum'
+                    : 'Tracking missing - order status updated in Rithum';
+
+                const logTrackingNumber = submittedTracking || 'N/A';
+                console.log(`   ✅ Updated Rithum order ${rithumOrderId} (tracking: ${logTrackingNumber})`);
+                if (!usedShipmentEndpoint) {
+                    console.log('   ℹ️  Shipment endpoint skipped - only order status updated in Rithum');
+                }
             } catch (error) {
                 trackedOrder.rithumUpdated = false;
                 trackedOrder.rithumUpdate.error = {

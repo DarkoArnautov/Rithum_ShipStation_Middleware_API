@@ -1,7 +1,7 @@
 {
   "trackedOrders": [
     {
-      "timestamp": "2025-11-07T10:30:46.639Z",
+      "timestamp": "2025-11-07T20:12:59.601Z",
       "webhookEvent": "fulfillment_shipped_v2",
       "shipment": {
         "shipment_id": "se-918673901",
@@ -9,13 +9,13 @@
         "external_shipment_id": "1022178878",
         "shipment_status": "label_purchased",
         "created_at": "2025-11-07T09:14:16.723Z",
-        "modified_at": "2025-11-07T09:37:58.437Z"
+        "modified_at": "2025-11-07T17:16:06.73Z"
       },
       "tracking": {
         "tracking_number": "9400150899563155599883",
         "carrier_id": null,
         "carrier_name": "USPS",
-        "ship_date": "2025-11-07T00:00:00Z",
+        "ship_date": "2025-11-07T08:00:00Z",
         "packages": [
           {
             "package_id": "se-3",
@@ -73,29 +73,15 @@
       "rithumUpdate": {
         "attempted": true,
         "success": true,
-        "updatedAt": "2025-11-07T10:30:53.141Z",
+        "updatedAt": "2025-11-07T20:13:05.401Z",
         "trackingNumber": "9400150899563155599883",
         "carrier": "USPS",
         "error": null,
         "responses": {
-          "shipment": {
-            "status": "pending",
-            "requestId": "7df7b23b-6909-4aa0-8841-8d737125b71c",
-            "eventDate": "2025-11-07T10:30:51.885Z",
-            "messages": [
-              {
-                "code": "submitted",
-                "severity": "info",
-                "description": [
-                  "Asynchronous request submitted"
-                ]
-              }
-            ]
-          },
           "status": {
             "status": "pending",
-            "requestId": "1f5efc98-e469-4969-9148-9706acd2170c",
-            "eventDate": "2025-11-07T10:30:55.832Z",
+            "requestId": "967d9149-7106-42aa-8a8d-60bd3d2543c9",
+            "eventDate": "2025-11-07T20:13:06.651Z",
             "messages": [
               {
                 "code": "submitted",
@@ -108,7 +94,7 @@
           }
         }
       },
-      "note": "Tracking captured and sent to Rithum"
+      "note": "Tracking recorded locally - order status updated in Rithum"
     },
     {
       "timestamp": "2025-11-07T12:23:11.487Z",
@@ -271,8 +257,358 @@
         }
       },
       "note": "Tracking captured locally - failed to update Rithum"
+    },
+    {
+      "timestamp": "2025-11-07T16:46:00.775Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-918673921",
+        "shipment_number": "BOX.75549392.69932164",
+        "external_shipment_id": "1022179222",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-07T09:14:21.113Z",
+        "modified_at": "2025-11-07T16:45:58.983Z"
+      },
+      "tracking": {
+        "tracking_number": null,
+        "carrier_id": null,
+        "ship_date": "2025-11-07T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-3",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 0,
+              "width": 0,
+              "height": 0
+            },
+            "weight": {
+              "value": "N/A",
+              "unit": "ounce",
+              "display": "N/A ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Polly Landgren",
+          "phone": "13609415210",
+          "email": null,
+          "company_name": null,
+          "address_line1": "824 PO BOX",
+          "address_line2": null,
+          "address_line3": null,
+          "city_locality": "STANWOOD",
+          "state_province": "WA",
+          "postal_code": "98292",
+          "country_code": "US",
+          "address_residential_indicator": "unknown"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": null,
+          "company_name": "JaxKelly Inc",
+          "address_line1": "2555 State Street",
+          "address_line2": "Unit 102",
+          "address_line3": "",
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1022179222",
+      "rithumUpdated": false,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": false,
+        "updatedAt": null,
+        "trackingNumber": null,
+        "carrier": null,
+        "error": {
+          "message": "Missing tracking number for Rithum update"
+        }
+      },
+      "note": "Tracking captured locally - failed to update Rithum"
+    },
+    {
+      "timestamp": "2025-11-07T17:14:12.835Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-918673865",
+        "shipment_number": "BOX.75542076.69929250",
+        "external_shipment_id": "1021520936",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-07T09:13:59.88Z",
+        "modified_at": "2025-11-07T16:43:58.093Z"
+      },
+      "tracking": {
+        "tracking_number": null,
+        "carrier_id": null,
+        "ship_date": "2025-11-08T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-3",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 0,
+              "width": 0,
+              "height": 0
+            },
+            "weight": {
+              "value": "N/A",
+              "unit": "ounce",
+              "display": "N/A ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Stephanni Stafford",
+          "phone": "12024319409",
+          "email": null,
+          "company_name": null,
+          "address_line1": "4065 RINEHART RD",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "WESTMINSTER",
+          "state_province": "MD",
+          "postal_code": "21158-2315",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": null,
+          "company_name": "JaxKelly Inc",
+          "address_line1": "2555 State Street",
+          "address_line2": "Unit 102",
+          "address_line3": "",
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1021520936",
+      "rithumUpdated": false,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": false,
+        "updatedAt": null,
+        "trackingNumber": null,
+        "carrier": null,
+        "error": {
+          "message": "Missing tracking number for Rithum update"
+        }
+      },
+      "note": "Tracking captured locally - failed to update Rithum"
+    },
+    {
+      "timestamp": "2025-11-07T17:20:33.394Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-918673896",
+        "shipment_number": "BOX.75550043.69672940",
+        "external_shipment_id": "1022179127",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-07T09:14:12.537Z",
+        "modified_at": "2025-11-07T17:20:27.67Z"
+      },
+      "tracking": {
+        "tracking_number": null,
+        "carrier_id": null,
+        "ship_date": "2025-11-07T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-3",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 0,
+              "width": 0,
+              "height": 0
+            },
+            "weight": {
+              "value": "N/A",
+              "unit": "ounce",
+              "display": "N/A ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Nicole Perris",
+          "phone": "12487016694",
+          "email": null,
+          "company_name": null,
+          "address_line1": "442 RIDGEWOOD DR S",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "ORTONVILLE",
+          "state_province": "MI",
+          "postal_code": "48462-8320",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": null,
+          "company_name": "JaxKelly Inc",
+          "address_line1": "2555 State Street",
+          "address_line2": "Unit 102",
+          "address_line3": "",
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1022179127",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-07T17:20:36.779Z",
+        "carrier": null,
+        "error": null,
+        "responses": {
+          "status": {
+            "status": "pending",
+            "requestId": "582ddef5-b690-4fd0-a1b6-b63754a3738e",
+            "eventDate": "2025-11-07T17:20:37.101Z",
+            "messages": [
+              {
+                "code": "submitted",
+                "severity": "info",
+                "description": [
+                  "Asynchronous request submitted"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "note": "Tracking missing - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-07T17:23:45.209Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-918673886",
+        "shipment_number": "BOX.75542361.69930052",
+        "external_shipment_id": "1021521014",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-07T09:14:06.427Z",
+        "modified_at": "2025-11-07T17:23:43.347Z"
+      },
+      "tracking": {
+        "tracking_number": null,
+        "carrier_id": null,
+        "ship_date": "2025-11-07T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-3",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 0,
+              "width": 0,
+              "height": 0
+            },
+            "weight": {
+              "value": "N/A",
+              "unit": "ounce",
+              "display": "N/A ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Kristen Petro",
+          "phone": "12018198547",
+          "email": null,
+          "company_name": null,
+          "address_line1": "684 HICKORY ST",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "TWP WASHINTON",
+          "state_province": "NJ",
+          "postal_code": "07676-4005",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": null,
+          "company_name": "JaxKelly Inc",
+          "address_line1": "2555 State Street",
+          "address_line2": "Unit 102",
+          "address_line3": "",
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1021521014",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-07T17:23:47.662Z",
+        "carrier": null,
+        "error": null,
+        "responses": {
+          "status": {
+            "status": "pending",
+            "requestId": "92b99e1e-ae50-4616-bd71-54ba0902e845",
+            "eventDate": "2025-11-07T17:23:49.343Z",
+            "messages": [
+              {
+                "code": "submitted",
+                "severity": "info",
+                "description": [
+                  "Asynchronous request submitted"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "note": "Tracking missing - order status updated in Rithum"
     }
   ],
-  "lastUpdated": "2025-11-07T12:30:58.375Z",
-  "totalTracked": 3
+  "lastUpdated": "2025-11-07T20:13:05.406Z",
+  "totalTracked": 7
 }
