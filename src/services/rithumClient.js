@@ -30,7 +30,7 @@ class RithumClient {
         this.client.interceptors.request.use(
             async (config) => {
                 const token = await this.ensureAccessToken();
-                config.headers['Authorization'] = `bearer ${token}`;
+                config.headers['Authorization'] = `Bearer ${token}`;
                 // Set JSON content-type only when sending a body
                 if (config.data && !config.headers['Content-Type']) {
                     config.headers['Content-Type'] = 'application/json';
@@ -226,6 +226,50 @@ class RithumClient {
         }
     }
 
+    async createOrder(order) {
+        try {
+            console.log(`Creating single order on Rithum (poNumber: ${order.poNumber})...`);
+            const response = await this.makeRequest('POST', '/order/', order);
+            console.log(`Successfully created order (poNumber: ${order.poNumber})`);
+            return response;
+        } catch (error) {
+            console.error(`Error creating order (poNumber: ${order.poNumber}):`, error.message);
+            throw error;
+        }
+    }
+
+    async createOrdersBatch(orders) {
+        try {
+            const payload = Array.isArray(orders) ? orders : [orders];
+            console.log(`Creating order batch on Rithum (orders: ${payload.length})...`);
+            const response = await this.makeRequest('POST', '/order/batch/small', payload);
+            
+            // Log response details for debugging
+            if (response.requestId) {
+                console.log(`✅ Successfully submitted order batch to Rithum (requestId: ${response.requestId})`);
+            } else {
+                console.log(`⚠️  Order batch response received but no requestId found`);
+                console.log(`   Response status: ${response.status || 'unknown'}`);
+            }
+            
+            // Log any messages or errors in the response
+            if (response.messages && response.messages.length > 0) {
+                console.log(`   Response contains ${response.messages.length} message(s):`);
+                response.messages.forEach((msg, index) => {
+                    console.log(`     ${index + 1}. [${msg.severity || 'info'}] ${msg.code || 'N/A'}: ${msg.description || 'N/A'}`);
+                });
+            }
+            
+            return response;
+        } catch (error) {
+            console.error('Error creating order batch on Rithum:', error.message);
+            if (error.response && error.response.data) {
+                console.error('   Error response:', JSON.stringify(error.response.data, null, 2));
+            }
+            throw error;
+        }
+    }
+
     async getOrderChangeLog(params = {}) {
         try {
             console.log('Fetching Rithum order change log...', params);
@@ -384,7 +428,7 @@ class RithumClient {
         }
     }
 
-    async checkForNewOrders(includeOrderDetails = false) {
+    async checkForNewOrders(includeOrderDetails = false, dscoLifecycleFilter = null, eventReasonsFilter = ['create']) {
         try {
             if (!this.streamId) {
                 await this.initializeOrderStream();
@@ -403,6 +447,12 @@ class RithumClient {
             const currentPosition = this.lastPosition || partition.position || '0';
 
             console.log(`[checkForNewOrders] Using position: ${currentPosition}`);
+            if (dscoLifecycleFilter) {
+                console.log(`[checkForNewOrders] Filtering by dscoLifecycle: ${dscoLifecycleFilter}`);
+            }
+            if (eventReasonsFilter && eventReasonsFilter.length > 0) {
+                console.log(`[checkForNewOrders] Filtering by eventReasons: ${eventReasonsFilter.join(', ')}`);
+            }
 
             const eventsResponse = await this.getStreamEventsFromPosition(
                 this.streamId,
@@ -414,9 +464,24 @@ class RithumClient {
 
             const allEvents = eventsResponse.events || [];
 
-            const newOrderEvents = allEvents.filter(
-                event => event.eventReasons && event.eventReasons.includes('create')
-            );
+            // Filter events based on eventReasons and dscoLifecycle status
+            let newOrderEvents = allEvents.filter(event => {
+                // Check event reasons filter (e.g., 'create', 'update_status_lifecycle')
+                const hasMatchingReason = event.eventReasons && 
+                    event.eventReasons.some(reason => eventReasonsFilter.includes(reason));
+                
+                if (!hasMatchingReason) {
+                    return false;
+                }
+
+                // Apply lifecycle status filter if provided
+                if (dscoLifecycleFilter) {
+                    const payload = event.payload;
+                    return payload && payload.dscoLifecycle === dscoLifecycleFilter;
+                }
+
+                return true;
+            });
 
             const newOrderIds = newOrderEvents.map(event => {
                 return event.payload?.dscoOrderId || event.objectId || null;

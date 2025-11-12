@@ -255,12 +255,13 @@ class ShipStationClient {
         }
         
         // Add shipping service as a tag for easy filtering/display
-        if (orderData.requestedShippingService) {
-            shipment.tags.push({ name: `Service: ${orderData.requestedShippingService}` });
+        // Also set requested_shipment_service field (per ShipStation API v2 spec - informational only)
+        if (orderData.requestedShipmentService) {
+            shipment.tags.push({ name: `Service: ${orderData.requestedShipmentService}` });
             
-            // Try to set requested_shipment_service if the API accepts it
-            // Some ShipStation API versions may accept this field
-            shipment.requested_shipment_service = orderData.requestedShippingService;
+            // Set requested_shipment_service (informational field in ShipStation API v2)
+            // When labels are created, ShipStation uses carrier_id + service_code instead
+            shipment.requested_shipment_service = orderData.requestedShipmentService;
         }
         
         // Only include tags array if it has items
@@ -691,6 +692,8 @@ class ShipStationClient {
                 tracking_number: trackingNumber,
                 carrier_id: shipment.carrier_id || null,
                 carrier_name: shipment.carrier_name || null,
+                carrier_code: shipment.carrier_code || null,
+                service_code: shipment.service_code || null,
                 ship_date: shipment.ship_date || null,
                 estimated_delivery_date: shipment.estimated_delivery_date || null,
                 packages: shipment.packages || []

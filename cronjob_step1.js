@@ -47,21 +47,12 @@ async function fetchAndMapOrders() {
                     console.log(`   Found ${warehouses ? warehouses.length : 0} warehouse(s) in ShipStation`);
                     
                     if (warehouses && warehouses.length > 0) {
-                        // Use the default warehouse if available, otherwise use the first one
                         const defaultWarehouse = warehouses.find(w => w.is_default === true);
                         const warehouse = defaultWarehouse || warehouses[0];
-                        
-                        console.log(`   Using warehouse: ${warehouse.name || warehouse.warehouse_id || 'Unknown'}`);
-                        if (warehouse.is_default) {
-                            console.log(`   (This is the default warehouse)`);
-                        }
-                        
                         warehouseId = warehouse.warehouse_id;
                         
-                        // Extract ship_from from warehouse origin_address (per OpenAPI spec)
                         if (warehouse.origin_address) {
                             const originAddr = warehouse.origin_address;
-                            // Convert address format to ship_from format (v2 API format)
                             shipFromAddress = {
                                 name: originAddr.name || warehouse.name || 'Ship From',
                                 company_name: originAddr.company_name || originAddr.name || warehouse.name,
@@ -76,31 +67,14 @@ async function fetchAndMapOrders() {
                                 address_residential_indicator: originAddr.address_residential_indicator || 'no'
                             };
                             console.log(`✅ Extracted ship_from address from warehouse origin_address: ${warehouse.name || warehouseId}`);
-                            console.log(`   Location: ${shipFromAddress.city_locality || 'N/A'}, ${shipFromAddress.state_province || 'N/A'}\n`);
                         } else {
                             console.log(`⚠️  Warehouse ${warehouseId} found but no origin_address available.`);
-                            console.log(`   Will use warehouse_id for order creation.\n`);
                         }
                     } else {
                         console.log('⚠️  No warehouses found in ShipStation.');
-                        console.log('   You can still create orders using ship_from address.');
-                        console.log('   Please configure SHIPSTATION_SHIP_FROM_* environment variables in .env file.');
-                        console.log('   Example:');
-                        console.log('     SHIPSTATION_SHIP_FROM_NAME=Your Company');
-                        console.log('     SHIPSTATION_SHIP_FROM_ADDRESS=123 Main St');
-                        console.log('     SHIPSTATION_SHIP_FROM_CITY=City');
-                        console.log('     SHIPSTATION_SHIP_FROM_STATE=CA');
-                        console.log('     SHIPSTATION_SHIP_FROM_POSTAL=12345');
-                        console.log('     SHIPSTATION_SHIP_FROM_COUNTRY=US');
-                        console.log('     SHIPSTATION_SHIP_FROM_PHONE=555-555-5555\n');
                     }
                 } catch (warehouseError) {
                     console.warn(`⚠️  Could not fetch warehouses: ${warehouseError.message}`);
-                    if (warehouseError.response) {
-                        console.warn(`   API Status: ${warehouseError.response.status}`);
-                        console.warn(`   API Response:`, JSON.stringify(warehouseError.response.data, null, 2));
-                    }
-                    console.warn('   Will proceed without ship_from address. Orders may fail if warehouse is not configured.\n');
                 }
             } else if (shipstationConfig.shipFrom) {
                 shipFromAddress = shipstationConfig.shipFrom;
@@ -111,11 +85,14 @@ async function fetchAndMapOrders() {
             }
         } catch (error) {
             console.error('❌ Failed to initialize ShipStation client:', error.message);
-            console.error('⚠️  Will map orders but not create them in ShipStation.\n');
         }
 
         console.log('📥 Fetching new orders from Rithum Event Stream...\n');
-        const rithumResponse = await rithumClient.checkForNewOrders(true); // includeOrderDetails = true
+        const rithumResponse = await rithumClient.checkForNewOrders(
+            true,                    
+            'acknowledged',          
+            ['update_status_lifecycle']
+        );
 
         if (!rithumResponse.success) {
             console.error('❌ Failed to fetch orders from Rithum:', rithumResponse.error || 'Unknown error');
@@ -123,23 +100,11 @@ async function fetchAndMapOrders() {
         }
         const orders = rithumResponse.orderDetails || [];
         const newOrderCount = rithumResponse.newOrderCount || 0;
-        const newOrderIds = rithumResponse.newOrderIds || [];
-        const allEvents = rithumResponse.allEvents || [];
 
         console.log(`✅ Found ${newOrderCount} new order event(s) from Rithum Stream`);
-        console.log(`📋 Order IDs: ${newOrderIds.length > 0 ? newOrderIds.slice(0, 5).join(', ') + (newOrderIds.length > 5 ? `... (+${newOrderIds.length - 5} more)` : '') : 'None'}`);
-        console.log(`📊 Total events processed: ${allEvents.length}`);
-        console.log(`📍 Current stream position: ${rithumResponse.lastPosition || 'N/A'}\n`);
-
-        if (newOrderCount > 50) {
-            console.log('⚠️  WARNING: Large number of orders detected (>50).');
-            console.log('   Consider implementing batching for bulk order scenarios (see Project.md).');
-            console.log('   Current implementation processes all orders in parallel.\n');
-        }
 
         if (!orders || orders.length === 0) {
             console.log('ℹ️  No new orders to process.');
-            console.log('   Stream position will be updated to prevent re-processing.\n');
             await saveOutput({
                 timestamp: new Date().toISOString(),
                 totalOrders: 0,
@@ -159,7 +124,6 @@ async function fetchAndMapOrders() {
             return;
         }
 
-        // Process orders: Map and Create in ShipStation
         const results = {
             timestamp: new Date().toISOString(),
             totalOrders: orders.length,
@@ -221,10 +185,7 @@ async function fetchAndMapOrders() {
                     };
                     
                     console.log(`✅ Order ${i + 1}/${orders.length} (${orderId}): Mapped successfully`);
-                    console.log(`   PO Number: ${mappingResult.mappedOrder.orderNumber}`);
                     console.log(`   Status: ${mappingResult.mappedOrder.orderStatus}`);
-                    console.log(`   Items: ${mappingResult.mappedOrder.items.length}`);
-
                     // Create order in ShipStation
                     if (shipstationClient) {
                         try {
@@ -237,9 +198,6 @@ async function fetchAndMapOrders() {
                                 existingShipment = await shipstationClient.getShipmentByExternalId(orderNumber);
                                 if (existingShipment && existingShipment.shipment_id) {
                                     console.log(`   ⏭️  Order already exists in ShipStation (Shipment ID: ${existingShipment.shipment_id})`);
-                                    console.log(`      Status: ${existingShipment.shipment_status || 'N/A'}`);
-                                    console.log(`      Skipping creation to avoid duplicates.`);
-                                    
                                     results.summary.skipped++;
                                     mappedOrderData.shipstationCreated = false;
                                     mappedOrderData.shipstationSkipped = true;
@@ -248,66 +206,41 @@ async function fetchAndMapOrders() {
                                     mappedOrderData.shipstationShipmentId = existingShipment.shipment_id || 'N/A';
                                     mappedOrderData.existingShipmentStatus = existingShipment.shipment_status || 'N/A';
                                     mappedOrderData.skippedAt = new Date().toISOString();
-                                    
-                                    // Still add to mappedOrders but mark as skipped
                                     results.mappedOrders.push(mappedOrderData);
                                     continue; // Skip to next order
                                 }
                             } catch (checkError) {
-                                // If 404 or not found, order doesn't exist - proceed with creation
                                 if (checkError.response && checkError.response.status === 404) {
                                     console.log(`   ✅ Order does not exist - proceeding with creation...`);
                                 } else {
-                                    // Log warning but continue (might be network issue)
                                     console.log(`   ⚠️  Could not verify if order exists: ${checkError.message}`);
-                                    console.log(`      Proceeding with creation anyway...`);
                                 }
                             }
                             
-                            console.log(`   🚀 Creating order in ShipStation via /v2/shipments endpoint...`);
-                            console.log(`      (Using create_sales_order: true to create order)`);
-                            
-                            // Add ship_from or warehouse_id to the order if we have it
-                            // Note: ship_from address is sufficient - warehouse_id is optional
                             const orderWithShipFrom = { ...mappingResult.mappedOrder };
                             if (shipFromAddress) {
                                 orderWithShipFrom.shipFrom = shipFromAddress;
-                                console.log(`      📍 Using ship_from address for order creation (no warehouse needed)`);
                             } else if (warehouseId) {
                                 orderWithShipFrom.warehouse_id = warehouseId;
-                                console.log(`      📦 Using warehouse_id: ${warehouseId} for order creation`);
                             } else {
                                 console.log(`      ⚠️  No ship_from address or warehouse_id available - order may fail`);
                             }
                             
                             const createdOrder = await shipstationClient.createOrder(orderWithShipFrom);
                             
-                            // Get ship_from address from creation response (for logging/verification)
                             let createdShipFrom = createdOrder.ship_from || null;
                             let createdWarehouseId = createdOrder.warehouse_id || null;
                             
-                            // Priority 1: Check if ship_from is in the creation response
-                            if (createdShipFrom) {
-                                console.log(`   📍 Ship From address from creation response`);
-                            } else if (createdWarehouseId) {
-                                console.log(`   📦 Warehouse ID from creation response: ${createdWarehouseId}`);
-                            }
-                            
-                            // Priority 2: Check if we sent ship_from (fallback reference)
                             if (!createdShipFrom && !createdWarehouseId && createdOrder.sent_ship_from) {
                                 createdShipFrom = createdOrder.sent_ship_from;
-                                console.log(`   📍 Ship From address from sent data (fallback)`);
                             }
                             
-                            // Priority 3: Fetch full shipment details if still missing
                             if (!createdShipFrom && !createdWarehouseId && createdOrder.shipment_id) {
                                 try {
-                                    console.log(`   🔍 Fetching full shipment details to get ship_from address...`);
                                     const shipmentResponse = await shipstationClient.client.get(`/v2/shipments/${createdOrder.shipment_id}`);
                                     const shipment = shipmentResponse.data;
                                     if (shipment.ship_from) {
                                         createdShipFrom = shipment.ship_from;
-                                        console.log(`   ✅ Ship From address retrieved from GET /v2/shipments/${createdOrder.shipment_id}`);
                                     }
                                     if (shipment.warehouse_id) {
                                         createdWarehouseId = shipment.warehouse_id;
@@ -317,7 +250,6 @@ async function fetchAndMapOrders() {
                                 }
                             }
                             
-                            // Use the ship_from we fetched at startup if not in response
                             if (!createdShipFrom && shipFromAddress) {
                                 createdShipFrom = shipFromAddress;
                             }
@@ -335,14 +267,6 @@ async function fetchAndMapOrders() {
                             mappedOrderData.createdAt = new Date().toISOString();
                             results.createdOrders.push(mappedOrderData);
                             
-                            console.log(`   ✅ Order created in ShipStation:`);
-                            console.log(`      Sales Order ID: ${mappedOrderData.shipstationOrderId}`);
-                            console.log(`      Shipment ID: ${mappedOrderData.shipstationShipmentId}`);
-                            if (createdShipFrom) {
-                                console.log(`      Ship From: ${createdShipFrom.company_name || createdShipFrom.name || 'N/A'}, ${createdShipFrom.city_locality || 'N/A'}, ${createdShipFrom.state_province || 'N/A'}`);
-                            } else if (createdWarehouseId) {
-                                console.log(`      Warehouse ID: ${createdWarehouseId}`);
-                            }
                         } catch (createError) {
                             results.summary.creationFailed++;
                             mappedOrderData.shipstationCreated = false;
@@ -367,7 +291,6 @@ async function fetchAndMapOrders() {
                                 if (createError.response.data.errors && 
                                     createError.response.data.errors.some(e => e.path && e.path.includes('/v2/orders/createorder'))) {
                                     console.log(`   ⚠️  This error suggests the old /v2/orders/createorder endpoint was used.`);
-                                    console.log(`   The code should use /v2/shipments with create_sales_order: true instead.`);
                                 }
                             }
                         }
@@ -411,10 +334,6 @@ async function fetchAndMapOrders() {
             console.log(`   ⚠️  ShipStation creation skipped (client not initialized)`);
         }
         
-        console.log(`   ❌ Mapping Failed: ${results.summary.failed}`);
-        console.log(`   ⏭️  Skipped: ${results.summary.skipped} (includes duplicates and business logic skips)`);
-        
-        // Count how many were skipped due to duplicates
         const duplicateCount = results.mappedOrders.filter(o => o.shipstationSkipped === true).length;
         if (duplicateCount > 0) {
             console.log(`   🔄 Duplicates Found (already exist in ShipStation): ${duplicateCount}`);
@@ -484,14 +403,11 @@ async function saveOutput(data) {
         console.log(`\n💾 Results saved to: ${OUTPUT_FILE}\n`);
     } catch (error) {
         console.error(`\n❌ Failed to save output file: ${error.message}`);
-        // Don't throw - allow script to continue even if save fails
     }
 }
 
-// Export the function for use in scheduled versions
 module.exports = { fetchAndMapOrders };
 
-// Run the script if called directly (not imported)
 if (require.main === module) {
     fetchAndMapOrders();
 }

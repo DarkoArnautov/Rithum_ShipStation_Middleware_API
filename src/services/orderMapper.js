@@ -74,10 +74,12 @@ class OrderMapper {
             shipstationOrder.notesForGift = rithumOrder.giftMessage;
         }
 
-        // Shipping service information (for display in ShipStation UI)
-        // Map Rithum shipping service to ShipStation format
+        // Shipping service information (for ShipStation shipment)
+        // Map Rithum shipping service code to ShipStation service_code format
+        // Note: This is informational only. When labels are created, ShipStation uses carrier_id + service_code
+        // Field name: requested_shipment_service (per ShipStation API v2 spec)
         if (rithumOrder.requestedShippingServiceLevelCode || rithumOrder.shippingServiceLevelCode) {
-            shipstationOrder.requestedShippingService = this.mapShippingService(
+            shipstationOrder.requestedShipmentService = this.mapShippingService(
                 rithumOrder.requestedShippingServiceLevelCode || rithumOrder.shippingServiceLevelCode,
                 rithumOrder.requestedShipCarrier || rithumOrder.shipCarrier,
                 rithumOrder.requestedShipMethod || rithumOrder.shipMethod
@@ -519,8 +521,8 @@ class OrderMapper {
             return false;
         }
 
-        // Skip cancelled orders
-        if (rithumOrder.dscoStatus === 'cancelled') {
+        // Skip cancelled orders (check both legacy dscoStatus and new dscoLifecycle)
+        if (rithumOrder.dscoStatus === 'cancelled' || rithumOrder.dscoLifecycle === 'cancelled') {
             console.log(`Skipping cancelled order: ${rithumOrder.dscoOrderId}`);
             return false;
         }
@@ -531,11 +533,25 @@ class OrderMapper {
             return false;
         }
 
-        // Only process orders in certain statuses
-        const processableStatuses = ['created', 'shipment_pending'];
-        if (!processableStatuses.includes(rithumOrder.dscoStatus)) {
-            console.log(`Skipping order with status ${rithumOrder.dscoStatus}: ${rithumOrder.dscoOrderId}`);
-            return false;
+        // Check dscoLifecycle status first (new field), fallback to dscoStatus (deprecated)
+        const lifecycle = rithumOrder.dscoLifecycle;
+        const legacyStatus = rithumOrder.dscoStatus;
+        
+        if (lifecycle) {
+            // New lifecycle field takes priority
+            // Process acknowledged and created orders
+            const processableLifecycles = ['created', 'acknowledged'];
+            if (!processableLifecycles.includes(lifecycle)) {
+                console.log(`Skipping order with lifecycle ${lifecycle}: ${rithumOrder.dscoOrderId}`);
+                return false;
+            }
+        } else if (legacyStatus) {
+            // Fallback to legacy status field for backward compatibility
+            const processableStatuses = ['created', 'shipment_pending'];
+            if (!processableStatuses.includes(legacyStatus)) {
+                console.log(`Skipping order with status ${legacyStatus}: ${rithumOrder.dscoOrderId}`);
+                return false;
+            }
         }
 
         return true;
