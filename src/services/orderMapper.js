@@ -539,16 +539,15 @@ class OrderMapper {
         
         if (lifecycle) {
             // New lifecycle field takes priority
-            // Process acknowledged and created orders
-            const processableLifecycles = ['created', 'acknowledged'];
-            if (!processableLifecycles.includes(lifecycle)) {
+            // Only process acknowledged orders (not created)
+            if (lifecycle !== 'acknowledged') {
                 console.log(`Skipping order with lifecycle ${lifecycle}: ${rithumOrder.dscoOrderId}`);
                 return false;
             }
         } else if (legacyStatus) {
             // Fallback to legacy status field for backward compatibility
-            const processableStatuses = ['created', 'shipment_pending'];
-            if (!processableStatuses.includes(legacyStatus)) {
+            // For legacy status, only process 'shipment_pending' (equivalent to acknowledged)
+            if (legacyStatus !== 'shipment_pending') {
                 console.log(`Skipping order with status ${legacyStatus}: ${rithumOrder.dscoOrderId}`);
                 return false;
             }
