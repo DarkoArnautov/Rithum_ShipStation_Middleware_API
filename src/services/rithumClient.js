@@ -532,35 +532,50 @@ class RithumClient {
             let newPosition = currentPosition;
             if (allEvents.length > 0) {
                 const lastEvent = allEvents[allEvents.length - 1];
+                console.log(`[checkForNewOrders] Last event:`, {
+                    hasId: !!lastEvent?.id,
+                    id: lastEvent?.id,
+                    eventReasons: lastEvent?.eventReasons,
+                    objectId: lastEvent?.objectId
+                });
+                
                 if (lastEvent && lastEvent.id) {
                     newPosition = lastEvent.id;
-                    console.log(`[checkForNewOrders] Updating position to last event ID: ${newPosition}`);
+                    console.log(`[checkForNewOrders] Setting position to last event ID: ${newPosition}`);
+                } else if (eventsResponse.position) {
+                    // Fallback to response position if event doesn't have ID
+                    newPosition = eventsResponse.position;
+                    console.log(`[checkForNewOrders] Using response position (event has no ID): ${newPosition}`);
                 } else {
+                    // Last resort: try to get position from stream partition
                     try {
                         const updatedStream = await this.getStream(this.streamId);
                         if (updatedStream && updatedStream.partitions && updatedStream.partitions.length > 0) {
                             const updatedPartition = updatedStream.partitions.find(p => p.partitionId === partitionId);
                             if (updatedPartition && updatedPartition.position) {
                                 newPosition = updatedPartition.position;
-                                console.log(`[checkForNewOrders] Using partition position: ${newPosition}`);
+                                console.log(`[checkForNewOrders] Using partition position (no event ID): ${newPosition}`);
                             }
-                        }
-                        if (newPosition === currentPosition && eventsResponse.position) {
-                            newPosition = eventsResponse.position;
-                            console.log(`[checkForNewOrders] Using response position: ${newPosition}`);
                         }
                     } catch (error) {
                         console.warn('Could not fetch updated partition position:', error.message);
                     }
                 }
+            } else {
+                console.log(`[checkForNewOrders] No events found, position unchanged: ${currentPosition}`);
             }
 
+            // Always save position if it changed, regardless of whether orders were processed
             if (newPosition && newPosition !== this.lastPosition) {
+                const oldPosition = this.lastPosition;
                 this.lastPosition = newPosition;
                 await this.saveStreamConfig();
-                console.log(`[checkForNewOrders] Position saved: ${newPosition}`);
-            } else if (allEvents.length === 0) {
-                console.log(`[checkForNewOrders] No events found, position unchanged: ${currentPosition}`);
+                console.log(`[checkForNewOrders] ✅ Position updated and saved:`);
+                console.log(`   Old: ${oldPosition || '(initial)'}`);
+                console.log(`   New: ${newPosition}`);
+            } else if (newPosition === this.lastPosition) {
+                console.log(`[checkForNewOrders] ⚠️  Position unchanged: ${currentPosition}`);
+                console.log(`   This may indicate events are being re-fetched.`);
             }
 
             const formattedEvents = newOrderEvents.map(event => ({
