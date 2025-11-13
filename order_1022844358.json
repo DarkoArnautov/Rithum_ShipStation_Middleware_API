@@ -1,0 +1,265 @@
+[dotenv@17.2.3] injecting env (12) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+[dotenv@17.2.3] injecting env (0) from .env -- tip: 🔑 add access controls to secrets: https://dotenvx.com/ops
+🔍 Fetching order details from Rithum...
+   Order ID: 1022844358 
+
+✅ RithumClient initialized
+
+Fetching orders using /order/page endpoint...
+
+Rithum API Request (attempt 1): {
+  method: 'GET',
+  endpoint: '/order/page',
+  hasData: false,
+  hasParams: true
+}
+Getting access token from: https://api.dsco.io/api/v3/oauth2/token
+Access token obtained, expires in: 3600 seconds
+Rithum API Success (attempt 1): { status: 200, endpoint: '/order/page' }
+Found 100 orders
+
+📦 Order Details:
+═══════════════════════════════════════════════════════════
+Order ID: 1022844358
+PO Number: BOX.75553299.69936462
+Status: undefined
+Lifecycle: completed
+Order Date: undefined
+
+📋 Line Items:
+─────────────────────────────────────────────────────────
+
+Item 1:
+  dscoItemId: 1296623851
+  SKU: JAX-FA-081-DS
+  Partner SKU: JAX-FA-081-DS
+  Title: Druzy Bar - White - Gold Earrings
+  Quantity: 1
+  Line Number: 1
+
+Item 2:
+  dscoItemId: 1296623850
+  SKU: JAX-FA-082-DS
+  Partner SKU: JAX-FA-082-DS
+  Title: Huggies Gold Sphere Earrings
+  Quantity: 1
+  Line Number: 2
+
+
+📦 Existing Shipments:
+─────────────────────────────────────────────────────────
+No shipments found
+
+═══════════════════════════════════════════════════════════
+
+📄 Full order JSON:
+
+{
+  "billTo": {},
+  "buyer": null,
+  "cancelRequested": false,
+  "cancelRequestedCode": null,
+  "channel": "2504BD1DD",
+  "consumerOrderDate": "2025-11-07T02:02:36+00:00",
+  "crossDockFlag": false,
+  "crossDockLocation": null,
+  "customer": null,
+  "deliveryMethod": null,
+  "extendedExpectedCostTotal": 19.81,
+  "giftFlag": false,
+  "giftWrapFlag": false,
+  "invoiceTo": null,
+  "orderType": "dropship",
+  "poNumber": "BOX.75553299.69936462",
+  "requestedShipCarrier": "Generic",
+  "requestedShipMethod": "Ground",
+  "requestedShippingServiceLevelCode": "GCG",
+  "requiredDeliveryDate": "2025-12-07T11:30:13+00:00",
+  "retailerCreateDate": "2025-11-07T11:30:13+00:00",
+  "shipByDate": "2025-11-19T07:59:00+00:00",
+  "shipCarrier": "Generic",
+  "shipMethod": "Ground",
+  "shipping": {
+    "address1": "274 EAST DR",
+    "address": [
+      "274 EAST DR"
+    ],
+    "city": "OAK RIDGE",
+    "country": "US",
+    "firstName": "Whitteny",
+    "lastName": "Stinnett",
+    "name": "Whitteny Stinnett",
+    "phone": "18658056105",
+    "postal": "37830",
+    "region": "TN",
+    "state": "TN"
+  },
+  "signatureRequiredFlag": false,
+  "testFlag": false,
+  "dscoCreateDate": "2025-11-07T23:02:36+00:00",
+  "expectedDeliveryDate": "2025-12-07T11:30:13+00:00",
+  "lineItems": [
+    {
+      "rejectedQuantity": 0,
+      "readyForPickup": false,
+      "activity": [
+        {
+          "quantity": 1,
+          "action": "add",
+          "uuid": "d50856c5eeee4c3ab537a4e960a2e836",
+          "activityDate": "2025-11-07T23:02:36+00:00",
+          "updateDate": "2025-11-07T23:02:36+00:00"
+        },
+        {
+          "reason": "Tracking # 9400150899563165959721 added",
+          "quantity": 1,
+          "action": "ship",
+          "uuid": "c623bc77e67f4843ad0cd84aa15ee6b0",
+          "activityDate": "2025-11-11T22:33:47+00:00",
+          "updateDate": "2025-11-11T22:33:47+00:00"
+        }
+      ],
+      "acceptedQuantity": 1,
+      "title": "Druzy Bar - White - Gold Earrings",
+      "extendedExpectedCostTotal": 12.11,
+      "personalization": "10002360",
+      "expectedCost": 12.11,
+      "lineNumber": 1,
+      "cancelRequested": false,
+      "productGroup": "JAX-FA-081-DS",
+      "sku": "JAX-FA-081-DS",
+      "statusReason": "Tracking # 9400150899563165959721 added",
+      "quantity": 1,
+      "expectedCostAdjustmentAllowed": false,
+      "retailerItemIds": [
+        "2504BD1DD"
+      ],
+      "giftFlag": false,
+      "retailerLineId": "202423519",
+      "consumerPrice": 26,
+      "acceptedReason": "Tracking # 9400150899563165959721 added",
+      "partnerSku": "JAX-FA-081-DS",
+      "cancelledQuantity": 0,
+      "bogoFlag": false,
+      "status": "accepted",
+      "dscoItemId": "1296623851"
+    },
+    {
+      "rejectedQuantity": 0,
+      "readyForPickup": false,
+      "activity": [
+        {
+          "quantity": 1,
+          "action": "add",
+          "uuid": "db75a5e9e21b4bdb9e074122cedba90b",
+          "activityDate": "2025-11-07T23:02:36+00:00",
+          "updateDate": "2025-11-07T23:02:36+00:00"
+        },
+        {
+          "reason": "Tracking # 9400150899563165959721 added",
+          "quantity": 1,
+          "action": "ship",
+          "uuid": "67f3248293e94a63bca1b6f87bf83c26",
+          "activityDate": "2025-11-11T22:33:47+00:00",
+          "updateDate": "2025-11-11T22:33:47+00:00"
+        }
+      ],
+      "acceptedQuantity": 1,
+      "title": "Huggies Gold Sphere Earrings",
+      "extendedExpectedCostTotal": 7.7,
+      "personalization": "10002360",
+      "expectedCost": 7.7,
+      "lineNumber": 2,
+      "cancelRequested": false,
+      "productGroup": "JAX-FA-082-DS",
+      "sku": "JAX-FA-082-DS",
+      "statusReason": "Tracking # 9400150899563165959721 added",
+      "quantity": 1,
+      "expectedCostAdjustmentAllowed": false,
+      "retailerItemIds": [
+        "2504BD1DD"
+      ],
+      "giftFlag": false,
+      "retailerLineId": "202423520",
+      "consumerPrice": 21,
+      "acceptedReason": "Tracking # 9400150899563165959721 added",
+      "partnerSku": "JAX-FA-082-DS",
+      "cancelledQuantity": 0,
+      "bogoFlag": false,
+      "status": "accepted",
+      "dscoItemId": "1296623850"
+    }
+  ],
+  "dscoLastUpdate": "2025-11-11T22:34:59+00:00",
+  "dscoLifecycle": "completed",
+  "dscoRetailerId": "1000051226",
+  "dscoShipLateDate": "2025-11-11T07:59:59+00:00",
+  "shippingServiceLevelCode": "GCG",
+  "packages": [
+    {
+      "ssccBarcode": null,
+      "trackingNumber": "9400150899563165959721",
+      "untracked": false,
+      "carrierManifestId": "USPS",
+      "returnedFlag": false,
+      "shipCost": 0,
+      "shippingServiceLevelCode": "USGA",
+      "shipDate": "2025-11-11T22:33:30+00:00",
+      "packageShipFrom": {},
+      "dscoPackageId": 2025026612,
+      "shipMethod": "Ground Advantage",
+      "shipWeight": 1,
+      "items": [
+        {
+          "packageSpanFlag": false,
+          "quantity": 1,
+          "retailerItemIds": [
+            "2504BD1DD"
+          ],
+          "lineNumber": 1,
+          "retailerLineId": "202423519",
+          "partnerSku": "JAX-FA-081-DS",
+          "originalOrderQuantity": 1,
+          "sku": "JAX-FA-081-DS",
+          "dscoItemId": "1296623851"
+        },
+        {
+          "packageSpanFlag": false,
+          "quantity": 1,
+          "retailerItemIds": [
+            "2504BD1DD"
+          ],
+          "lineNumber": 2,
+          "retailerLineId": "202423520",
+          "partnerSku": "JAX-FA-082-DS",
+          "originalOrderQuantity": 1,
+          "sku": "JAX-FA-082-DS",
+          "dscoItemId": "1296623850"
+        }
+      ],
+      "shipWeightUnits": "LB",
+      "shipCarrier": "USPS",
+      "packageShipTo": {
+        "country": "US",
+        "address": [
+          "274 EAST DR"
+        ],
+        "city": "OAK RIDGE",
+        "phone": "18658056105",
+        "address1": "274 EAST DR",
+        "name": "Whitteny Stinnett",
+        "lastName": "Stinnett",
+        "postal": "37830",
+        "region": "TN",
+        "firstName": "Whitteny"
+      },
+      "tracking_url": "tools.usps.com/go/TrackConfirmAction_input?origTrackNum=9400150899563165959721"
+    }
+  ],
+  "dscoStatus": "shipped",
+  "dscoOrderId": "1022844358",
+  "dscoSupplierId": "1000062228",
+  "dscoSupplierName": "JaxKelly Inc",
+  "dscoTradingPartnerId": null,
+  "dscoTradingPartnerName": null
+}

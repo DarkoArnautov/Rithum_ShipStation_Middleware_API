@@ -269,8 +269,42 @@ class ShipStationClient {
             delete shipment.tags;
         }
 
-        // Note: Packages are not required when create_sales_order is true
-        // ShipStation will handle package creation during label generation
+        // Add packages array with weight, service_code, and package_code
+        // This is required to set the weight, service, and package in ShipStation UI
+        if (orderData.weight || orderData.packageCode || orderData.serviceCode) {
+            const packageData = {};
+            
+            // Add weight
+            if (orderData.weight && orderData.weight.value) {
+                packageData.weight = {
+                    value: parseFloat(orderData.weight.value),
+                    unit: orderData.weight.unit || 'ounce'
+                };
+            }
+            
+            // Add dimensions if available
+            if (orderData.dimensions) {
+                packageData.dimensions = {
+                    length: parseFloat(orderData.dimensions.length) || 0,
+                    width: parseFloat(orderData.dimensions.width) || 0,
+                    height: parseFloat(orderData.dimensions.height) || 0,
+                    unit: orderData.dimensions.unit || 'inch'
+                };
+            }
+            
+            // Add package_code
+            if (orderData.packageCode) {
+                packageData.package_code = orderData.packageCode;
+            }
+            
+            // Note: service_code is set at shipment level, not package level
+            shipment.packages = [packageData];
+        }
+        
+        // Add service_code at shipment level (not in packages)
+        if (orderData.serviceCode) {
+            shipment.service_code = orderData.serviceCode;
+        }
 
         return shipment;
     }
@@ -365,6 +399,8 @@ class ShipStationClient {
                 create_sales_order: shipment.create_sales_order,
                 shipment_number: shipment.shipment_number,
                 external_shipment_id: shipment.external_shipment_id,
+                service_code: shipment.service_code,
+                packages: shipment.packages,
                 tags: shipment.tags || [],
                 items: shipment.items.map(item => ({
                     sku: item.sku,

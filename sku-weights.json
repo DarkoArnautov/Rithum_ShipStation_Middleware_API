@@ -1,0 +1,28 @@
+{
+  "comment": "SKU weight catalog for jewelry items. Weight values are in ounces.",
+  "defaultWeight": {
+    "value": 0.5,
+    "unit": "ounce",
+    "comment": "Default weight for jewelry items when SKU not found"
+  },
+  "skus": {
+    "JAX-FA-087-DS": { "weight": 0.5, "unit": "ounce", "name": "Offset Trio Sapphire Earrings" },
+    "JAX-FA-083-DS": { "weight": 0.8, "unit": "ounce", "name": "Threader Amazonite Earrings" },
+    "JAX-FA-085-DS": { "weight": 0.6, "unit": "ounce", "name": "Chain Huggie Stud Gold Earrings" },
+    "JAX-FA-082-DS": { "weight": 0.7, "unit": "ounce", "name": "Huggies Gold Sphere Earrings" },
+    "JAX-FA-078-DS": { "weight": 0.5, "unit": "ounce", "name": "Jewelry Item" },
+    "JAX-FA-081-DS": { "weight": 0.6, "unit": "ounce", "name": "Jewelry Item" },
+    "JAX-FA-076-DS": { "weight": 0.5, "unit": "ounce", "name": "Jewelry Item" },
+    "JAX-FA-072-DS": { "weight": 0.5, "unit": "ounce", "name": "Jewelry Item" },
+    "JAX-FA-073-DS": { "weight": 0.5, "unit": "ounce", "name": "Jewelry Item" },
+    "JAX-FA-074-DS": { "weight": 0.5, "unit": "ounce", "name": "Jewelry Item" },
+    "JAX-FA-075-DS": { "weight": 0.5, "unit": "ounce", "name": "Jewelry Item" },
+    "JAX-FA-077-DS": { "weight": 0.5, "unit": "ounce", "name": "Jewelry Item" },
+    "JAX-FA-079-DS": { "weight": 0.5, "unit": "ounce", "name": "Jewelry Item" },
+    "JAX-FA-080-DS": { "weight": 0.5, "unit": "ounce", "name": "Jewelry Item" },
+    "JAX-FA-084-DS": { "weight": 0.5, "unit": "ounce", "name": "Jewelry Item" },
+    "JAX-FA-086-DS": { "weight": 0.5, "unit": "ounce", "name": "Jewelry Item" },
+    "JAX-FA-088-DS": { "weight": 0.5, "unit": "ounce", "name": "Jewelry Item" },
+    "JAX-FA-089-DS": { "weight": 0.5, "unit": "ounce", "name": "Jewelry Item" }
+  }
+}

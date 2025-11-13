@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 /**
  * Order Mapper Service
  * Transforms Rithum orders to ShipStation order format
@@ -8,6 +11,50 @@
  * - address_residential_indicator is required (defaults to "unknown" if not specified)
  */
 class OrderMapper {
+    constructor() {
+        // Load SKU weight catalog
+        this.skuWeights = this.loadSkuWeights();
+    }
+
+    /**
+     * Load SKU weight catalog from JSON file
+     * @returns {Object} SKU weight catalog
+     */
+    loadSkuWeights() {
+        try {
+            const catalogPath = path.join(__dirname, '../../sku-weights.json');
+            const catalogData = fs.readFileSync(catalogPath, 'utf8');
+            return JSON.parse(catalogData);
+        } catch (error) {
+            console.warn('⚠️  Warning: Could not load SKU weight catalog:', error.message);
+            console.warn('⚠️  Using default weights only');
+            return {
+                defaultWeight: { value: 2, unit: 'ounce' },
+                skus: {}
+            };
+        }
+    }
+
+    /**
+     * Get weight for a SKU from catalog
+     * @param {string} sku - Product SKU
+     * @returns {Object|null} Weight object {value, unit} or null
+     */
+    getSkuWeight(sku) {
+        if (!sku || !this.skuWeights.skus) {
+            return null;
+        }
+        
+        const skuData = this.skuWeights.skus[sku];
+        if (skuData && skuData.weight && skuData.unit) {
+            return {
+                value: skuData.weight,
+                unit: skuData.unit
+            };
+        }
+        
+        return null;
+    }
     /**
      * Map Rithum order to ShipStation order format
      * @param {Object} rithumOrder - Order from Rithum API
@@ -39,6 +86,34 @@ class OrderMapper {
             shipTo: this.mapShippingAddress(rithumOrder.shipping || rithumOrder.shipTo),
             items: this.mapLineItems(rithumOrder.lineItems || [])
         };
+
+        // Add weight if available from line items
+        const weight = this.calculateTotalWeight(rithumOrder.lineItems || []);
+        if (weight) {
+            shipstationOrder.weight = weight;
+        }
+
+        // Add package code (package type) first
+        const packageCode = this.getPackageCode(rithumOrder);
+        if (packageCode) {
+            shipstationOrder.packageCode = packageCode;
+        }
+
+        // Note: Do NOT send dimensions when using a package_code
+        // ShipStation uses predefined dimensions from the package type configuration
+        // Only send dimensions if using 'package' (generic) without specific package type
+        // if (packageCode === 'package') {
+        //     const dimensions = this.getPackageDimensions(packageCode);
+        //     if (dimensions) {
+        //         shipstationOrder.dimensions = dimensions;
+        //     }
+        // }
+
+        // Add service code (carrier + service combination)
+        const serviceCode = this.getServiceCode(rithumOrder);
+        if (serviceCode) {
+            shipstationOrder.serviceCode = serviceCode;
+        }
 
         // Optional fields - only include if they have values
         if (rithumOrder.shipByDate) {
@@ -414,6 +489,390 @@ class OrderMapper {
         }
         console.warn(`No SKU found for item at index ${index}, using generated SKU`);
         return `ITEM-${index + 1}`;
+    }
+
+    /**
+     * Calculate total weight from line items
+     * Uses SKU catalog lookup if Rithum doesn't provide weight
+     * @param {Array} lineItems - Line items from Rithum
+     * @returns {Object|null} Weight object with value and unit, or null if no weight data
+     */
+    calculateTotalWeight(lineItems) {
+        if (!Array.isArray(lineItems) || lineItems.length === 0) {
+            return null;
+        }
+
+        let totalWeightInPounds = 0;
+        let hasWeight = false;
+        let skuLookupCount = 0;
+
+        for (const item of lineItems) {
+            const quantity = this.getItemQuantity(item);
+            let weightInPounds = 0;
+            
+            // First, try to get weight from Rithum line item
+            if (item.weight && item.weight > 0) {
+                weightInPounds = parseFloat(item.weight);
+
+                // Convert to pounds if needed
+                if (item.weightUnits) {
+                    const unit = item.weightUnits.toLowerCase();
+                    if (unit === 'kg' || unit === 'kilogram' || unit === 'kilograms') {
+                        weightInPounds = weightInPounds * 2.20462; // kg to lbs
+                    } else if (unit === 'oz' || unit === 'ounce' || unit === 'ounces') {
+                        weightInPounds = weightInPounds / 16; // oz to lbs
+                    } else if (unit === 'g' || unit === 'gram' || unit === 'grams') {
+                        weightInPounds = weightInPounds * 0.00220462; // g to lbs
+                    }
+                    // Default to lbs if already in pounds or unspecified
+                }
+
+                totalWeightInPounds += weightInPounds * quantity;
+                hasWeight = true;
+            } else {
+                // If no weight from Rithum, try SKU catalog lookup
+                const sku = item.sku || item.partnerSku;
+                const skuWeight = this.getSkuWeight(sku);
+                
+                if (skuWeight) {
+                    weightInPounds = parseFloat(skuWeight.value);
+                    
+                    // Convert SKU weight to pounds
+                    const unit = skuWeight.unit.toLowerCase();
+                    if (unit === 'kg' || unit === 'kilogram' || unit === 'kilograms') {
+                        weightInPounds = weightInPounds * 2.20462;
+                    } else if (unit === 'oz' || unit === 'ounce' || unit === 'ounces') {
+                        weightInPounds = weightInPounds / 16;
+                    } else if (unit === 'g' || unit === 'gram' || unit === 'grams') {
+                        weightInPounds = weightInPounds * 0.00220462;
+                    }
+                    
+                    totalWeightInPounds += weightInPounds * quantity;
+                    hasWeight = true;
+                    skuLookupCount++;
+                    console.log(`   📦 Using SKU catalog weight for ${sku}: ${skuWeight.value} ${skuWeight.unit}`);
+                }
+            }
+        }
+
+        // If still no weight, use default weight
+        if (!hasWeight || totalWeightInPounds <= 0) {
+            if (this.skuWeights.defaultWeight) {
+                const defaultWeight = this.skuWeights.defaultWeight.value;
+                const defaultUnit = this.skuWeights.defaultWeight.unit;
+                
+                // Convert default weight to pounds
+                let defaultWeightInPounds = parseFloat(defaultWeight);
+                const unit = defaultUnit.toLowerCase();
+                if (unit === 'oz' || unit === 'ounce' || unit === 'ounces') {
+                    defaultWeightInPounds = defaultWeightInPounds / 16;
+                } else if (unit === 'kg' || unit === 'kilogram') {
+                    defaultWeightInPounds = defaultWeightInPounds * 2.20462;
+                } else if (unit === 'g' || unit === 'gram') {
+                    defaultWeightInPounds = defaultWeightInPounds * 0.00220462;
+                }
+                
+                totalWeightInPounds = defaultWeightInPounds * lineItems.length;
+                console.log(`   ⚠️  No weight data found, using default: ${defaultWeight} ${defaultUnit} per item`);
+                hasWeight = true;
+            }
+        }
+
+        if (!hasWeight || totalWeightInPounds <= 0) {
+            console.log('   ⚠️  No weight data available and no default weight configured');
+            return null;
+        }
+
+        // Return weight in ounces (ShipStation commonly uses ounces)
+        const ounces = totalWeightInPounds * 16;
+        const finalWeight = {
+            value: Math.max(1, Math.ceil(ounces)), // Convert to oz, round up, min 1 oz
+            unit: 'ounce'
+        };
+        
+        if (skuLookupCount > 0) {
+            console.log(`   ✅ Total weight calculated: ${finalWeight.value} ${finalWeight.unit} (${skuLookupCount} from SKU catalog)`);
+        }
+        
+        return finalWeight;
+    }
+
+    /**
+     * Get package dimensions based on package type
+     * Provides default dimensions for common package types
+     * @param {string} packageCode - Package code (e.g., 'flat_rate_padded_envelope')
+     * @returns {Object|null} Dimensions object with length, width, height, unit or null
+     */
+    getPackageDimensions(packageCode) {
+        if (!packageCode) {
+            return null;
+        }
+        
+        // USPS package dimensions (official sizes)
+        const dimensionsMap = {
+            // Flat Rate Envelopes
+            'flat_rate_envelope': { length: 12.5, width: 9.5, height: 0.75, unit: 'inch' },
+            'flat_rate_padded_envelope': { length: 12.5, width: 9.5, height: 1, unit: 'inch' },
+            'flat_rate_legal_envelope': { length: 15, width: 9.5, height: 0.75, unit: 'inch' },
+            
+            // Flat Rate Boxes
+            'small_flat_rate_box': { length: 8.625, width: 5.375, height: 1.625, unit: 'inch' },
+            'medium_flat_rate_box': { length: 11.25, width: 8.75, height: 6, unit: 'inch' }, // Can also be 14x12x3.5
+            'large_flat_rate_box': { length: 12.25, width: 12.25, height: 6, unit: 'inch' },
+            
+            // Regional Rate Boxes
+            'regional_rate_box_a': { length: 10.125, width: 7.125, height: 5, unit: 'inch' },
+            'regional_rate_box_b': { length: 12.25, width: 10.5, height: 5.5, unit: 'inch' },
+            
+            // Standard packages (approximate)
+            'thick_envelope': { length: 10, width: 7, height: 1, unit: 'inch' },
+            'letter': { length: 11.5, width: 6.125, height: 0.25, unit: 'inch' },
+            'large_envelope_or_flat': { length: 15, width: 12, height: 0.75, unit: 'inch' },
+            
+            // FedEx packages (official sizes)
+            'fedex_envelope': { length: 12.5, width: 9.5, height: 0.5, unit: 'inch' },
+            'fedex_pak': { length: 15.5, width: 12, height: 1, unit: 'inch' },
+            'fedex_small_box': { length: 12.25, width: 10.875, height: 1.5, unit: 'inch' },
+            'fedex_medium_box': { length: 13.25, width: 11.5, height: 2.375, unit: 'inch' },
+            'fedex_large_box': { length: 17.875, width: 12.375, height: 3, unit: 'inch' },
+            'fedex_extra_large_box': { length: 20, width: 16, height: 12, unit: 'inch' },
+            
+            // UPS packages (official sizes)
+            'ups_letter': { length: 12.5, width: 9.5, height: 0.5, unit: 'inch' },
+            'ups_express_pak': { length: 16, width: 12.75, height: 1, unit: 'inch' },
+            'ups_express_box_small': { length: 13, width: 11, height: 2, unit: 'inch' },
+            'ups_express_box': { length: 16, width: 11, height: 3, unit: 'inch' },
+            'ups_express_box_medium': { length: 16, width: 13, height: 3, unit: 'inch' },
+            'ups__express_box_large': { length: 18, width: 13, height: 3, unit: 'inch' }
+        };
+        
+        return dimensionsMap[packageCode] || null;
+    }
+
+    /**
+     * Get package code (package type)
+     * Optimized for jewelry/small items business
+     * @param {Object} rithumOrder - Order from Rithum
+     * @returns {string|null} Package code
+     */
+    getPackageCode(rithumOrder) {
+        const weight = this.calculateTotalWeight(rithumOrder.lineItems || []);
+        const carrier = (rithumOrder.requestedShipCarrier || rithumOrder.shipCarrier || '').toLowerCase();
+        const serviceCode = (rithumOrder.requestedShippingServiceLevelCode || rithumOrder.shippingServiceLevelCode || '').toLowerCase();
+        const method = (rithumOrder.requestedShipMethod || rithumOrder.shipMethod || '').toLowerCase();
+        
+        // If no weight available, use generic package
+        if (!weight || weight.value <= 0) {
+            return 'package';
+        }
+        
+        const ounces = weight.value;
+        
+        // Determine if requesting Priority Mail or flat rate service
+        const isPriorityOrFlatRate = serviceCode === 'pm' || 
+                                     method.includes('priority') || 
+                                     method.includes('flat rate');
+        
+        // USPS carrier (or Generic which defaults to USPS)
+        if (carrier.includes('usps') || carrier.includes('postal') || carrier.includes('generic') || !carrier) {
+            // For Priority Mail / Flat Rate service → use flat rate packages (better value)
+            if (isPriorityOrFlatRate) {
+                // Very light items (0-8 oz) - Perfect for jewelry
+                if (ounces <= 8) {
+                    return 'flat_rate_padded_envelope'; // Best protection + cost for small items
+                }
+                // Light items (8-16 oz)
+                if (ounces <= 16) {
+                    return 'small_flat_rate_box';
+                }
+                // Medium items (16-48 oz / 3 lbs)
+                if (ounces <= 48) {
+                    return 'medium_flat_rate_box';
+                }
+                // Heavy items (over 3 lbs)
+                return 'large_flat_rate_box';
+            }
+            
+            // For Ground Advantage / other services → use non-flat-rate packages
+            // These are compatible with Ground Advantage and cost-effective
+            if (ounces <= 4) {
+                return 'thick_envelope'; // For very light items (jewelry)
+            }
+            if (ounces <= 16) {
+                return 'package'; // Generic package (most flexible)
+            }
+            if (ounces <= 48) {
+                return 'package'; // Still generic package
+            }
+            // Heavy items
+            return 'large_package'; // For items > 3 lbs
+        }
+        
+        // FedEx carrier
+        if (carrier.includes('fedex')) {
+            // Very light items (0-8 oz)
+            if (ounces <= 8) {
+                return 'fedex_envelope';
+            }
+            // Light items (8-16 oz)
+            if (ounces <= 16) {
+                return 'fedex_small_box';
+            }
+            // Medium items (16-32 oz / 2 lbs)
+            if (ounces <= 32) {
+                return 'fedex_medium_box';
+            }
+            // Heavy items
+            return 'fedex_large_box';
+        }
+        
+        // UPS carrier
+        if (carrier.includes('ups')) {
+            // Very light items (0-8 oz)
+            if (ounces <= 8) {
+                return 'ups_express_pak';
+            }
+            // Light items (8-16 oz)
+            if (ounces <= 16) {
+                return 'ups_express_box_small';
+            }
+            // Medium items
+            if (ounces <= 32) {
+                return 'ups_express_box';
+            }
+            // Heavy items
+            return 'ups_express_box_medium';
+        }
+        
+        // Default to generic package for unknown carriers
+        return 'package';
+    }
+
+    /**
+     * Get service code from Rithum shipping information
+     * Maps Rithum shipping service to ShipStation service code
+     * Based on available services in your ShipStation account (see list-carriers-services.js)
+     * 
+     * IMPORTANT: Flat rate packages require Priority Mail service, not Ground Advantage
+     * 
+     * @param {Object} rithumOrder - Order from Rithum
+     * @returns {string|null} Service code (e.g., 'usps_ground_advantage', 'fedex_ground')
+     */
+    getServiceCode(rithumOrder) {
+        const carrier = (rithumOrder.requestedShipCarrier || rithumOrder.shipCarrier || '').toLowerCase();
+        const serviceCode = (rithumOrder.requestedShippingServiceLevelCode || rithumOrder.shippingServiceLevelCode || '').toLowerCase();
+        const method = (rithumOrder.requestedShipMethod || rithumOrder.shipMethod || '').toLowerCase();
+
+        // Check if using flat rate package (requires Priority Mail)
+        const packageCode = this.getPackageCode(rithumOrder);
+        const isFlatRate = packageCode && packageCode.includes('flat_rate');
+
+        // Map Rithum carrier + service to ShipStation service codes
+        // Note: Based on actual services available in your ShipStation account
+        
+        // USPS mappings (Available: usps_priority_mail, usps_ground_advantage)
+        if (carrier.includes('usps') || carrier.includes('postal') || carrier.includes('generic') || !carrier) {
+            // IMPORTANT: Flat rate packages MUST use Priority Mail service
+            if (isFlatRate) {
+                return 'usps_priority_mail';
+            }
+            
+            // Rithum service codes:
+            // - GCG = Ground Commercial Ground → usps_ground_advantage
+            // - PM = Priority Mail → usps_priority_mail
+            if (serviceCode === 'gcg' || method.includes('ground')) {
+                return 'usps_ground_advantage';
+            }
+            if (serviceCode === 'pm' || method.includes('priority')) {
+                return 'usps_priority_mail';
+            }
+            // Default USPS to ground advantage (most common/cheapest)
+            return 'usps_ground_advantage';
+        }
+
+        // FedEx mappings (32 services available - see list-carriers-services.js for full list)
+        if (carrier.includes('fedex') || carrier.includes('fed ex')) {
+            // Ground services
+            if (method.includes('ground') || serviceCode.includes('gnd') || serviceCode.includes('ground')) {
+                return 'fedex_ground';
+            }
+            if (method.includes('home delivery')) {
+                return 'fedex_home_delivery';
+            }
+            
+            // 2-day services
+            if (method.includes('2day') || method.includes('2 day')) {
+                if (method.includes('am')) {
+                    return 'fedex_2day_am';
+                }
+                return 'fedex_2day';
+            }
+            
+            // Overnight services
+            if (method.includes('overnight') || method.includes('next day')) {
+                if (method.includes('first') || method.includes('early')) {
+                    return 'fedex_first_overnight';
+                }
+                if (method.includes('priority')) {
+                    return 'fedex_priority_overnight';
+                }
+                return 'fedex_standard_overnight';
+            }
+            
+            // Express services
+            if (method.includes('express')) {
+                if (method.includes('saver')) {
+                    return 'fedex_express_saver';
+                }
+                return 'fedex_express_saver';
+            }
+            
+            // Default FedEx
+            return 'fedex_ground';
+        }
+
+        // UPS mappings (30 services available - see list-carriers-services.js for full list)
+        if (carrier.includes('ups')) {
+            // Ground services
+            if (method.includes('ground')) {
+                return 'ups_ground';
+            }
+            
+            // 3-day service
+            if (method.includes('3 day') || method.includes('3day') || method.includes('three day')) {
+                return 'ups_3_day_select';
+            }
+            
+            // 2-day services
+            if (method.includes('2nd day') || method.includes('2 day') || method.includes('two day')) {
+                if (method.includes('am')) {
+                    return 'ups_2nd_day_air_am';
+                }
+                return 'ups_2nd_day_air';
+            }
+            
+            // Next day / overnight services
+            if (method.includes('next day') || method.includes('overnight')) {
+                if (method.includes('early') || method.includes('am')) {
+                    return 'ups_next_day_air_early_am';
+                }
+                if (method.includes('saver')) {
+                    return 'ups_next_day_air_saver';
+                }
+                return 'ups_next_day_air';
+            }
+            
+            // Default UPS
+            return 'ups_ground';
+        }
+
+        // DHL Express
+        if (carrier.includes('dhl')) {
+            return 'dhl_express_worldwide';
+        }
+
+        // No matching service found - return null (ShipStation will use default)
+        return null;
     }
 
     /**

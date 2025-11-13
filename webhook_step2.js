@@ -351,33 +351,34 @@ async function updateRithumOrderTracking(rithumClient, rithumOrderId, shipment, 
         shipmentData.shipments[0].shipWeight = parseFloat(shipWeight);
         
         // Convert weight unit to Rithum format
-        // ShipStation uses: ounce, pound, gram, kilogram (singular)
-        // Rithum expects: Ounces, Pounds, Grams, Kilograms (plural, capitalized)
+        // ShipStation uses: ounce, pound, gram, kilogram (singular, lowercase)
+        // Rithum expects: LB, oz, g, kg (uppercase LB, lowercase others - based on actual API data)
+        // Note: API spec shows lowercase (lb, oz, g, kg) but actual data uses uppercase LB
         const weightUnitMap = {
-            'oz': 'Ounces',
-            'ounce': 'Ounces',
-            'ounces': 'Ounces',
-            'lb': 'Pounds',
-            'lbs': 'Pounds',
-            'pound': 'Pounds',
-            'pounds': 'Pounds',
-            'g': 'Grams',
-            'gram': 'Grams',
-            'grams': 'Grams',
-            'kg': 'Kilograms',
-            'kilogram': 'Kilograms',
-            'kilograms': 'Kilograms'
+            'oz': 'oz',
+            'ounce': 'oz',
+            'ounces': 'oz',
+            'lb': 'LB',
+            'lbs': 'LB',
+            'pound': 'LB',
+            'pounds': 'LB',
+            'g': 'g',
+            'gram': 'g',
+            'grams': 'g',
+            'kg': 'kg',
+            'kilogram': 'kg',
+            'kilograms': 'kg'
         };
         
-        const normalizedUnit = weightUnitMap[String(shipWeightUnit).toLowerCase()] || 'Ounces';
+        const normalizedUnit = weightUnitMap[String(shipWeightUnit).toLowerCase()] || 'oz';
         shipmentData.shipments[0].shipWeightUnits = normalizedUnit;
         
         console.log(`   ⚖️  Ship Weight: ${shipWeight} ${normalizedUnit}`);
     } else {
         // Default weight if not available (required field)
         shipmentData.shipments[0].shipWeight = 1;
-        shipmentData.shipments[0].shipWeightUnits = 'Ounces';
-        console.log(`   ⚖️  Ship Weight: 1 Ounces (default - weight not found in shipment)`);
+        shipmentData.shipments[0].shipWeightUnits = 'oz';
+        console.log(`   ⚖️  Ship Weight: 1 oz (default - weight not found in shipment)`);
     }
     
     // Determine which shipping method to use
@@ -548,11 +549,26 @@ async function extractRithumOrderId(shipment, shipstationClient = null) {
 
     // Method 4: Try to extract from external_shipment_id (if it's a dscoOrderId)
     if (!rithumOrderId && shipment.external_shipment_id) {
+        const externalId = shipment.external_shipment_id;
+        
         // Check if external_shipment_id is numeric (likely dscoOrderId)
-        if (shipment.external_shipment_id.match(/^\d+$/)) {
-            rithumOrderId = shipment.external_shipment_id;
+        if (externalId.match(/^\d+$/)) {
+            rithumOrderId = externalId;
             console.log(`   🔗 Found Rithum Order ID in external_shipment_id: ${rithumOrderId}`);
             return rithumOrderId;
+        }
+        
+        // Handle test order IDs (format: 91026064154-790940)
+        // Extract original ID by removing test prefix '9' and timestamp
+        if (externalId.match(/^9\d+-\d+$/)) {
+            // Extract the part between '9' prefix and '-timestamp'
+            const match = externalId.match(/^9(\d+)-\d+$/);
+            if (match && match[1]) {
+                rithumOrderId = match[1];
+                console.log(`   🔗 Found TEST Rithum Order ID in external_shipment_id: ${externalId}`);
+                console.log(`      Extracted original ID: ${rithumOrderId}`);
+                return rithumOrderId;
+            }
         }
     }
 

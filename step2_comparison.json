@@ -1,0 +1,41 @@
+{
+  "shipstation_webhook": {
+    "resource_type": "shipment",
+    "event_type": "shipment.shipped",
+    "shipment": {
+      "shipment_id": "se-123456789",
+      "tracking_number": "9400150899562158461951",
+      "carrier_code": "stamps_com",
+      "service_code": "usps_ground_advantage",
+      "ship_date": "2025-11-08T10:30:00Z",
+      "tags": [
+        {
+          "name": "1022178919"
+        }
+      ]
+    }
+  },
+  "rithum_update_payload": {
+    "dscoOrderId": "1022178919",
+    "poNumber": "BOX.75546037.69931481",
+    "trackingNumber": "9400150899562158461951",
+    "shipCarrier": "USPS",
+    "shipMethod": "Ground",
+    "shipDate": "2025-11-08T10:30:00Z",
+    "shippingServiceLevelCode": "USGA"
+  },
+  "carrier_mappings": {
+    "stamps_com": "USPS",
+    "usps": "USPS",
+    "fedex": "FEDEX",
+    "ups": "UPS",
+    "dhl_express": "DHL"
+  },
+  "service_code_mappings": {
+    "usps_ground_advantage": "USGA",
+    "usps_priority_mail": "PM",
+    "usps_priority_mail_express": "PME",
+    "fedex_ground": "FEDEX_GROUND",
+    "ups_ground": "UPS_GROUND"
+  }
+}

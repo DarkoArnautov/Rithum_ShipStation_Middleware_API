@@ -1,0 +1,140 @@
+[dotenv@17.2.3] injecting env (12) from .env -- tip: 🔄 add secrets lifecycle management: https://dotenvx.com/ops
+[dotenv@17.2.3] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+🔍 Fetching order details from Rithum...
+   Order ID: 1026063942 
+
+✅ RithumClient initialized
+
+Fetching orders using /order/page endpoint...
+
+Rithum API Request (attempt 1): {
+  method: 'GET',
+  endpoint: '/order/page',
+  hasData: false,
+  hasParams: true
+}
+Getting access token from: https://api.dsco.io/api/v3/oauth2/token
+Access token obtained, expires in: 3600 seconds
+Rithum API Success (attempt 1): { status: 200, endpoint: '/order/page' }
+Found 100 orders
+
+📦 Order Details:
+═══════════════════════════════════════════════════════════
+Order ID: 1026063942
+PO Number: BOX.75594056.69954666
+Status: undefined
+Lifecycle: created
+Order Date: undefined
+
+📋 Line Items:
+─────────────────────────────────────────────────────────
+
+Item 1:
+  dscoItemId: 1296623851
+  SKU: JAX-FA-081-DS
+  Partner SKU: JAX-FA-081-DS
+  Title: Druzy Bar - White - Gold Earrings
+  Quantity: 1
+  Line Number: 1
+
+
+📦 Existing Shipments:
+─────────────────────────────────────────────────────────
+No shipments found
+
+═══════════════════════════════════════════════════════════
+
+📄 Full order JSON:
+
+{
+  "billTo": {},
+  "buyer": null,
+  "cancelRequested": false,
+  "cancelRequestedCode": null,
+  "channel": "2504BD1DD",
+  "consumerOrderDate": "2025-11-12T01:15:09+00:00",
+  "crossDockFlag": false,
+  "crossDockLocation": null,
+  "customer": null,
+  "deliveryMethod": null,
+  "extendedExpectedCostTotal": 12.11,
+  "giftFlag": false,
+  "giftWrapFlag": false,
+  "invoiceTo": null,
+  "orderType": "dropship",
+  "poNumber": "BOX.75594056.69954666",
+  "requestedShipCarrier": "Generic",
+  "requestedShipMethod": "Ground",
+  "requestedShippingServiceLevelCode": "GCG",
+  "requiredDeliveryDate": "2025-12-12T11:30:09+00:00",
+  "retailerCreateDate": "2025-11-12T11:30:09+00:00",
+  "shipByDate": "2025-11-22T07:59:00+00:00",
+  "shipCarrier": "Generic",
+  "shipMethod": "Ground",
+  "shipping": {
+    "address1": "1227 Cedar Canyon Rd",
+    "address": [
+      "1227 Cedar Canyon Rd"
+    ],
+    "city": "Billings",
+    "country": "US",
+    "firstName": "Christa",
+    "lastName": "Lowery",
+    "name": "Christa Lowery",
+    "phone": "4064802876",
+    "postal": "59101",
+    "region": "MT",
+    "state": "MT"
+  },
+  "signatureRequiredFlag": false,
+  "testFlag": false,
+  "dscoCreateDate": "2025-11-12T23:00:27+00:00",
+  "expectedDeliveryDate": "2025-12-12T11:30:09+00:00",
+  "lineItems": [
+    {
+      "rejectedQuantity": 0,
+      "readyForPickup": false,
+      "activity": [
+        {
+          "quantity": 1,
+          "action": "add",
+          "uuid": "33c63ce4c20942b4bde0859ead8680ca",
+          "activityDate": "2025-11-12T23:00:27+00:00",
+          "updateDate": "2025-11-12T23:00:27+00:00"
+        }
+      ],
+      "acceptedQuantity": 0,
+      "title": "Druzy Bar - White - Gold Earrings",
+      "extendedExpectedCostTotal": 12.11,
+      "personalization": "10002360",
+      "expectedCost": 12.11,
+      "lineNumber": 1,
+      "cancelRequested": false,
+      "productGroup": "JAX-FA-081-DS",
+      "sku": "JAX-FA-081-DS",
+      "quantity": 1,
+      "expectedCostAdjustmentAllowed": false,
+      "retailerItemIds": [
+        "2504BD1DD"
+      ],
+      "giftFlag": false,
+      "retailerLineId": "202462808",
+      "consumerPrice": 26,
+      "partnerSku": "JAX-FA-081-DS",
+      "cancelledQuantity": 0,
+      "bogoFlag": false,
+      "dscoItemId": "1296623851"
+    }
+  ],
+  "dscoLastUpdate": "2025-11-12T23:02:05+00:00",
+  "dscoLifecycle": "created",
+  "dscoRetailerId": "1000051226",
+  "dscoShipLateDate": "2025-11-14T07:59:59+00:00",
+  "shippingServiceLevelCode": "GCG",
+  "dscoStatus": "created",
+  "dscoOrderId": "1026063942",
+  "dscoSupplierId": "1000062228",
+  "dscoSupplierName": "JaxKelly Inc",
+  "dscoTradingPartnerId": null,
+  "dscoTradingPartnerName": null
+}

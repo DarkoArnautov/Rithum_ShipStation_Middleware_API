@@ -1,0 +1,140 @@
+[dotenv@17.2.3] injecting env (12) from .env -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+[dotenv@17.2.3] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+🔍 Fetching order details from Rithum...
+   Order ID: 1026064160 
+
+✅ RithumClient initialized
+
+Fetching orders using /order/page endpoint...
+
+Rithum API Request (attempt 1): {
+  method: 'GET',
+  endpoint: '/order/page',
+  hasData: false,
+  hasParams: true
+}
+Getting access token from: https://api.dsco.io/api/v3/oauth2/token
+Access token obtained, expires in: 3600 seconds
+Rithum API Success (attempt 1): { status: 200, endpoint: '/order/page' }
+Found 100 orders
+
+📦 Order Details:
+═══════════════════════════════════════════════════════════
+Order ID: 1026064160
+PO Number: BOX.75594266.69955397
+Status: undefined
+Lifecycle: created
+Order Date: undefined
+
+📋 Line Items:
+─────────────────────────────────────────────────────────
+
+Item 1:
+  dscoItemId: 1296623841
+  SKU: JAX-FA-078-DS
+  Partner SKU: JAX-FA-078-DS
+  Title: Gold Hoop Sculptural Wide Earrings
+  Quantity: 1
+  Line Number: 1
+
+
+📦 Existing Shipments:
+─────────────────────────────────────────────────────────
+No shipments found
+
+═══════════════════════════════════════════════════════════
+
+📄 Full order JSON:
+
+{
+  "billTo": {},
+  "buyer": null,
+  "cancelRequested": false,
+  "cancelRequestedCode": null,
+  "channel": "2504BD1DD",
+  "consumerOrderDate": "2025-11-12T04:21:53+00:00",
+  "crossDockFlag": false,
+  "crossDockLocation": null,
+  "customer": null,
+  "deliveryMethod": null,
+  "extendedExpectedCostTotal": 14,
+  "giftFlag": false,
+  "giftWrapFlag": false,
+  "invoiceTo": null,
+  "orderType": "dropship",
+  "poNumber": "BOX.75594266.69955397",
+  "requestedShipCarrier": "Generic",
+  "requestedShipMethod": "Ground",
+  "requestedShippingServiceLevelCode": "GCG",
+  "requiredDeliveryDate": "2025-12-12T11:30:11+00:00",
+  "retailerCreateDate": "2025-11-12T11:30:11+00:00",
+  "shipByDate": "2025-11-22T07:59:00+00:00",
+  "shipCarrier": "Generic",
+  "shipMethod": "Ground",
+  "shipping": {
+    "address1": "433 S 7TH ST. APT 2001",
+    "address": [
+      "433 S 7TH ST. APT 2001"
+    ],
+    "city": "MINNEAPOLIS",
+    "country": "US",
+    "firstName": "Anna",
+    "lastName": "Achter",
+    "name": "Anna Achter",
+    "phone": "7153098651",
+    "postal": "55415",
+    "region": "MN",
+    "state": "MN"
+  },
+  "signatureRequiredFlag": false,
+  "testFlag": false,
+  "dscoCreateDate": "2025-11-12T23:00:30+00:00",
+  "expectedDeliveryDate": "2025-12-12T11:30:11+00:00",
+  "lineItems": [
+    {
+      "rejectedQuantity": 0,
+      "readyForPickup": false,
+      "activity": [
+        {
+          "quantity": 1,
+          "action": "add",
+          "uuid": "764351caa64b488a831d0c7c643455d7",
+          "activityDate": "2025-11-12T23:00:30+00:00",
+          "updateDate": "2025-11-12T23:00:30+00:00"
+        }
+      ],
+      "acceptedQuantity": 0,
+      "title": "Gold Hoop Sculptural Wide Earrings",
+      "extendedExpectedCostTotal": 14,
+      "personalization": "10002360",
+      "expectedCost": 14,
+      "lineNumber": 1,
+      "cancelRequested": false,
+      "productGroup": "JAX-FA-078-DS",
+      "sku": "JAX-FA-078-DS",
+      "quantity": 1,
+      "expectedCostAdjustmentAllowed": false,
+      "retailerItemIds": [
+        "2504BD1DD"
+      ],
+      "giftFlag": false,
+      "retailerLineId": "202463784",
+      "consumerPrice": 29,
+      "partnerSku": "JAX-FA-078-DS",
+      "cancelledQuantity": 0,
+      "bogoFlag": false,
+      "dscoItemId": "1296623841"
+    }
+  ],
+  "dscoLastUpdate": "2025-11-12T23:02:13+00:00",
+  "dscoLifecycle": "created",
+  "dscoRetailerId": "1000051226",
+  "dscoShipLateDate": "2025-11-14T07:59:59+00:00",
+  "shippingServiceLevelCode": "GCG",
+  "dscoStatus": "created",
+  "dscoOrderId": "1026064160",
+  "dscoSupplierId": "1000062228",
+  "dscoSupplierName": "JaxKelly Inc",
+  "dscoTradingPartnerId": null,
+  "dscoTradingPartnerName": null
+}
