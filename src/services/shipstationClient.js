@@ -782,6 +782,31 @@ class ShipStationClient {
     }
 
     /**
+     * Get label information for a shipment (includes cost)
+     * @param {string} shipmentId - ShipStation shipment ID
+     * @returns {Promise<Object>} Label information including shipment_cost
+     */
+    async getLabelByShipmentId(shipmentId) {
+        try {
+            const response = await this.client.get('/v2/labels', {
+                params: {
+                    shipment_id: shipmentId,
+                    page_size: 1
+                }
+            });
+            
+            if (response.data.labels && response.data.labels.length > 0) {
+                return response.data.labels[0];
+            } else {
+                throw new Error(`No label found for shipment ${shipmentId}`);
+            }
+        } catch (error) {
+            console.error(`Error fetching label for shipment ${shipmentId}:`, error.response?.status, error.response?.data);
+            throw error;
+        }
+    }
+
+    /**
      * Get tracking information by order number
      * @param {string} orderNumber - Order number (PO number or shipment number)
      * @returns {Promise<Object>} Tracking information

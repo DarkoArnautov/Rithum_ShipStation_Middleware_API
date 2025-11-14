@@ -96,7 +96,7 @@ function extractFulfillmentFromLegacyPayload(webhookData) {
     }
 }
 
-async function updateRithumOrderTracking(rithumClient, rithumOrderId, shipment, trackingInfo) {
+async function updateRithumOrderTracking(rithumClient, rithumOrderId, shipment, trackingInfo, shipstationClient = null, shipmentId = null) {
     if (!rithumClient) {
         throw new Error('Rithum client not available');
     }
@@ -107,8 +107,25 @@ async function updateRithumOrderTracking(rithumClient, rithumOrderId, shipment, 
 
     const trackingNumber = trackingInfo?.tracking_number || shipment.tracking_number;
     
+    // Try to get actual label cost from ShipStation
+    let labelCost = 0;
+    if (shipstationClient && shipmentId) {
+        try {
+            console.log(`   💰 Fetching label cost from ShipStation...`);
+            const label = await shipstationClient.getLabelByShipmentId(shipmentId);
+            if (label && label.shipment_cost && label.shipment_cost.amount) {
+                labelCost = label.shipment_cost.amount;
+                console.log(`   💰 Label Cost: $${labelCost} (from ShipStation label)`);
+            }
+        } catch (error) {
+            console.warn(`   ⚠️  Could not fetch label cost: ${error.message}`);
+        }
+    }
+    
     // Variable to store the requested shipping method from Rithum order
     let requestedShippingServiceLevelCode = null;
+    // Variable to store the Rithum order for accessing poNumber and other fields
+    let rithumOrder = null;
     
     // Check if order already has this shipment (avoid duplicates)
     console.log(`   🔍 Checking if shipment already exists in Rithum order ${rithumOrderId}...`);
@@ -144,7 +161,11 @@ async function updateRithumOrderTracking(rithumClient, rithumOrderId, shipment, 
         }
         
         if (existingOrder) {
+            // Store the order for later use (poNumber, etc.)
+            rithumOrder = existingOrder;
+            
             console.log(`   ✅ Found order ${rithumOrderId} - lifecycle: ${existingOrder.dscoLifecycle}`);
+            console.log(`      PO Number: ${existingOrder.poNumber || 'N/A'}`);
             console.log(`      Requested shipping: ${existingOrder.requestedShippingServiceLevelCode || 'N/A'}`);
             
             // Check if order is in wrong lifecycle state (not acknowledged or completed)
@@ -203,10 +224,13 @@ async function updateRithumOrderTracking(rithumClient, rithumOrderId, shipment, 
             // Store the requested shipping method from the order to use instead of ShipStation's method
             requestedShippingServiceLevelCode = existingOrder.requestedShippingServiceLevelCode;
         } else {
-            console.log(`   ⚠️  Order ${rithumOrderId} not found in recent orders - proceeding with shipment creation`);
+            console.log(`   ⚠️  Order ${rithumOrderId} not found in recent orders`);
+            console.log(`      This may fail if order is not in "acknowledged" lifecycle state`);
+            console.log(`      Proceeding with shipment creation anyway...`);
         }
     } catch (error) {
         console.warn(`   ⚠️  Could not check for existing shipment: ${error.message}`);
+        console.warn(`      This may fail if order is not in "acknowledged" lifecycle state`);
         console.warn(`      Proceeding with shipment creation anyway...`);
     }
     
@@ -248,15 +272,17 @@ async function updateRithumOrderTracking(rithumClient, rithumOrderId, shipment, 
             lineItem.dscoItemId = String(dscoItemId);
         }
 
-        // Fallback to other identifiers if no dscoItemId
-        if (!lineItem.dscoItemId) {
-            if (item.sku) {
-                lineItem.sku = String(item.sku);
-            } else if (item.partner_sku || item.partnerSku) {
-                lineItem.partnerSku = String(item.partner_sku || item.partnerSku);
-            } else if (item.upc) {
-                lineItem.upc = String(item.upc);
-            }
+        // ALWAYS include SKU (REQUIRED by Rithum API even if dscoItemId is present)
+        if (item.sku) {
+            lineItem.sku = String(item.sku);
+        }
+        
+        // Include other identifiers as well
+        if (item.partner_sku || item.partnerSku) {
+            lineItem.partnerSku = String(item.partner_sku || item.partnerSku);
+        }
+        if (item.upc) {
+            lineItem.upc = String(item.upc);
         }
 
         // Only include line item if it has at least one identifier
@@ -280,6 +306,14 @@ async function updateRithumOrderTracking(rithumClient, rithumOrderId, shipment, 
             }
         ]
     };
+    
+    // Add poNumber if we have the Rithum order (REQUIRED for singleShipment endpoint)
+    if (rithumOrder && rithumOrder.poNumber) {
+        shipmentData.poNumber = rithumOrder.poNumber;
+        console.log(`   📋 Using PO Number from order: ${rithumOrder.poNumber}`);
+    } else {
+        console.log(`   ⚠️  WARNING: No PO Number available (order not fetched or missing poNumber)`);
+    }
 
     // Add line items to the shipment
     if (lineItems.length > 0) {
@@ -311,13 +345,14 @@ async function updateRithumOrderTracking(rithumClient, rithumOrderId, shipment, 
         shipmentData.shipments[0].shipDate = shipDate;
     }
     
-    // Ship Cost - Extract from shipment (optional, only include if > 0)
-    const shipCost = shipment.shipping_amount?.amount || shipment.ship_cost || shipment.cost || null;
-    if (shipCost !== null && shipCost !== undefined && parseFloat(shipCost) > 0) {
-        shipmentData.shipments[0].shipCost = parseFloat(shipCost);
-        console.log(`   💰 Ship Cost: ${shipCost}`);
+    // Ship Cost - Use label cost if available, otherwise try shipment fields
+    // Label cost is the actual cost charged by the carrier for the label
+    const shipCost = labelCost || shipment.shipping_amount?.amount || shipment.ship_cost || shipment.cost || 0;
+    shipmentData.shipments[0].shipCost = parseFloat(shipCost);
+    if (labelCost) {
+        console.log(`   💰 Ship Cost: $${shipCost} (from label)`);
     } else {
-        console.log(`   💰 Ship Cost: Not provided (0 or null)`);
+        console.log(`   💰 Ship Cost: $${shipCost} (from shipment or default)`);
     }
     
     // Ship Weight (REQUIRED) - Extract from shipment packages or total_weight
@@ -352,33 +387,32 @@ async function updateRithumOrderTracking(rithumClient, rithumOrderId, shipment, 
         
         // Convert weight unit to Rithum format
         // ShipStation uses: ounce, pound, gram, kilogram (singular, lowercase)
-        // Rithum expects: LB, oz, g, kg (uppercase LB, lowercase others - based on actual API data)
-        // Note: API spec shows lowercase (lb, oz, g, kg) but actual data uses uppercase LB
+        // Rithum expects uppercase: OZ, LB, G, KG (matching test-sync-shipment.js format)
         const weightUnitMap = {
-            'oz': 'oz',
-            'ounce': 'oz',
-            'ounces': 'oz',
+            'oz': 'OZ',
+            'ounce': 'OZ',
+            'ounces': 'OZ',
             'lb': 'LB',
             'lbs': 'LB',
             'pound': 'LB',
             'pounds': 'LB',
-            'g': 'g',
-            'gram': 'g',
-            'grams': 'g',
-            'kg': 'kg',
-            'kilogram': 'kg',
-            'kilograms': 'kg'
+            'g': 'G',
+            'gram': 'G',
+            'grams': 'G',
+            'kg': 'KG',
+            'kilogram': 'KG',
+            'kilograms': 'KG'
         };
         
-        const normalizedUnit = weightUnitMap[String(shipWeightUnit).toLowerCase()] || 'oz';
+        const normalizedUnit = weightUnitMap[String(shipWeightUnit).toLowerCase()] || 'OZ';
         shipmentData.shipments[0].shipWeightUnits = normalizedUnit;
         
         console.log(`   ⚖️  Ship Weight: ${shipWeight} ${normalizedUnit}`);
     } else {
         // Default weight if not available (required field)
         shipmentData.shipments[0].shipWeight = 1;
-        shipmentData.shipments[0].shipWeightUnits = 'oz';
-        console.log(`   ⚖️  Ship Weight: 1 oz (default - weight not found in shipment)`);
+        shipmentData.shipments[0].shipWeightUnits = 'OZ';
+        console.log(`   ⚖️  Ship Weight: 1 OZ (default - weight not found in shipment)`);
     }
     
     // Determine which shipping method to use
@@ -447,6 +481,7 @@ async function updateRithumOrderTracking(rithumClient, rithumOrderId, shipment, 
     shipmentData.shipments[0].carrierManifestId = carrierManifestId;
     shipmentData.shipments[0].shippingServiceLevelCode = rithumShippingMethod;
     shipmentData.shipments[0].shipMethod = shipMethodMap[rithumShippingMethod] || 'Ground';
+    shipmentData.shipments[0].shipCarrier = carrierManifestId;  // REQUIRED field - same as carrierManifestId
     
     console.log(`   📦 Carrier Manifest ID: ${carrierManifestId}`);
     console.log(`   🚚 Shipping Service Level Code: ${rithumShippingMethod}`);
@@ -476,20 +511,6 @@ async function updateRithumOrderTracking(rithumClient, rithumOrderId, shipment, 
     };
 }
 
-/**
- * Step 2: Track Shipped Orders Info
- * 
- * This script processes ShipStation webhook events for shipped orders.
- * It extracts and tracks shipment and tracking information WITHOUT sending to Rithum.
- * 
- * Usage:
- * 1. As a webhook handler: POST webhook payload to this script
- * 2. As a standalone processor: Pass webhook payload as argument
- */
-
-/**
- * Load existing tracked orders from file
- */
 async function loadTrackedOrders() {
     try {
         const data = await fs.readFile(TRACKING_FILE, 'utf8');
@@ -520,11 +541,6 @@ async function saveTrackedOrders(data) {
     }
 }
 
-/**
- * Extract Rithum order ID from shipment
- * Tries multiple methods to find the dscoOrderId
- * This is stored in customField2 or tags when orders are created via the middleware
- */
 async function extractRithumOrderId(shipment, shipstationClient = null) {
     let rithumOrderId = null;
 
@@ -640,50 +656,39 @@ async function extractRithumOrderId(shipment, shipstationClient = null) {
 async function processLabelCreatedWebhook(webhookData, shipstationClient, rithumClient) {
     try {
         let shipmentId = null;
-        
-        // Try to get shipment_id from direct data first
         const shipmentData = webhookData.shipment || webhookData.data || webhookData.label?.shipment;
         if (shipmentData && shipmentData.shipment_id) {
             shipmentId = shipmentData.shipment_id;
         }
         
-        // If not found, try to extract from resource_url (label_created_v2 format)
         if (!shipmentId && webhookData.resource_url) {
             try {
                 const resourceUrl = new URL(webhookData.resource_url);
                 
-                // Check if resource_url has shipment_id in the path (e.g., /v2/shipments/se-920103002)
                 const pathMatch = resourceUrl.pathname.match(/\/shipments\/([^\/]+)/);
                 if (pathMatch) {
                     shipmentId = pathMatch[1];
                     console.log(`   ✅ Found shipment_id in resource_url path: ${shipmentId}`);
                 }
                 
-                // Check if resource_url has shipment_id as query param
                 if (!shipmentId) {
                     shipmentId = resourceUrl.searchParams.get('shipment_id');
                 }
                 
-                // If not, try to get batch_id and fetch labels
                 if (!shipmentId) {
                     const batchId = resourceUrl.searchParams.get('batch_id');
                     if (batchId) {
-                        console.log(`   🔍 Fetching labels from batch: ${batchId}`);
-                        // Fetch labels by batch_id to get shipment_id
                         const labelsResponse = await shipstationClient.client.get('/v2/labels', {
                             params: { batch_id: batchId }
                         });
                         
                         const labels = labelsResponse.data?.labels || labelsResponse.data || [];
                         if (Array.isArray(labels) && labels.length > 0) {
-                            // Get shipment_id from first label
                             shipmentId = labels[0].shipment_id;
                             console.log(`   ✅ Found shipment_id from batch labels: ${shipmentId}`);
                             
-                            // Also check if tracking number is available in the label
                             if (labels[0].tracking_number) {
                                 console.log(`   ✅ Found tracking number in batch label: ${labels[0].tracking_number}`);
-                                // Store this for later use
                                 webhookData._labelTrackingNumber = labels[0].tracking_number;
                                 webhookData._labelCarrierId = labels[0].carrier_id;
                                 webhookData._labelCarrierCode = labels[0].carrier_code;
@@ -701,14 +706,9 @@ async function processLabelCreatedWebhook(webhookData, shipstationClient, rithum
         }
 
         console.log(`\n🏷️  Processing label created webhook:`);
-        console.log(`   Shipment ID: ${shipmentId}`);
-
-        // Get full shipment details from ShipStation
-        console.log(`   🔍 Fetching full shipment details...`);
         const shipment = await shipstationClient.getShipmentById(shipmentId);
         let trackingInfo = await shipstationClient.getShipmentTracking(shipmentId);
         
-        // If tracking number is not available from shipment, try to get it from labels
         if (!trackingInfo.tracking_number) {
             // First, check if we already have tracking from batch labels
             if (webhookData._labelTrackingNumber) {
@@ -802,7 +802,9 @@ async function processLabelCreatedWebhook(webhookData, shipstationClient, rithum
                     rithumClient,
                     rithumOrderId,
                     shipment,
-                    trackingInfo
+                    trackingInfo,
+                    shipstationClient,  // Pass ShipStation client
+                    shipmentId          // Pass shipment ID for label lookup
                 );
                 
                 trackedOrder.rithumUpdated = true;
@@ -994,7 +996,9 @@ async function processFulfillmentShippedWebhook(webhookData, shipstationClient, 
                     rithumClient,
                     rithumOrderId,
                     shipment,
-                    trackingInfo
+                    trackingInfo,
+                    shipstationClient,  // Pass ShipStation client
+                    shipmentId          // Pass shipment ID for label lookup
                 );
                 
                 trackedOrder.rithumUpdated = true;
@@ -1102,8 +1106,6 @@ async function processWebhookEvent(webhookData, shipstationClient, rithumClient)
         throw new Error('Missing event type in webhook payload');
     }
 
-    console.log(`\n📨 Processing webhook event: ${eventTypeRaw}`);
-
     switch (eventType) {
         case 'fulfillment_shipped_v2':
         case 'fulfillment_shipped_v2 (legacy)':
@@ -1112,11 +1114,9 @@ async function processWebhookEvent(webhookData, shipstationClient, rithumClient)
             return await processFulfillmentShippedWebhook(webhookData, shipstationClient, rithumClient);
 
         case 'label_created_v2':
-            // Process label_created_v2 - update Rithum when label is created
             return await processLabelCreatedWebhook(webhookData, shipstationClient, rithumClient);
 
         case 'shipment_created_v2':
-            console.log(`   ℹ️  Shipment created event - shipment may not be shipped yet`);
             return {
                 success: true,
                 message: 'Shipment created event received (not tracking - waiting for fulfillment_shipped_v2)',
@@ -1133,12 +1133,8 @@ async function processWebhookEvent(webhookData, shipstationClient, rithumClient)
     }
 }
 
-/**
- * Main function to process webhook
- */
 async function trackShippedOrder(webhookPayload) {
     try {
-        // Validate ShipStation configuration
         let shipstationClient = null;
         try {
             validateShipStationConfig();
@@ -1153,8 +1149,6 @@ async function trackShippedOrder(webhookPayload) {
             console.error('❌ Failed to initialize ShipStation client:', error.message);
             throw new Error('ShipStation client not configured');
         }
-
-        // Initialize Rithum client (optional but recommended)
         let rithumClient = null;
         try {
             validateRithumConfig();
@@ -1166,10 +1160,7 @@ async function trackShippedOrder(webhookPayload) {
             console.log('✅ Rithum client initialized\n');
         } catch (error) {
             console.warn('⚠️  Rithum client not available:', error.message);
-            console.warn('   Tracking will be stored locally but not pushed to Rithum.');
         }
-
-        // Process webhook
         const result = await processWebhookEvent(webhookPayload, shipstationClient, rithumClient);
 
         return result;
@@ -1224,11 +1215,8 @@ async function getTrackingSummary() {
  */
 function startWebhookServer() {
     const app = express();
-    
-    // Middleware
     app.use(express.json());
-    
-    // Health check endpoint
+
     app.get('/health', (req, res) => {
         res.json({
             status: 'ok',
@@ -1239,10 +1227,7 @@ function startWebhookServer() {
     
     const webhookHandler = async (req, res) => {
         try {
-            console.log('\n' + '='.repeat(80));
             console.log('📨 Received webhook request');
-            console.log('='.repeat(80));
-
             // Process the webhook
             const result = await trackShippedOrder(req.body);
 
@@ -1341,12 +1326,7 @@ if (require.main === module) {
                 });
         } catch (error) {
             console.error('❌ Invalid JSON payload:', error.message);
-            console.log('\nUsage:');
-            console.log('  node webhook_step2.js                    # Show summary');
-            console.log('  node webhook_step2.js --summary          # Show summary');
-            console.log('  node webhook_step2.js --server           # Start webhook server (for ngrok)');
-            console.log('  node webhook_step2.js \'{"event":"fulfillment_shipped_v2",...}\'  # Process webhook');
-            process.exit(1);
+                        process.exit(1);
         }
     }
 }

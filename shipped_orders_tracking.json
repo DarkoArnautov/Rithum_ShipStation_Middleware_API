@@ -1,909 +1,21 @@
 {
   "trackedOrders": [
     {
-      "timestamp": "2025-11-11T18:25:49.391Z",
+      "timestamp": "2025-11-14T09:53:03.300Z",
       "webhookEvent": "label_created_v2",
       "shipment": {
-        "shipment_id": "se-793765426",
-        "shipment_number": "R627NUTD2T",
-        "external_shipment_id": "bo_r627nutd2t",
+        "shipment_id": "se-920983019",
+        "shipment_number": "BOX.75594204.69954565",
+        "external_shipment_id": "1026064165",
         "shipment_status": "label_purchased",
-        "created_at": "2024-11-14T16:19:37.04Z",
-        "modified_at": "2025-11-11T18:25:25.817Z"
+        "created_at": "2025-11-12T23:31:53.96Z",
+        "modified_at": "2025-11-14T09:52:48.607Z"
       },
       "tracking": {
-        "tracking_number": null,
-        "carrier_id": "se-287927",
-        "ship_date": "2025-11-12T00:00:00Z",
-        "packages": [
-          {
-            "package_id": "se-162091",
-            "tracking_number": null,
-            "carrier": null,
-            "dimensions": {
-              "unit": "inch",
-              "length": 6,
-              "width": 6,
-              "height": 2
-            },
-            "weight": {
-              "value": 8,
-              "unit": "ounce",
-              "display": "8 ounce"
-            }
-          }
-        ]
-      },
-      "shipping": {
-        "ship_to": {
-          "geolocation": null,
-          "instructions": null,
-          "name": "Riham LaRussa",
-          "phone": "6145710801",
-          "email": null,
-          "company_name": "SMALL PACKAGES",
-          "address_line1": "7 DOGGETT COAT PL",
-          "address_line2": "",
-          "address_line3": null,
-          "city_locality": "SARATOGA SPGS",
-          "state_province": "NY",
-          "postal_code": "12866-8313",
-          "country_code": "US",
-          "address_residential_indicator": "yes"
-        },
-        "ship_from": {
-          "instructions": null,
-          "name": "JaxKelly Inc",
-          "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
-          "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
-          "city_locality": "San Diego",
-          "state_province": "CA",
-          "postal_code": "92101",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        }
-      },
-      "rithumOrderId": null,
-      "rithumUpdated": false,
-      "rithumUpdate": {
-        "attempted": false,
-        "success": false,
-        "updatedAt": null,
-        "trackingNumber": null,
-        "carrier": null,
-        "error": {
-          "message": "Rithum order ID not found on shipment"
-        }
-      },
-      "note": "Label created - tracking captured - awaiting Rithum update"
-    },
-    {
-      "timestamp": "2025-11-12T06:19:18.328Z",
-      "webhookEvent": "manual_reprocess",
-      "shipment": {
-        "shipment_id": "se-918673875",
-        "shipment_number": "BOX.75542113.69929224",
-        "external_shipment_id": "1021520946",
-        "shipment_status": "label_purchased"
-      },
-      "tracking": {
-        "tracking_number": null,
-        "carrier_id": null,
-        "ship_date": "2025-11-11T00:00:00Z"
-      },
-      "rithumOrderId": "1021520946",
-      "rithumUpdated": true,
-      "rithumUpdate": {
-        "attempted": true,
-        "success": true,
-        "updatedAt": "2025-11-12T06:19:18.334Z",
-        "carrier": null,
-        "error": null,
-        "responses": {
-          "status": {
-            "status": "pending",
-            "requestId": "8a6230e9-2974-492d-a1b9-b3fb36f2c553",
-            "eventDate": "2025-11-12T06:19:20.711Z",
-            "messages": [
-              {
-                "code": "submitted",
-                "severity": "info",
-                "description": [
-                  "Asynchronous request submitted"
-                ]
-              }
-            ]
-          }
-        }
-      },
-      "note": "Manually reprocessed - no tracking available - status updated in Rithum"
-    },
-    {
-      "timestamp": "2025-11-12T06:44:42.018Z",
-      "webhookEvent": "label_created_v2",
-      "shipment": {
-        "shipment_id": "se-920420902",
-        "shipment_number": "100006",
-        "external_shipment_id": "aa924c33-9300-cacb-4296-c5275313959e",
-        "shipment_status": "label_purchased",
-        "created_at": "2025-11-11T19:15:16.673Z",
-        "modified_at": "2025-11-11T19:17:04.32Z"
-      },
-      "tracking": {
-        "tracking_number": "395225103514",
-        "carrier_id": "se-996890",
-        "carrier_name": "fedex_walleted",
-        "ship_date": "2025-11-11T00:00:00Z",
-        "packages": [
-          {
-            "package_id": "se-163342",
-            "tracking_number": null,
-            "carrier": null,
-            "dimensions": {
-              "unit": "inch",
-              "length": 13,
-              "width": 9,
-              "height": 11
-            },
-            "weight": {
-              "value": 16,
-              "unit": "ounce",
-              "display": "16 ounce"
-            }
-          }
-        ]
-      },
-      "shipping": {
-        "ship_to": {
-          "geolocation": null,
-          "instructions": null,
-          "name": "James Smith - Cervical - 1 Level Cervical Fusion - null cm0pljxsf000qq1z091ae0pu1",
-          "phone": "1231123123",
-          "email": "test@gmail.com",
-          "company_name": null,
-          "address_line1": "Austin School Of Fashion Design - ASFD, Research Boulevard, Austin, TX, USA",
-          "address_line2": null,
-          "address_line3": null,
-          "city_locality": "Austin",
-          "state_province": "TX",
-          "postal_code": "78759",
-          "country_code": "US",
-          "address_residential_indicator": "unknown"
-        },
-        "ship_from": {
-          "instructions": null,
-          "name": "JaxKelly Inc",
-          "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
-          "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
-          "city_locality": "San Diego",
-          "state_province": "CA",
-          "postal_code": "92101",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        }
-      },
-      "rithumOrderId": "100006",
-      "rithumUpdated": true,
-      "rithumUpdate": {
-        "attempted": true,
-        "success": true,
-        "updatedAt": "2025-11-12T06:44:45.576Z",
-        "trackingNumber": "395225103514",
-        "carrier": "fedex_walleted",
-        "error": null,
-        "lineItemCount": 0,
-        "responses": {
-          "status": {
-            "status": "pending",
-            "requestId": "e97a45da-d736-4a35-9d20-0b0f0320b011",
-            "eventDate": "2025-11-12T06:44:45.389Z",
-            "messages": [
-              {
-                "code": "submitted",
-                "severity": "info",
-                "description": [
-                  "Asynchronous request submitted"
-                ]
-              }
-            ]
-          }
-        }
-      },
-      "note": "Label created - tracking: 395225103514 - order status updated in Rithum"
-    },
-    {
-      "timestamp": "2025-11-12T07:23:20.636Z",
-      "webhookEvent": "label_created_v2",
-      "shipment": {
-        "shipment_id": "se-920103002",
-        "shipment_number": "BOX.75561772.69627620",
-        "external_shipment_id": "1024721194",
-        "shipment_status": "label_purchased",
-        "created_at": "2025-11-10T23:30:38.527Z",
-        "modified_at": "2025-11-12T06:49:00.973Z"
-      },
-      "tracking": {
-        "tracking_number": "1ZAC66380303317107",
-        "carrier_id": "se-733076",
-        "carrier_name": "ups",
-        "ship_date": "2025-11-20T00:00:00Z",
-        "packages": [
-          {
-            "package_id": "se-163343",
-            "tracking_number": null,
-            "carrier": null,
-            "dimensions": {
-              "unit": "inch",
-              "length": 22,
-              "width": 14,
-              "height": 12
-            },
-            "weight": {
-              "value": 16,
-              "unit": "ounce",
-              "display": "16 ounce"
-            }
-          }
-        ]
-      },
-      "shipping": {
-        "ship_to": {
-          "geolocation": null,
-          "instructions": null,
-          "name": "Erin Chaney",
-          "phone": "(971) 235-6658",
-          "email": null,
-          "company_name": null,
-          "address_line1": "3741 N VANCOUVER AVE",
-          "address_line2": "",
-          "address_line3": null,
-          "city_locality": "PORTLAND",
-          "state_province": "OR",
-          "postal_code": "97227-1429",
-          "country_code": "US",
-          "address_residential_indicator": "yes"
-        },
-        "ship_from": {
-          "instructions": null,
-          "name": "JaxKelly Inc",
-          "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
-          "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
-          "city_locality": "San Diego",
-          "state_province": "CA",
-          "postal_code": "92101",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        }
-      },
-      "rithumOrderId": "1024721194",
-      "rithumUpdated": true,
-      "rithumUpdate": {
-        "attempted": true,
-        "success": true,
-        "updatedAt": "2025-11-12T07:23:23.814Z",
-        "trackingNumber": "1ZAC66380303317107",
-        "carrier": "ups",
-        "error": null,
-        "lineItemCount": 1,
-        "responses": {
-          "status": {
-            "status": "pending",
-            "requestId": "127b6db1-f9b1-4f05-abf6-672c4a995915",
-            "eventDate": "2025-11-12T07:23:23.639Z",
-            "messages": [
-              {
-                "code": "submitted",
-                "severity": "info",
-                "description": [
-                  "Asynchronous request submitted"
-                ]
-              }
-            ]
-          }
-        }
-      },
-      "note": "Label created - tracking: 1ZAC66380303317107 - order status updated in Rithum"
-    },
-    {
-      "timestamp": "2025-11-12T09:43:11.177Z",
-      "webhookEvent": "label_created_v2",
-      "shipment": {
-        "shipment_id": "se-920513303",
-        "shipment_number": "BOX.75583867.69949875",
-        "external_shipment_id": "1025416768",
-        "shipment_status": "label_purchased",
-        "created_at": "2025-11-11T23:30:29.337Z",
-        "modified_at": "2025-11-12T08:25:02.133Z"
-      },
-      "tracking": {
-        "tracking_number": "1ZAC66381515974728",
-        "carrier_id": "se-733076",
-        "carrier_name": "ups",
-        "ship_date": "2025-11-21T00:00:00Z",
-        "packages": [
-          {
-            "package_id": "se-3",
-            "tracking_number": null,
-            "carrier": null,
-            "dimensions": {
-              "unit": "inch",
-              "length": 1,
-              "width": 0,
-              "height": 0
-            },
-            "weight": {
-              "value": 16,
-              "unit": "ounce",
-              "display": "16 ounce"
-            }
-          }
-        ]
-      },
-      "shipping": {
-        "ship_to": {
-          "geolocation": null,
-          "instructions": null,
-          "name": "Sasha Mencias",
-          "phone": "16462089433",
-          "email": null,
-          "company_name": null,
-          "address_line1": "475 SHALER BLVD",
-          "address_line2": "",
-          "address_line3": null,
-          "city_locality": "RIDGEFIELD",
-          "state_province": "NJ",
-          "postal_code": "07657-2448",
-          "country_code": "US",
-          "address_residential_indicator": "yes"
-        },
-        "ship_from": {
-          "instructions": null,
-          "name": "JaxKelly Inc",
-          "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
-          "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
-          "city_locality": "San Diego",
-          "state_province": "CA",
-          "postal_code": "92101",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        }
-      },
-      "rithumOrderId": "1025416768",
-      "rithumUpdated": true,
-      "rithumUpdate": {
-        "attempted": true,
-        "success": true,
-        "updatedAt": "2025-11-12T09:43:15.151Z",
-        "trackingNumber": "1ZAC66381515974728",
-        "carrier": "UPS",
-        "error": null,
-        "lineItemCount": 1,
-        "responses": {
-          "status": {
-            "skipped": true,
-            "reason": "Duplicate tracking on completed order"
-          }
-        }
-      },
-      "note": "Label created - tracking: 1ZAC66381515974728 - order status updated in Rithum"
-    },
-    {
-      "timestamp": "2025-11-12T09:12:32.219Z",
-      "webhookEvent": "label_created_v2",
-      "shipment": {
-        "shipment_id": "se-920513286",
-        "shipment_number": "BOX.75584273.69951460",
-        "external_shipment_id": "1025416466",
-        "shipment_status": "label_purchased",
-        "created_at": "2025-11-11T23:30:22.533Z",
-        "modified_at": "2025-11-12T09:12:14.807Z"
-      },
-      "tracking": {
-        "tracking_number": "1ZAC66381532365103",
-        "carrier_id": "se-733076",
-        "carrier_name": "ups",
-        "ship_date": "2025-11-21T00:00:00Z",
-        "packages": [
-          {
-            "package_id": "se-3",
-            "tracking_number": null,
-            "carrier": null,
-            "dimensions": {
-              "unit": "inch",
-              "length": 0,
-              "width": 0,
-              "height": 0
-            },
-            "weight": {
-              "value": 8,
-              "unit": "ounce",
-              "display": "8 ounce"
-            }
-          }
-        ]
-      },
-      "shipping": {
-        "ship_to": {
-          "geolocation": null,
-          "instructions": null,
-          "name": "Kayla Bonsall",
-          "phone": "17575754007",
-          "email": null,
-          "company_name": null,
-          "address_line1": "1804 GARNET AVE PMB 340",
-          "address_line2": "",
-          "address_line3": null,
-          "city_locality": "SAN DIEGO",
-          "state_province": "CA",
-          "postal_code": "92109-3352",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        },
-        "ship_from": {
-          "instructions": null,
-          "name": "JaxKelly Inc",
-          "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
-          "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
-          "city_locality": "San Diego",
-          "state_province": "CA",
-          "postal_code": "92101",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        }
-      },
-      "rithumOrderId": "1025416466",
-      "rithumUpdated": true,
-      "rithumUpdate": {
-        "attempted": true,
-        "success": true,
-        "updatedAt": "2025-11-12T09:12:35.415Z",
-        "trackingNumber": "1ZAC66381532365103",
-        "carrier": "ups",
-        "error": null,
-        "lineItemCount": 1,
-        "responses": {
-          "status": {
-            "status": "pending",
-            "requestId": "b1e4cc43-f89b-4217-bfa5-7ee28b389093",
-            "eventDate": "2025-11-12T09:12:35.287Z",
-            "messages": [
-              {
-                "code": "submitted",
-                "severity": "info",
-                "description": [
-                  "Asynchronous request submitted"
-                ]
-              }
-            ]
-          }
-        }
-      },
-      "note": "Label created - tracking: 1ZAC66381532365103 - order status updated in Rithum"
-    },
-    {
-      "timestamp": "2025-11-12T09:26:06.422Z",
-      "webhookEvent": "label_created_v2",
-      "shipment": {
-        "shipment_id": "se-920513299",
-        "shipment_number": "BOX.75583492.69950873",
-        "external_shipment_id": "1025416411",
-        "shipment_status": "label_purchased",
-        "created_at": "2025-11-11T23:30:27.697Z",
-        "modified_at": "2025-11-12T09:25:59.967Z"
-      },
-      "tracking": {
-        "tracking_number": "1ZAC66381500377946",
-        "carrier_id": "se-733076",
-        "carrier_name": "ups",
-        "ship_date": "2025-11-21T00:00:00Z",
-        "packages": [
-          {
-            "package_id": "se-3",
-            "tracking_number": null,
-            "carrier": null,
-            "dimensions": {
-              "unit": "inch",
-              "length": 0,
-              "width": 0,
-              "height": 0
-            },
-            "weight": {
-              "value": 1,
-              "unit": "ounce",
-              "display": "1 ounce"
-            }
-          }
-        ]
-      },
-      "shipping": {
-        "ship_to": {
-          "geolocation": null,
-          "instructions": null,
-          "name": "Kim Llacuna",
-          "phone": "16144035370",
-          "email": null,
-          "company_name": null,
-          "address_line1": "38 S SUMMIT ST",
-          "address_line2": "",
-          "address_line3": null,
-          "city_locality": "WESTERVILLE",
-          "state_province": "OH",
-          "postal_code": "43081-1621",
-          "country_code": "US",
-          "address_residential_indicator": "yes"
-        },
-        "ship_from": {
-          "instructions": null,
-          "name": "JaxKelly Inc",
-          "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
-          "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
-          "city_locality": "San Diego",
-          "state_province": "CA",
-          "postal_code": "92101",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        }
-      },
-      "rithumOrderId": "1025416411",
-      "rithumUpdated": true,
-      "rithumUpdate": {
-        "attempted": true,
-        "success": true,
-        "updatedAt": "2025-11-12T09:26:09.831Z",
-        "trackingNumber": "1ZAC66381500377946",
-        "carrier": "ups",
-        "error": null,
-        "lineItemCount": 1,
-        "responses": {
-          "status": {
-            "status": "pending",
-            "requestId": "366e53b1-28ef-4cfd-9617-f0a57c077ca3",
-            "eventDate": "2025-11-12T09:26:09.707Z",
-            "messages": [
-              {
-                "code": "submitted",
-                "severity": "info",
-                "description": [
-                  "Asynchronous request submitted"
-                ]
-              }
-            ]
-          }
-        }
-      },
-      "note": "Label created - tracking: 1ZAC66381500377946 - order status updated in Rithum"
-    },
-    {
-      "timestamp": "2025-11-12T09:38:50.448Z",
-      "webhookEvent": "label_created_v2",
-      "shipment": {
-        "shipment_id": "se-920513301",
-        "shipment_number": "BOX.75584328.69950026",
-        "external_shipment_id": "1025416193",
-        "shipment_status": "label_purchased",
-        "created_at": "2025-11-11T23:30:28.507Z",
-        "modified_at": "2025-11-12T09:08:36.12Z"
-      },
-      "tracking": {
-        "tracking_number": "1ZAC66380114540134",
-        "carrier_id": "se-733076",
-        "carrier_name": "ups",
-        "ship_date": "2025-11-21T00:00:00Z",
-        "packages": [
-          {
-            "package_id": "se-3",
-            "tracking_number": null,
-            "carrier": null,
-            "dimensions": {
-              "unit": "inch",
-              "length": 0,
-              "width": 0,
-              "height": 0
-            },
-            "weight": {
-              "value": 16,
-              "unit": "ounce",
-              "display": "16 ounce"
-            }
-          }
-        ]
-      },
-      "shipping": {
-        "ship_to": {
-          "geolocation": null,
-          "instructions": null,
-          "name": "Angel Knight",
-          "phone": "13216635474",
-          "email": null,
-          "company_name": null,
-          "address_line1": "3532 HOLLIDAY AVE",
-          "address_line2": "",
-          "address_line3": null,
-          "city_locality": "APOPKA",
-          "state_province": "FL",
-          "postal_code": "32703-6727",
-          "country_code": "US",
-          "address_residential_indicator": "yes"
-        },
-        "ship_from": {
-          "instructions": null,
-          "name": "JaxKelly Inc",
-          "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
-          "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
-          "city_locality": "San Diego",
-          "state_province": "CA",
-          "postal_code": "92101",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        }
-      },
-      "rithumOrderId": "1025416193",
-      "rithumUpdated": true,
-      "rithumUpdate": {
-        "attempted": true,
-        "success": true,
-        "updatedAt": "2025-11-12T09:38:53.554Z",
-        "trackingNumber": "1ZAC66380114540134",
-        "carrier": "ups",
-        "error": null,
-        "lineItemCount": 1,
-        "responses": {
-          "status": {
-            "status": "pending",
-            "requestId": "6ed906e0-d802-4da8-aabe-470236bf952c",
-            "eventDate": "2025-11-12T09:38:53.444Z",
-            "messages": [
-              {
-                "code": "submitted",
-                "severity": "info",
-                "description": [
-                  "Asynchronous request submitted"
-                ]
-              }
-            ]
-          }
-        }
-      },
-      "note": "Label created - tracking: 1ZAC66380114540134 - order status updated in Rithum"
-    },
-    {
-      "timestamp": "2025-11-12T09:48:41.923Z",
-      "webhookEvent": "label_created_v2",
-      "shipment": {
-        "shipment_id": "se-920513297",
-        "shipment_number": "BOX.75584928.69949614",
-        "external_shipment_id": "1025416247",
-        "shipment_status": "label_purchased",
-        "created_at": "2025-11-11T23:30:25.6Z",
-        "modified_at": "2025-11-12T09:48:29.71Z"
-      },
-      "tracking": {
-        "tracking_number": "1ZAC66380129201919",
-        "carrier_id": "se-733076",
-        "carrier_name": "ups",
-        "ship_date": "2025-11-21T00:00:00Z",
-        "packages": [
-          {
-            "package_id": "se-3",
-            "tracking_number": null,
-            "carrier": null,
-            "dimensions": {
-              "unit": "inch",
-              "length": 0,
-              "width": 0,
-              "height": 0
-            },
-            "weight": {
-              "value": 16,
-              "unit": "ounce",
-              "display": "16 ounce"
-            }
-          }
-        ]
-      },
-      "shipping": {
-        "ship_to": {
-          "geolocation": null,
-          "instructions": null,
-          "name": "Karin Dugan",
-          "phone": "9492544123",
-          "email": null,
-          "company_name": null,
-          "address_line1": "41 CHAPITAL",
-          "address_line2": "",
-          "address_line3": null,
-          "city_locality": "SAN CLEMENTE",
-          "state_province": "CA",
-          "postal_code": "92672-9311",
-          "country_code": "US",
-          "address_residential_indicator": "yes"
-        },
-        "ship_from": {
-          "instructions": null,
-          "name": "JaxKelly Inc",
-          "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
-          "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
-          "city_locality": "San Diego",
-          "state_province": "CA",
-          "postal_code": "92101",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        }
-      },
-      "rithumOrderId": "1025416247",
-      "rithumUpdated": true,
-      "rithumUpdate": {
-        "attempted": true,
-        "success": true,
-        "updatedAt": "2025-11-12T09:48:46.252Z",
-        "trackingNumber": "1ZAC66380129201919",
-        "carrier": "ups",
-        "error": null,
-        "lineItemCount": 1,
-        "responses": {
-          "status": {
-            "status": "pending",
-            "requestId": "08b059ff-ff54-4c42-a48a-4258ff3a426b",
-            "eventDate": "2025-11-12T09:48:46.142Z",
-            "messages": [
-              {
-                "code": "submitted",
-                "severity": "info",
-                "description": [
-                  "Asynchronous request submitted"
-                ]
-              }
-            ]
-          }
-        }
-      },
-      "note": "Label created - tracking: 1ZAC66380129201919 - order status updated in Rithum"
-    },
-    {
-      "timestamp": "2025-11-12T10:15:26.495Z",
-      "webhookEvent": "label_created_v2",
-      "shipment": {
-        "shipment_id": "se-920513298",
-        "shipment_number": "BOX.75588797.69952355",
-        "external_shipment_id": "1025416727",
-        "shipment_status": "label_purchased",
-        "created_at": "2025-11-11T23:30:26.463Z",
-        "modified_at": "2025-11-12T10:03:59.64Z"
-      },
-      "tracking": {
-        "tracking_number": "1ZAC66381533817926",
-        "carrier_id": "se-733076",
-        "carrier_name": "ups",
-        "ship_date": "2025-11-21T00:00:00Z",
-        "packages": [
-          {
-            "package_id": "se-3",
-            "tracking_number": null,
-            "carrier": null,
-            "dimensions": {
-              "unit": "inch",
-              "length": 0,
-              "width": 0,
-              "height": 0
-            },
-            "weight": {
-              "value": 16,
-              "unit": "ounce",
-              "display": "16 ounce"
-            }
-          }
-        ]
-      },
-      "shipping": {
-        "ship_to": {
-          "geolocation": null,
-          "instructions": null,
-          "name": "Elizabeth Kauachi",
-          "phone": "12103506482",
-          "email": null,
-          "company_name": null,
-          "address_line1": "1698 LUCKENBACH CAIN CITY RD",
-          "address_line2": "",
-          "address_line3": null,
-          "city_locality": "FREDERICKSBRG",
-          "state_province": "TX",
-          "postal_code": "78624-4949",
-          "country_code": "US",
-          "address_residential_indicator": "yes"
-        },
-        "ship_from": {
-          "instructions": null,
-          "name": "JaxKelly Inc",
-          "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
-          "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
-          "city_locality": "San Diego",
-          "state_province": "CA",
-          "postal_code": "92101",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        }
-      },
-      "rithumOrderId": "1025416727",
-      "rithumUpdated": true,
-      "rithumUpdate": {
-        "attempted": true,
-        "success": true,
-        "updatedAt": "2025-11-12T10:15:30.753Z",
-        "trackingNumber": "1ZAC66381533817926",
-        "carrier": "ups",
-        "error": null,
-        "lineItemCount": 1,
-        "responses": {
-          "status": {
-            "status": "pending",
-            "requestId": "607f680a-8965-4e58-8769-883b2d771346",
-            "eventDate": "2025-11-12T10:15:30.650Z",
-            "messages": [
-              {
-                "code": "submitted",
-                "severity": "info",
-                "description": [
-                  "Asynchronous request submitted"
-                ]
-              }
-            ]
-          }
-        }
-      },
-      "note": "Label created - tracking: 1ZAC66381533817926 - order status updated in Rithum"
-    },
-    {
-      "timestamp": "2025-11-13T12:27:52.770Z",
-      "webhookEvent": "label_created_v2",
-      "shipment": {
-        "shipment_id": "se-920983015",
-        "shipment_number": "BOX.75593079.69955817",
-        "external_shipment_id": "1026063756",
-        "shipment_status": "label_purchased",
-        "created_at": "2025-11-12T23:31:53.03Z",
-        "modified_at": "2025-11-13T12:27:44.547Z"
-      },
-      "tracking": {
-        "tracking_number": "9400150206241019643052",
+        "tracking_number": "9400150206241019743462",
         "carrier_id": "se-287927",
         "carrier_name": "usps",
-        "ship_date": "2025-11-13T00:00:00Z",
+        "ship_date": "2025-11-14T00:00:00Z",
         "packages": [
           {
             "package_id": "se-162103",
@@ -927,16 +39,16 @@
         "ship_to": {
           "geolocation": null,
           "instructions": null,
-          "name": "Joyce Golonka",
-          "phone": "4124987003",
+          "name": "Carla Velasquez",
+          "phone": "14242190908",
           "email": null,
           "company_name": null,
-          "address_line1": "7061 PINEHURST DR",
+          "address_line1": "921 S TAMARIND AVE",
           "address_line2": "",
           "address_line3": null,
-          "city_locality": "PRESTO",
-          "state_province": "PA",
-          "postal_code": "15142-1062",
+          "city_locality": "COMPTON",
+          "state_province": "CA",
+          "postal_code": "90220-3806",
           "country_code": "US",
           "address_residential_indicator": "yes"
         },
@@ -956,21 +68,21 @@
           "address_residential_indicator": "no"
         }
       },
-      "rithumOrderId": "1026063756",
+      "rithumOrderId": "1026064165",
       "rithumUpdated": true,
       "rithumUpdate": {
         "attempted": true,
         "success": true,
-        "updatedAt": "2025-11-13T12:27:57.120Z",
-        "trackingNumber": "9400150206241019643052",
+        "updatedAt": "2025-11-14T09:53:07.882Z",
+        "trackingNumber": "9400150206241019743462",
         "carrier": "usps",
         "error": null,
         "lineItemCount": 1,
         "responses": {
           "status": {
             "status": "pending",
-            "requestId": "632cbbe9-c509-4eea-a9bf-be2e184a1d19",
-            "eventDate": "2025-11-13T12:27:59.877Z",
+            "requestId": "8d4c3c37-9c7b-4429-b044-52fdaac8b863",
+            "eventDate": "2025-11-14T09:53:07.770Z",
             "messages": [
               {
                 "code": "submitted",
@@ -983,24 +95,24 @@
           }
         }
       },
-      "note": "Label created - tracking: 9400150206241019643052 - order status updated in Rithum"
+      "note": "Label created - tracking: 9400150206241019743462 - order status updated in Rithum"
     },
     {
-      "timestamp": "2025-11-13T18:17:36.798Z",
+      "timestamp": "2025-11-14T10:36:07.920Z",
       "webhookEvent": "label_created_v2",
       "shipment": {
-        "shipment_id": "se-921027603",
-        "shipment_number": "3859926695",
-        "external_shipment_id": "3859926695",
+        "shipment_id": "se-920983034",
+        "shipment_number": "BOX.75594266.69955397",
+        "external_shipment_id": "1026064160",
         "shipment_status": "label_purchased",
-        "created_at": "2025-11-13T02:00:10.463Z",
-        "modified_at": "2025-11-13T17:21:05.477Z"
+        "created_at": "2025-11-12T23:31:55.807Z",
+        "modified_at": "2025-11-14T10:36:03.95Z"
       },
       "tracking": {
-        "tracking_number": "9400150206242019458202",
+        "tracking_number": "9400150105498019656731",
         "carrier_id": "se-287927",
         "carrier_name": "usps",
-        "ship_date": "2025-11-13T00:00:00Z",
+        "ship_date": "2025-11-14T00:00:00Z",
         "packages": [
           {
             "package_id": "se-162103",
@@ -1013,9 +125,9 @@
               "height": 2
             },
             "weight": {
-              "value": 8,
+              "value": 2,
               "unit": "ounce",
-              "display": "8 ounce"
+              "display": "2 ounce"
             }
           }
         ]
@@ -1024,16 +136,16 @@
         "ship_to": {
           "geolocation": null,
           "instructions": null,
-          "name": "Jenna Blaski",
-          "phone": null,
-          "email": "jennab1998@yahoo.com",
+          "name": "Anna Achter",
+          "phone": "7153098651",
+          "email": null,
           "company_name": null,
-          "address_line1": "927 S LOWELL BLVD",
+          "address_line1": "433 S 7TH ST APT 2001",
           "address_line2": "",
           "address_line3": null,
-          "city_locality": "DENVER",
-          "state_province": "CO",
-          "postal_code": "80219-3336",
+          "city_locality": "MINNEAPOLIS",
+          "state_province": "MN",
+          "postal_code": "55415-1642",
           "country_code": "US",
           "address_residential_indicator": "yes"
         },
@@ -1041,11 +153,11 @@
           "instructions": null,
           "name": "JaxKelly Inc",
           "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
           "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
+          "address_line2": "suite 102",
+          "address_line3": null,
           "city_locality": "San Diego",
           "state_province": "CA",
           "postal_code": "92101",
@@ -1053,21 +165,21 @@
           "address_residential_indicator": "no"
         }
       },
-      "rithumOrderId": "3859926695",
+      "rithumOrderId": "1026064160",
       "rithumUpdated": true,
       "rithumUpdate": {
         "attempted": true,
         "success": true,
-        "updatedAt": "2025-11-13T18:17:46.444Z",
-        "trackingNumber": "9400150206242019458202",
+        "updatedAt": "2025-11-14T10:36:12.820Z",
+        "trackingNumber": "9400150105498019656731",
         "carrier": "usps",
         "error": null,
-        "lineItemCount": 4,
+        "lineItemCount": 1,
         "responses": {
           "status": {
             "status": "pending",
-            "requestId": "73529258-e765-4690-875c-a9fa7d2ceeb7",
-            "eventDate": "2025-11-13T18:17:47.494Z",
+            "requestId": "5dd2b23e-23b9-4a2d-829d-e24f0fd71c7f",
+            "eventDate": "2025-11-14T10:36:12.733Z",
             "messages": [
               {
                 "code": "submitted",
@@ -1080,24 +192,24 @@
           }
         }
       },
-      "note": "Label created - tracking: 9400150206242019458202 - order status updated in Rithum"
+      "note": "Label created - tracking: 9400150105498019656731 - order status updated in Rithum"
     },
     {
-      "timestamp": "2025-11-13T18:20:08.390Z",
+      "timestamp": "2025-11-14T10:40:55.661Z",
       "webhookEvent": "label_created_v2",
       "shipment": {
-        "shipment_id": "se-921207492",
-        "shipment_number": "108557",
-        "external_shipment_id": "6288852451413-7446471999573",
+        "shipment_id": "se-920982996",
+        "shipment_number": "BOX.75593970.69955315",
+        "external_shipment_id": "1026064154",
         "shipment_status": "label_purchased",
-        "created_at": "2025-11-13T16:50:57.267Z",
-        "modified_at": "2025-11-13T17:21:33.247Z"
+        "created_at": "2025-11-12T23:31:50.767Z",
+        "modified_at": "2025-11-14T09:40:44.537Z"
       },
       "tracking": {
-        "tracking_number": "9400150105498019596099",
+        "tracking_number": "9400150206242019518319",
         "carrier_id": "se-287927",
         "carrier_name": "usps",
-        "ship_date": "2025-11-13T00:00:00Z",
+        "ship_date": "2025-11-14T00:00:00Z",
         "packages": [
           {
             "package_id": "se-162103",
@@ -1110,9 +222,9 @@
               "height": 2
             },
             "weight": {
-              "value": 4,
+              "value": 2,
               "unit": "ounce",
-              "display": "4 ounce"
+              "display": "2 ounce"
             }
           }
         ]
@@ -1121,16 +233,16 @@
         "ship_to": {
           "geolocation": null,
           "instructions": null,
-          "name": "Colette Chipman",
-          "phone": "7035058722",
-          "email": "colettecrabill@mac.com",
+          "name": "Angela Termini",
+          "phone": "17573480467",
+          "email": null,
           "company_name": null,
-          "address_line1": "5121 25TH ST N",
+          "address_line1": "4621A PRETTY LAKE AVE APT 322",
           "address_line2": "",
           "address_line3": null,
-          "city_locality": "ARLINGTON",
+          "city_locality": "NORFOLK",
           "state_province": "VA",
-          "postal_code": "22207-2624",
+          "postal_code": "23518-2056",
           "country_code": "US",
           "address_residential_indicator": "yes"
         },
@@ -1138,11 +250,11 @@
           "instructions": null,
           "name": "JaxKelly Inc",
           "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
           "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
+          "address_line2": "suite 102",
+          "address_line3": null,
           "city_locality": "San Diego",
           "state_province": "CA",
           "postal_code": "92101",
@@ -1150,21 +262,21 @@
           "address_residential_indicator": "no"
         }
       },
-      "rithumOrderId": "108557",
+      "rithumOrderId": "1026064154",
       "rithumUpdated": true,
       "rithumUpdate": {
         "attempted": true,
         "success": true,
-        "updatedAt": "2025-11-13T18:20:17.777Z",
-        "trackingNumber": "9400150105498019596099",
+        "updatedAt": "2025-11-14T10:41:00.550Z",
+        "trackingNumber": "9400150206242019518319",
         "carrier": "usps",
         "error": null,
-        "lineItemCount": 1,
+        "lineItemCount": 3,
         "responses": {
           "status": {
             "status": "pending",
-            "requestId": "16703669-b594-4a15-acc4-049a03b28ded",
-            "eventDate": "2025-11-13T18:20:19.875Z",
+            "requestId": "aaabbab9-c2fa-4a70-8151-d1eb30b1b67f",
+            "eventDate": "2025-11-14T10:41:00.460Z",
             "messages": [
               {
                 "code": "submitted",
@@ -1177,39 +289,39 @@
           }
         }
       },
-      "note": "Label created - tracking: 9400150105498019596099 - order status updated in Rithum"
+      "note": "Label created - tracking: 9400150206242019518319 - order status updated in Rithum"
     },
     {
-      "timestamp": "2025-11-13T20:17:25.073Z",
+      "timestamp": "2025-11-14T10:50:18.612Z",
       "webhookEvent": "label_created_v2",
       "shipment": {
-        "shipment_id": "se-921049067",
-        "shipment_number": "8TSR4A7V4M",
-        "external_shipment_id": "bo_8tsr4a7v4m",
+        "shipment_id": "se-921494234",
+        "shipment_number": "BOX.75763615.70090801",
+        "external_shipment_id": "1026732471",
         "shipment_status": "label_purchased",
-        "created_at": "2025-11-13T03:26:01.927Z",
-        "modified_at": "2025-11-13T20:17:22.197Z"
+        "created_at": "2025-11-14T10:48:09.427Z",
+        "modified_at": "2025-11-14T10:50:11.943Z"
       },
       "tracking": {
-        "tracking_number": "9400150206241019713236",
+        "tracking_number": "9400150206241019744261",
         "carrier_id": "se-287927",
         "carrier_name": "usps",
-        "ship_date": "2025-11-13T00:00:00Z",
+        "ship_date": "2025-11-14T00:00:00Z",
         "packages": [
           {
-            "package_id": "se-163256",
+            "package_id": "se-162103",
             "tracking_number": null,
             "carrier": null,
             "dimensions": {
               "unit": "inch",
               "length": 12,
               "width": 9,
-              "height": 3
+              "height": 2
             },
             "weight": {
-              "value": 15,
+              "value": 8,
               "unit": "ounce",
-              "display": "15 ounce"
+              "display": "8 ounce"
             }
           }
         ]
@@ -1218,344 +330,16 @@
         "ship_to": {
           "geolocation": null,
           "instructions": null,
-          "name": "Nutmeg Boutique",
-          "phone": "8587350515",
+          "name": "Olivia Salazar",
+          "phone": "9044379001",
           "email": null,
-          "company_name": "NUTMEG BOUTIQUE",
-          "address_line1": "12640 SABRE SPGS PKWY STE 105",
+          "company_name": null,
+          "address_line1": "215 YALE RD",
           "address_line2": "",
           "address_line3": null,
-          "city_locality": "SAN DIEGO",
-          "state_province": "CA",
-          "postal_code": "92128-4113",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        },
-        "ship_from": {
-          "instructions": null,
-          "name": "JaxKelly Inc",
-          "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
-          "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
-          "city_locality": "San Diego",
-          "state_province": "CA",
-          "postal_code": "92101",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        }
-      },
-      "rithumOrderId": null,
-      "rithumUpdated": false,
-      "rithumUpdate": {
-        "attempted": false,
-        "success": false,
-        "updatedAt": null,
-        "trackingNumber": null,
-        "carrier": null,
-        "error": {
-          "message": "Rithum order ID not found on shipment"
-        }
-      },
-      "note": "Label created - tracking captured - awaiting Rithum update"
-    },
-    {
-      "timestamp": "2025-11-13T20:24:18.383Z",
-      "webhookEvent": "label_created_v2",
-      "shipment": {
-        "shipment_id": "se-920197066",
-        "shipment_number": "7RBS4D5AC7",
-        "external_shipment_id": "bo_7rbs4d5ac7",
-        "shipment_status": "label_purchased",
-        "created_at": "2025-11-11T05:54:02.727Z",
-        "modified_at": "2025-11-13T20:24:03.493Z"
-      },
-      "tracking": {
-        "tracking_number": "9400150206242019489534",
-        "carrier_id": "se-287927",
-        "carrier_name": "usps",
-        "ship_date": "2025-11-13T00:00:00Z",
-        "packages": [
-          {
-            "package_id": "se-163256",
-            "tracking_number": null,
-            "carrier": null,
-            "dimensions": {
-              "unit": "inch",
-              "length": 12,
-              "width": 9,
-              "height": 3
-            },
-            "weight": {
-              "value": 15,
-              "unit": "ounce",
-              "display": "15 ounce"
-            }
-          }
-        ]
-      },
-      "shipping": {
-        "ship_to": {
-          "geolocation": null,
-          "instructions": null,
-          "name": "Luxe",
-          "phone": "5417430291",
-          "email": null,
-          "company_name": "LUXE",
-          "address_line1": "118 OAKWAY CTR",
-          "address_line2": "",
-          "address_line3": null,
-          "city_locality": "EUGENE",
-          "state_province": "OR",
-          "postal_code": "97401-5611",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        },
-        "ship_from": {
-          "instructions": null,
-          "name": "JaxKelly Inc",
-          "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
-          "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
-          "city_locality": "San Diego",
-          "state_province": "CA",
-          "postal_code": "92101",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        }
-      },
-      "rithumOrderId": null,
-      "rithumUpdated": false,
-      "rithumUpdate": {
-        "attempted": false,
-        "success": false,
-        "updatedAt": null,
-        "trackingNumber": null,
-        "carrier": null,
-        "error": {
-          "message": "Rithum order ID not found on shipment"
-        }
-      },
-      "note": "Label created - tracking captured - awaiting Rithum update"
-    },
-    {
-      "timestamp": "2025-11-13T20:25:29.401Z",
-      "webhookEvent": "label_created_v2",
-      "shipment": {
-        "shipment_id": "se-920446335",
-        "shipment_number": "VERKWDAW8S",
-        "external_shipment_id": "bo_verkwdaw8s",
-        "shipment_status": "label_purchased",
-        "created_at": "2025-11-11T20:11:17.783Z",
-        "modified_at": "2025-11-13T20:25:26.623Z"
-      },
-      "tracking": {
-        "tracking_number": "9400150206241019714295",
-        "carrier_id": "se-287927",
-        "carrier_name": "usps",
-        "ship_date": "2025-11-13T00:00:00Z",
-        "packages": [
-          {
-            "package_id": "se-163256",
-            "tracking_number": null,
-            "carrier": null,
-            "dimensions": {
-              "unit": "inch",
-              "length": 12,
-              "width": 9,
-              "height": 3
-            },
-            "weight": {
-              "value": 15,
-              "unit": "ounce",
-              "display": "15 ounce"
-            }
-          }
-        ]
-      },
-      "shipping": {
-        "ship_to": {
-          "geolocation": null,
-          "instructions": null,
-          "name": "Krsitin Ferguson",
-          "phone": "9046128724",
-          "email": null,
-          "company_name": "DRIFT BOUTIQUE",
-          "address_line1": "217 1ST ST",
-          "address_line2": "",
-          "address_line3": null,
-          "city_locality": "NEPTUNE BEACH",
+          "city_locality": "ST AUGUSTINE",
           "state_province": "FL",
-          "postal_code": "32266-6145",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        },
-        "ship_from": {
-          "instructions": null,
-          "name": "JaxKelly Inc",
-          "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
-          "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
-          "city_locality": "San Diego",
-          "state_province": "CA",
-          "postal_code": "92101",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        }
-      },
-      "rithumOrderId": null,
-      "rithumUpdated": false,
-      "rithumUpdate": {
-        "attempted": false,
-        "success": false,
-        "updatedAt": null,
-        "trackingNumber": null,
-        "carrier": null,
-        "error": {
-          "message": "Rithum order ID not found on shipment"
-        }
-      },
-      "note": "Label created - tracking captured - awaiting Rithum update"
-    },
-    {
-      "timestamp": "2025-11-13T20:30:26.778Z",
-      "webhookEvent": "label_created_v2",
-      "shipment": {
-        "shipment_id": "se-920975940",
-        "shipment_number": "2HE85TH233",
-        "external_shipment_id": "bo_2he85th233",
-        "shipment_status": "label_purchased",
-        "created_at": "2025-11-12T23:08:06.423Z",
-        "modified_at": "2025-11-13T20:30:14.983Z"
-      },
-      "tracking": {
-        "tracking_number": "9400150105498019628233",
-        "carrier_id": "se-287927",
-        "carrier_name": "usps",
-        "ship_date": "2025-11-13T00:00:00Z",
-        "packages": [
-          {
-            "package_id": "se-162091",
-            "tracking_number": null,
-            "carrier": null,
-            "dimensions": {
-              "unit": "inch",
-              "length": 6,
-              "width": 6,
-              "height": 2
-            },
-            "weight": {
-              "value": 8,
-              "unit": "ounce",
-              "display": "8 ounce"
-            }
-          }
-        ]
-      },
-      "shipping": {
-        "ship_to": {
-          "geolocation": null,
-          "instructions": null,
-          "name": "Lillies",
-          "phone": "2623777047",
-          "email": null,
-          "company_name": "LILLIES",
-          "address_line1": "W62N553 WASHINGTON AVE",
-          "address_line2": "",
-          "address_line3": null,
-          "city_locality": "CEDARBURG",
-          "state_province": "WI",
-          "postal_code": "53012-1968",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        },
-        "ship_from": {
-          "instructions": null,
-          "name": "JaxKelly Inc",
-          "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
-          "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
-          "city_locality": "San Diego",
-          "state_province": "CA",
-          "postal_code": "92101",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        }
-      },
-      "rithumOrderId": null,
-      "rithumUpdated": false,
-      "rithumUpdate": {
-        "attempted": false,
-        "success": false,
-        "updatedAt": null,
-        "trackingNumber": null,
-        "carrier": null,
-        "error": {
-          "message": "Rithum order ID not found on shipment"
-        }
-      },
-      "note": "Label created - tracking captured - awaiting Rithum update"
-    },
-    {
-      "timestamp": "2025-11-13T20:32:40.049Z",
-      "webhookEvent": "label_created_v2",
-      "shipment": {
-        "shipment_id": "se-920138531",
-        "shipment_number": "6HZ52SSDHQ",
-        "external_shipment_id": "bo_6hz52ssdhq",
-        "shipment_status": "label_purchased",
-        "created_at": "2025-11-11T01:32:26.607Z",
-        "modified_at": "2025-11-13T20:32:19.82Z"
-      },
-      "tracking": {
-        "tracking_number": "9400150105498019628462",
-        "carrier_id": "se-287927",
-        "carrier_name": "usps",
-        "ship_date": "2025-11-13T00:00:00Z",
-        "packages": [
-          {
-            "package_id": "se-162091",
-            "tracking_number": null,
-            "carrier": null,
-            "dimensions": {
-              "unit": "inch",
-              "length": 6,
-              "width": 6,
-              "height": 2
-            },
-            "weight": {
-              "value": 8,
-              "unit": "ounce",
-              "display": "8 ounce"
-            }
-          }
-        ]
-      },
-      "shipping": {
-        "ship_to": {
-          "geolocation": null,
-          "instructions": null,
-          "name": "Stephanie Delashmit",
-          "phone": "6789109896",
-          "email": null,
-          "company_name": "BARRE3",
-          "address_line1": "3097 S BANNOCK ST",
-          "address_line2": "",
-          "address_line3": null,
-          "city_locality": "ENGLEWOOD",
-          "state_province": "CO",
-          "postal_code": "80110-1520",
+          "postal_code": "32086-6046",
           "country_code": "US",
           "address_residential_indicator": "yes"
         },
@@ -1563,11 +347,11 @@
           "instructions": null,
           "name": "JaxKelly Inc",
           "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
           "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
+          "address_line2": "suite 102",
+          "address_line3": null,
           "city_locality": "San Diego",
           "state_province": "CA",
           "postal_code": "92101",
@@ -1575,51 +359,66 @@
           "address_residential_indicator": "no"
         }
       },
-      "rithumOrderId": null,
-      "rithumUpdated": false,
+      "rithumOrderId": "1026732471",
+      "rithumUpdated": true,
       "rithumUpdate": {
-        "attempted": false,
-        "success": false,
-        "updatedAt": null,
-        "trackingNumber": null,
-        "carrier": null,
-        "error": {
-          "message": "Rithum order ID not found on shipment"
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-14T10:50:23.605Z",
+        "trackingNumber": "9400150206241019744261",
+        "carrier": "usps",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "status": "pending",
+            "requestId": "7ccbf538-15f6-485a-b7f3-b5419da64ced",
+            "eventDate": "2025-11-14T10:50:23.405Z",
+            "messages": [
+              {
+                "code": "submitted",
+                "severity": "info",
+                "description": [
+                  "Asynchronous request submitted"
+                ]
+              }
+            ]
+          }
         }
       },
-      "note": "Label created - tracking captured - awaiting Rithum update"
+      "note": "Label created - tracking: 9400150206241019744261 - order status updated in Rithum"
     },
     {
-      "timestamp": "2025-11-13T20:37:41.951Z",
+      "timestamp": "2025-11-14T11:31:46.193Z",
       "webhookEvent": "label_created_v2",
       "shipment": {
-        "shipment_id": "se-920110842",
-        "shipment_number": "BV8J6729W3",
-        "external_shipment_id": "bo_bv8j6729w3",
+        "shipment_id": "se-921498233",
+        "shipment_number": "BOX.75763614.70089883",
+        "external_shipment_id": "1026732514",
         "shipment_status": "label_purchased",
-        "created_at": "2025-11-10T23:51:38.39Z",
-        "modified_at": "2025-11-13T20:37:19.393Z"
+        "created_at": "2025-11-14T11:30:16.417Z",
+        "modified_at": "2025-11-14T11:31:24.84Z"
       },
       "tracking": {
-        "tracking_number": "9400150105498019629315",
+        "tracking_number": "9400150206242019519644",
         "carrier_id": "se-287927",
         "carrier_name": "usps",
-        "ship_date": "2025-11-13T00:00:00Z",
+        "ship_date": "2025-11-14T00:00:00Z",
         "packages": [
           {
-            "package_id": "se-162091",
+            "package_id": "se-2",
             "tracking_number": null,
             "carrier": null,
             "dimensions": {
               "unit": "inch",
-              "length": 6,
-              "width": 6,
-              "height": 2
+              "length": 0,
+              "width": 0,
+              "height": 0
             },
             "weight": {
-              "value": 8,
+              "value": 1,
               "unit": "ounce",
-              "display": "8 ounce"
+              "display": "1 ounce"
             }
           }
         ]
@@ -1628,110 +427,28 @@
         "ship_to": {
           "geolocation": null,
           "instructions": null,
-          "name": "Lois  Atherton",
-          "phone": "5083147124",
+          "name": "Jessica Leeds",
+          "phone": "8455481443",
           "email": null,
-          "company_name": "RICHARD SPARROW HOUSE INC",
-          "address_line1": "1 MASSASOIT ST",
+          "company_name": null,
+          "address_line1": "19 HELAINE CT",
           "address_line2": "",
           "address_line3": null,
-          "city_locality": "PLYMOUTH",
-          "state_province": "MA",
-          "postal_code": "02360-3407",
-          "country_code": "US",
-          "address_residential_indicator": "yes"
-        },
-        "ship_from": {
-          "instructions": null,
-          "name": "JaxKelly Inc",
-          "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
-          "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
-          "city_locality": "San Diego",
-          "state_province": "CA",
-          "postal_code": "92101",
-          "country_code": "US",
-          "address_residential_indicator": "no"
-        }
-      },
-      "rithumOrderId": null,
-      "rithumUpdated": false,
-      "rithumUpdate": {
-        "attempted": false,
-        "success": false,
-        "updatedAt": null,
-        "trackingNumber": null,
-        "carrier": null,
-        "error": {
-          "message": "Rithum order ID not found on shipment"
-        }
-      },
-      "note": "Label created - tracking captured - awaiting Rithum update"
-    },
-    {
-      "timestamp": "2025-11-13T20:41:42.690Z",
-      "webhookEvent": "label_created_v2",
-      "shipment": {
-        "shipment_id": "se-920500128",
-        "shipment_number": "RXTQ5P39KZ",
-        "external_shipment_id": "bo_rxtq5p39kz",
-        "shipment_status": "label_purchased",
-        "created_at": "2025-11-11T22:44:59.233Z",
-        "modified_at": "2025-11-13T20:41:22.3Z"
-      },
-      "tracking": {
-        "tracking_number": "9400150206241019716695",
-        "carrier_id": "se-287927",
-        "carrier_name": "usps",
-        "ship_date": "2025-11-13T00:00:00Z",
-        "packages": [
-          {
-            "package_id": "se-162091",
-            "tracking_number": null,
-            "carrier": null,
-            "dimensions": {
-              "unit": "inch",
-              "length": 6,
-              "width": 6,
-              "height": 2
-            },
-            "weight": {
-              "value": 8,
-              "unit": "ounce",
-              "display": "8 ounce"
-            }
-          }
-        ]
-      },
-      "shipping": {
-        "ship_to": {
-          "geolocation": null,
-          "instructions": null,
-          "name": "Tara Silberberg ",
-          "phone": "7187886564",
-          "email": null,
-          "company_name": "THE CLAY POT",
-          "address_line1": "160 FAIRVIEW AVE",
-          "address_line2": "BOX 309",
-          "address_line3": null,
-          "city_locality": "HUDSON",
+          "city_locality": "ORANGEBURG",
           "state_province": "NY",
-          "postal_code": "12534-1267",
+          "postal_code": "10962-2305",
           "country_code": "US",
-          "address_residential_indicator": "unknown"
+          "address_residential_indicator": "yes"
         },
         "ship_from": {
           "instructions": null,
           "name": "JaxKelly Inc",
           "phone": "6199558475",
-          "email": null,
-          "company_name": "JaxKelly Inc",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
           "address_line1": "2555 State Street",
-          "address_line2": "Unit 102",
-          "address_line3": "",
+          "address_line2": "suite 102",
+          "address_line3": null,
           "city_locality": "San Diego",
           "state_province": "CA",
           "postal_code": "92101",
@@ -1739,21 +456,36 @@
           "address_residential_indicator": "no"
         }
       },
-      "rithumOrderId": null,
-      "rithumUpdated": false,
+      "rithumOrderId": "1026732514",
+      "rithumUpdated": true,
       "rithumUpdate": {
-        "attempted": false,
-        "success": false,
-        "updatedAt": null,
-        "trackingNumber": null,
-        "carrier": null,
-        "error": {
-          "message": "Rithum order ID not found on shipment"
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-14T11:31:51.602Z",
+        "trackingNumber": "9400150206242019519644",
+        "carrier": "usps",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "status": "pending",
+            "requestId": "6944dcb5-6609-43aa-8d10-3d8b2fb4e9a0",
+            "eventDate": "2025-11-14T11:31:51.508Z",
+            "messages": [
+              {
+                "code": "submitted",
+                "severity": "info",
+                "description": [
+                  "Asynchronous request submitted"
+                ]
+              }
+            ]
+          }
         }
       },
-      "note": "Label created - tracking captured - awaiting Rithum update"
+      "note": "Label created - tracking: 9400150206242019519644 - order status updated in Rithum"
     }
   ],
-  "lastUpdated": "2025-11-13T20:41:42.690Z",
-  "totalTracked": 20
+  "lastUpdated": "2025-11-14T11:31:51.604Z",
+  "totalTracked": 5
 }
