@@ -9,7 +9,7 @@ const { shipstationConfig, validateConfig: validateShipStationConfig } = require
 const { rithumConfig, validateConfig: validateRithumConfig } = require('./src/config/rithumConfig');
 
 const TRACKING_FILE = path.join(__dirname, 'shipped_orders_tracking.json');
-const PORT = process.env.WEBHOOK_PORT || 3001;
+const PORT = process.env.PORT || process.env.WEBHOOK_PORT || 3001;
 
 /**
  * Map ShipStation carrier and service codes to Rithum shipping method codes

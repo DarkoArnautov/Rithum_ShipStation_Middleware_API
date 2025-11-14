@@ -2,18 +2,18 @@
 # This file defines the services needed for the Rithum-ShipStation Middleware API
 
 services:
-  # Web Service - Main API server for webhooks and API endpoints
+  # Web Service - Webhook handler for ShipStation events
   - type: web
-    name: rithum-shipstation-api
+    name: rithum-shipstation-webhook
     env: node
     plan: starter  # Change to 'standard' or 'pro' for production
     buildCommand: npm install
-    startCommand: npm start
+    startCommand: node webhook_step2.js
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 8000
+        value: 3001
       # Add your environment variables from .env:
       # - key: SHIPSTATION_API_KEY
       #   sync: false  # Set to false and add value in Render dashboard

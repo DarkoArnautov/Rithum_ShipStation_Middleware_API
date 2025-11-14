@@ -27,8 +27,8 @@ const { shipstationConfig, validateConfig } = require('./src/config/shipstationC
 
 // Default webhook configuration
 const DEFAULT_WEBHOOK_NAME = 'Rithum Tracking Updates';
-const DEFAULT_WEBHOOK_EVENT = 'fulfillment_shipped_v2';
-const DEFAULT_WEBHOOK_URL = process.env.WEBHOOK_URL || process.env.API_URL || 'http://localhost:8000/api/shipstation/webhooks/v2';
+const DEFAULT_WEBHOOK_EVENT = 'label_created_v2';  // Changed to label_created_v2 for immediate tracking
+const DEFAULT_WEBHOOK_URL = process.env.WEBHOOK_URL || 'https://rithum-shipstation-middleware-api-webhook-0okw.onrender.com/webhook/shipstation';
 
 async function listWebhooks(client) {
     try {
