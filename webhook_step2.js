@@ -412,13 +412,45 @@ async function updateRithumOrderTracking(rithumClient, rithumOrderId, shipment, 
         console.warn(`      Input Service: "${shipMethod}"`);
     }
     
-    // Use shippingServiceLevelCode (Rithum's preferred field) instead of separate carrier + method
-    // The API spec says: "Either shippingServiceLevelCode must be present or shipCarrier and shipMethod must be present"
-    // Using shippingServiceLevelCode alone is cleaner and avoids concatenation issues
+    // Add shipping fields - Rithum requires BOTH carrierManifestId AND shippingServiceLevelCode
+    // carrierManifestId: The carrier name (USPS, FedEx, UPS, etc.)
+    // shippingServiceLevelCode: The service code (USGA, FECG, UPCG, etc.)
+    // shipMethod: Human-readable method name (optional but recommended)
     
+    // Map carrier name to Rithum's carrierManifestId format
+    const carrierManifestIdMap = {
+        'usps': 'USPS',
+        'stamps_com': 'USPS',
+        'fedex': 'FedEx',
+        'fedex_uk': 'FedEx',
+        'ups': 'UPS',
+        'dhl_express': 'DHL',
+        'ontrac': 'OnTrac'
+    };
+    
+    const normalizedCarrier = (carrierName || carrierCode || '').toLowerCase();
+    const carrierManifestId = carrierManifestIdMap[normalizedCarrier] || 
+                               (carrierName || carrierCode || 'USPS').toUpperCase();
+    
+    // Map service code to human-readable method name
+    const shipMethodMap = {
+        'USGA': 'Ground Advantage',
+        'USPM': 'Priority Mail',
+        'FECG': 'FedEx Ground',
+        'FEHD': 'FedEx 2Day',
+        'FESP': 'FedEx Express',
+        'UPCG': 'UPS Ground',
+        'UPSV': 'UPS Next Day Air',
+        'UPSP': 'UPS 2nd Day Air'
+    };
+    
+    shipmentData.shipments[0].carrierManifestId = carrierManifestId;
     shipmentData.shipments[0].shippingServiceLevelCode = rithumShippingMethod;
-    console.log(`   � Shipping Service Level Code: ${rithumShippingMethod}`);
-    console.log(`   📮 Method: ${shipMethod || 'N/A'} → Rithum Code: ${rithumShippingMethod}`);
+    shipmentData.shipments[0].shipMethod = shipMethodMap[rithumShippingMethod] || 'Ground';
+    
+    console.log(`   📦 Carrier Manifest ID: ${carrierManifestId}`);
+    console.log(`   🚚 Shipping Service Level Code: ${rithumShippingMethod}`);
+    console.log(`   📮 Ship Method: ${shipmentData.shipments[0].shipMethod}`);
     console.log(`   🔍 DEBUG: Final shipment payload being sent to Rithum:`);
     console.log(`      shippingServiceLevelCode: "${shipmentData.shipments[0].shippingServiceLevelCode}"`);
     console.log(`      trackingNumber: "${shipmentData.shipments[0].trackingNumber}"`);
