@@ -15,7 +15,7 @@
 require('dotenv').config();
 
 // Import the main cron job function
-const { fetchAndMapOrders } = require('./cronjob_step1');
+const { fetchAndMapOrders } = require('./get_Aknowledge_Orders_Rithum_send_Shipstation');
 
 // Get interval from environment variable (default: every 5 minutes)
 // Format: "*/5 * * * *" = every 5 minutes (300000 ms)
