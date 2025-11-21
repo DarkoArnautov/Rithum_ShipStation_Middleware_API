@@ -1261,6 +1261,151 @@ class ShipStationClient {
             };
         }
     }
+
+    /**
+     * Get all available carriers from ShipStation
+     * @returns {Array} List of available carriers
+     */
+    async getCarriers() {
+        try {
+            console.log('📡 Fetching carriers from ShipStation API...');
+            
+            const response = await this.client.get('/v2/carriers');
+            const carriers = response.data?.carriers || response.data || [];
+            
+            console.log(`✅ Retrieved ${carriers.length} carriers from ShipStation`);
+            
+            // Log some carrier info for debugging
+            if (carriers.length > 0) {
+                console.log('🚚 Available carriers:');
+                carriers.slice(0, 5).forEach(carrier => {
+                    const status = carrier.is_active === false ? '❌' : '✅';
+                    console.log(`   ${status} ${carrier.carrier_id} (${carrier.carrier_code}) - ${carrier.name || 'N/A'}`);
+                });
+                if (carriers.length > 5) {
+                    console.log(`   ... and ${carriers.length - 5} more carriers`);
+                }
+            }
+            
+            return carriers;
+        } catch (error) {
+            console.error('❌ Failed to fetch carriers:', error.message);
+            if (error.response) {
+                console.error(`   Status: ${error.response.status}`);
+                console.error(`   Response: ${JSON.stringify(error.response.data, null, 2)}`);
+            }
+            throw error;
+        }
+    }
+
+    /**
+     * Comprehensive check if an order already exists in ShipStation
+     * Checks multiple identifiers to avoid duplicates
+     * @param {Object} orderData - Order data with identifiers
+     * @param {string} orderData.orderNumber - Primary order number (usually Rithum order ID)
+     * @param {string} [orderData.poNumber] - PO number from Rithum
+     * @param {string} [orderData.shipmentNumber] - Alternative shipment number
+     * @returns {Promise<Object|null>} Existing shipment data if found, null if not found
+     */
+    async checkOrderExists(orderData) {
+        const { orderNumber, poNumber, shipmentNumber } = orderData;
+        const identifiersToCheck = [orderNumber, poNumber, shipmentNumber].filter(Boolean);
+        
+        console.log(`🔍 Checking if order exists using identifiers: [${identifiersToCheck.join(', ')}]`);
+        
+        // Method 1: Check by external_shipment_id (primary method)
+        for (const identifier of identifiersToCheck) {
+            try {
+                const shipment = await this.getShipmentByExternalId(identifier);
+                if (shipment && shipment.shipment_id) {
+                    console.log(`✅ Found existing shipment by external_shipment_id '${identifier}': ${shipment.shipment_id}`);
+                    return {
+                        found: true,
+                        method: 'external_shipment_id',
+                        identifier: identifier,
+                        shipment: shipment
+                    };
+                }
+            } catch (error) {
+                if (error.response && error.response.status === 404) {
+                    // Not found - continue checking
+                    continue;
+                } else {
+                    console.warn(`⚠️ Error checking external_shipment_id '${identifier}': ${error.message}`);
+                }
+            }
+        }
+        
+        // Method 2: Search shipments by shipment_number (secondary check)
+        for (const identifier of identifiersToCheck) {
+            try {
+                const response = await this.client.get('/v2/shipments', {
+                    params: {
+                        shipment_number: identifier,
+                        page_size: 10
+                    }
+                });
+                
+                const shipments = response.data?.shipments || [];
+                const matchingShipment = shipments.find(s => 
+                    s.shipment_number === identifier ||
+                    s.external_shipment_id === identifier
+                );
+                
+                if (matchingShipment) {
+                    console.log(`✅ Found existing shipment by shipment_number '${identifier}': ${matchingShipment.shipment_id}`);
+                    return {
+                        found: true,
+                        method: 'shipment_number_search',
+                        identifier: identifier,
+                        shipment: matchingShipment
+                    };
+                }
+            } catch (error) {
+                console.warn(`⚠️ Error searching by shipment_number '${identifier}': ${error.message}`);
+            }
+        }
+        
+        // Method 3: Search recent shipments for potential matches (last resort)
+        try {
+            const response = await this.client.get('/v2/shipments', {
+                params: {
+                    page_size: 100,
+                    sort_by: 'created_at',
+                    sort_dir: 'desc'
+                }
+            });
+            
+            const recentShipments = response.data?.shipments || [];
+            for (const identifier of identifiersToCheck) {
+                const matchingShipment = recentShipments.find(s => 
+                    s.external_shipment_id === identifier ||
+                    s.shipment_number === identifier ||
+                    (s.sales_order && s.sales_order.order_number === identifier)
+                );
+                
+                if (matchingShipment) {
+                    console.log(`✅ Found existing shipment in recent orders '${identifier}': ${matchingShipment.shipment_id}`);
+                    return {
+                        found: true,
+                        method: 'recent_shipments_search',
+                        identifier: identifier,
+                        shipment: matchingShipment
+                    };
+                }
+            }
+        } catch (error) {
+            console.warn(`⚠️ Error searching recent shipments: ${error.message}`);
+        }
+        
+        console.log(`✅ Order not found in ShipStation - safe to create`);
+        return {
+            found: false,
+            method: null,
+            identifier: null,
+            shipment: null
+        };
+    }
 }
 
 module.exports = ShipStationClient;

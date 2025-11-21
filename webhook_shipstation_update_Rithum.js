@@ -652,44 +652,53 @@ async function extractRithumOrderId(shipment, shipstationClient = null) {
  */
 async function processLabelCreatedWebhook(webhookData, shipstationClient, rithumClient) {
     try {
-        let shipmentId = null;
+        let shipmentIds = [];
         const shipmentData = webhookData.shipment || webhookData.data || webhookData.label?.shipment;
+        
+        // Single shipment case
         if (shipmentData && shipmentData.shipment_id) {
-            shipmentId = shipmentData.shipment_id;
+            shipmentIds.push(shipmentData.shipment_id);
         }
         
-        if (!shipmentId && webhookData.resource_url) {
+        if (shipmentIds.length === 0 && webhookData.resource_url) {
             try {
                 const resourceUrl = new URL(webhookData.resource_url);
                 
                 const pathMatch = resourceUrl.pathname.match(/\/shipments\/([^\/]+)/);
                 if (pathMatch) {
-                    shipmentId = pathMatch[1];
-                    console.log(`   ✅ Found shipment_id in resource_url path: ${shipmentId}`);
+                    shipmentIds.push(pathMatch[1]);
+                    console.log(`   ✅ Found shipment_id in resource_url path: ${pathMatch[1]}`);
                 }
                 
-                if (!shipmentId) {
-                    shipmentId = resourceUrl.searchParams.get('shipment_id');
+                if (shipmentIds.length === 0) {
+                    const singleShipmentId = resourceUrl.searchParams.get('shipment_id');
+                    if (singleShipmentId) {
+                        shipmentIds.push(singleShipmentId);
+                    }
                 }
                 
-                if (!shipmentId) {
+                // Check for batch processing
+                if (shipmentIds.length === 0) {
                     const batchId = resourceUrl.searchParams.get('batch_id');
                     if (batchId) {
+                        console.log(`   🔍 Processing batch webhook with batch_id: ${batchId}`);
                         const labelsResponse = await shipstationClient.client.get('/v2/labels', {
                             params: { batch_id: batchId }
                         });
                         
                         const labels = labelsResponse.data?.labels || labelsResponse.data || [];
                         if (Array.isArray(labels) && labels.length > 0) {
-                            shipmentId = labels[0].shipment_id;
-                            console.log(`   ✅ Found shipment_id from batch labels: ${shipmentId}`);
+                            // 🚀 FIX: Process ALL labels in batch, not just labels[0]
+                            shipmentIds = labels.map(label => label.shipment_id).filter(id => id);
+                            console.log(`   ✅ Found ${shipmentIds.length} shipment(s) in batch: ${shipmentIds.join(', ')}`);
                             
-                            if (labels[0].tracking_number) {
-                                console.log(`   ✅ Found tracking number in batch label: ${labels[0].tracking_number}`);
-                                webhookData._labelTrackingNumber = labels[0].tracking_number;
-                                webhookData._labelCarrierId = labels[0].carrier_id;
-                                webhookData._labelCarrierCode = labels[0].carrier_code;
-                            }
+                            // Store tracking info for all labels
+                            webhookData._batchLabels = labels.map(label => ({
+                                shipment_id: label.shipment_id,
+                                tracking_number: label.tracking_number,
+                                carrier_id: label.carrier_id,
+                                carrier_code: label.carrier_code
+                            }));
                         }
                     }
                 }
@@ -698,205 +707,235 @@ async function processLabelCreatedWebhook(webhookData, shipstationClient, rithum
             }
         }
         
-        if (!shipmentId) {
+        if (shipmentIds.length === 0) {
             throw new Error('No shipment_id found in label_created_v2 webhook payload. Tried: shipment data, resource_url params, and batch labels.');
         }
 
-        console.log(`\n🏷️  Processing label created webhook:`);
-        const shipment = await shipstationClient.getShipmentById(shipmentId);
-        let trackingInfo = await shipstationClient.getShipmentTracking(shipmentId);
+        console.log(`\n🏷️  Processing label created webhook for ${shipmentIds.length} shipment(s):`);
         
-        if (!trackingInfo.tracking_number) {
-            // First, check if we already have tracking from batch labels
-            if (webhookData._labelTrackingNumber) {
-                console.log(`   ✅ Using tracking number from batch label: ${webhookData._labelTrackingNumber}`);
-                trackingInfo.tracking_number = webhookData._labelTrackingNumber;
-                if (webhookData._labelCarrierId && !trackingInfo.carrier_id) {
-                    trackingInfo.carrier_id = webhookData._labelCarrierId;
-                }
-                if (webhookData._labelCarrierCode && !trackingInfo.carrier_name) {
-                    trackingInfo.carrier_name = webhookData._labelCarrierCode;
-                }
-            } else {
-                console.log(`   🔍 Tracking number not in shipment, checking labels...`);
-                try {
-                    // Fetch labels for this shipment
-                    const labelsResponse = await shipstationClient.client.get('/v2/labels', {
-                        params: { shipment_id: shipmentId }
-                    });
-                    
-                    const labels = labelsResponse.data?.labels || labelsResponse.data || [];
-                    if (Array.isArray(labels) && labels.length > 0) {
-                        // Get tracking number from first label
-                        const label = labels[0];
-                        if (label.tracking_number) {
-                            console.log(`   ✅ Found tracking number from label: ${label.tracking_number}`);
-                            trackingInfo.tracking_number = label.tracking_number;
-                            // Also update carrier info from label if available
-                            if (label.carrier_id && !trackingInfo.carrier_id) {
-                                trackingInfo.carrier_id = label.carrier_id;
+        // 🚀 FIX: Process ALL shipments in the batch
+        const results = [];
+        
+        for (let i = 0; i < shipmentIds.length; i++) {
+            const shipmentId = shipmentIds[i];
+            console.log(`\n   📦 Processing shipment ${i + 1}/${shipmentIds.length}: ${shipmentId}`);
+            
+            try {
+                const shipment = await shipstationClient.getShipmentById(shipmentId);
+                let trackingInfo = await shipstationClient.getShipmentTracking(shipmentId);
+                
+                // Check if we have tracking from batch labels
+                const batchLabel = webhookData._batchLabels?.find(label => label.shipment_id === shipmentId);
+                if (!trackingInfo.tracking_number && batchLabel?.tracking_number) {
+                    console.log(`      ✅ Using tracking number from batch label: ${batchLabel.tracking_number}`);
+                    trackingInfo.tracking_number = batchLabel.tracking_number;
+                    if (batchLabel.carrier_id && !trackingInfo.carrier_id) {
+                        trackingInfo.carrier_id = batchLabel.carrier_id;
+                    }
+                    if (batchLabel.carrier_code && !trackingInfo.carrier_name) {
+                        trackingInfo.carrier_name = batchLabel.carrier_code;
+                    }
+                } else if (!trackingInfo.tracking_number) {
+                    console.log(`   🔍 Tracking number not in shipment, checking labels...`);
+                    try {
+                        // Fetch labels for this shipment
+                        const labelsResponse = await shipstationClient.client.get('/v2/labels', {
+                            params: { shipment_id: shipmentId }
+                        });
+                        
+                        const labels = labelsResponse.data?.labels || labelsResponse.data || [];
+                        if (Array.isArray(labels) && labels.length > 0) {
+                            // Get tracking number from first label
+                            const label = labels[0];
+                            if (label.tracking_number) {
+                                console.log(`   ✅ Found tracking number from label: ${label.tracking_number}`);
+                                trackingInfo.tracking_number = label.tracking_number;
+                                // Also update carrier info from label if available
+                                if (label.carrier_id && !trackingInfo.carrier_id) {
+                                    trackingInfo.carrier_id = label.carrier_id;
+                                }
+                                if (label.carrier_code && !trackingInfo.carrier_name) {
+                                    trackingInfo.carrier_name = label.carrier_code;
+                                }
+                            } else {
+                                console.log(`   ⚠️  Label exists but tracking number not yet available (may be populated later)`);
                             }
-                            if (label.carrier_code && !trackingInfo.carrier_name) {
-                                trackingInfo.carrier_name = label.carrier_code;
-                            }
-                        } else {
-                            console.log(`   ⚠️  Label exists but tracking number not yet available (may be populated later)`);
+                        }
+                    } catch (error) {
+                        console.warn('⚠️  Could not fetch labels for tracking number:', error.message);
+                    }
+                } else {
+                    console.log(`   ✅ Tracking number found in shipment: ${trackingInfo.tracking_number}`);
+                }
+
+                // Extract Rithum order ID
+                const rithumOrderId = await extractRithumOrderId(shipment, shipstationClient);
+
+                // Build tracked order information
+                const trackedOrder = {
+                    timestamp: new Date().toISOString(),
+                    webhookEvent: 'label_created_v2',
+                    shipment: {
+                        shipment_id: shipment.shipment_id,
+                        shipment_number: shipment.shipment_number,
+                        external_shipment_id: shipment.external_shipment_id,
+                        shipment_status: shipment.shipment_status,
+                        sales_order_id: shipment.sales_order_id,
+                        created_at: shipment.created_at,
+                        modified_at: shipment.modified_at
+                    },
+                    tracking: {
+                        tracking_number: trackingInfo.tracking_number || null,
+                        carrier_id: trackingInfo.carrier_id || shipment.carrier_id,
+                        carrier_name: trackingInfo.carrier_name || shipment.carrier_name,
+                        ship_date: trackingInfo.ship_date || shipment.ship_date,
+                        estimated_delivery_date: trackingInfo.estimated_delivery_date || shipment.estimated_delivery_date,
+                        packages: trackingInfo.packages || shipment.packages || []
+                    },
+                    shipping: {
+                        ship_to: shipment.ship_to || null,
+                        ship_from: shipment.ship_from || null
+                    },
+                    rithumOrderId: rithumOrderId || null,
+                    rithumUpdated: false,
+                    rithumUpdate: {
+                        attempted: !!rithumClient && !!rithumOrderId,
+                        success: false,
+                        updatedAt: null,
+                        trackingNumber: null,
+                        carrier: null,
+                        error: null
+                    },
+                    note: rithumClient ? 'Label created - tracking captured - awaiting Rithum update' : 'Label created - tracking captured locally - Rithum client unavailable'
+                };
+
+                // Attempt to update Rithum with tracking information
+                if (rithumClient && rithumOrderId) {
+                    try {
+                        const { statusResponse, trackingNumber: submittedTracking, carrier, lineItemCount } = await updateRithumOrderTracking(
+                            rithumClient,
+                            rithumOrderId,
+                            shipment,
+                            trackingInfo,
+                            shipstationClient,  // Pass ShipStation client
+                            shipmentId          // Pass shipment ID for label lookup
+                        );
+                        
+                        trackedOrder.rithumUpdated = true;
+                        trackedOrder.rithumUpdate.success = true;
+                        trackedOrder.rithumUpdate.updatedAt = new Date().toISOString();
+                        trackedOrder.rithumUpdate.trackingNumber = submittedTracking;
+                        trackedOrder.rithumUpdate.carrier = carrier;
+                        trackedOrder.rithumUpdate.lineItemCount = lineItemCount;
+                        trackedOrder.rithumUpdate.responses = {
+                            status: statusResponse
+                        };
+
+                        trackedOrder.note = submittedTracking
+                            ? `Label created - tracking: ${submittedTracking} - order status updated in Rithum`
+                            : 'Label created - no tracking yet - order status updated in Rithum';
+
+                        const logTrackingNumber = submittedTracking || 'N/A';
+                        console.log(`      ✅ Updated Rithum order ${rithumOrderId}`);
+                        console.log(`         Status: shipped`);
+                        console.log(`         Tracking: ${logTrackingNumber}`);
+                        console.log(`         Line Items: ${lineItemCount}`);
+                    } catch (error) {
+                        trackedOrder.rithumUpdated = false;
+                        trackedOrder.rithumUpdate.error = {
+                            message: error.message,
+                            status: error.response?.status,
+                            data: error.response?.data
+                        };
+                        trackedOrder.note = 'Label created - tracking captured locally - failed to update Rithum';
+
+                        console.error(`      ❌ Failed to update Rithum order ${rithumOrderId}:`, error.message);
+                        if (error.response) {
+                            console.error('         Status:', error.response.status);
+                            console.error('         Response:', JSON.stringify(error.response.data, null, 2));
                         }
                     }
-                } catch (error) {
-                    console.warn('⚠️  Could not fetch labels for tracking number:', error.message);
+                } else if (!rithumClient) {
+                    trackedOrder.rithumUpdate.attempted = false;
+                    trackedOrder.rithumUpdate.error = {
+                        message: 'Rithum client not configured'
+                    };
+                } else {
+                    trackedOrder.rithumUpdate.error = {
+                        message: 'Rithum order ID not found on shipment'
+                    };
                 }
-            }
-        } else {
-            console.log(`   ✅ Tracking number found in shipment: ${trackingInfo.tracking_number}`);
-        }
 
-        // Extract Rithum order ID
-        const rithumOrderId = await extractRithumOrderId(shipment, shipstationClient);
+                // Load existing tracked orders
+                const trackingData = await loadTrackedOrders();
 
-        // Build tracked order information
-        const trackedOrder = {
-            timestamp: new Date().toISOString(),
-            webhookEvent: 'label_created_v2',
-            shipment: {
-                shipment_id: shipment.shipment_id,
-                shipment_number: shipment.shipment_number,
-                external_shipment_id: shipment.external_shipment_id,
-                shipment_status: shipment.shipment_status,
-                sales_order_id: shipment.sales_order_id,
-                created_at: shipment.created_at,
-                modified_at: shipment.modified_at
-            },
-            tracking: {
-                tracking_number: trackingInfo.tracking_number || null,
-                carrier_id: trackingInfo.carrier_id || shipment.carrier_id,
-                carrier_name: trackingInfo.carrier_name || shipment.carrier_name,
-                ship_date: trackingInfo.ship_date || shipment.ship_date,
-                estimated_delivery_date: trackingInfo.estimated_delivery_date || shipment.estimated_delivery_date,
-                packages: trackingInfo.packages || shipment.packages || []
-            },
-            shipping: {
-                ship_to: shipment.ship_to || null,
-                ship_from: shipment.ship_from || null
-            },
-            rithumOrderId: rithumOrderId || null,
-            rithumUpdated: false,
-            rithumUpdate: {
-                attempted: !!rithumClient && !!rithumOrderId,
-                success: false,
-                updatedAt: null,
-                trackingNumber: null,
-                carrier: null,
-                error: null
-            },
-            note: rithumClient ? 'Label created - tracking captured - awaiting Rithum update' : 'Label created - tracking captured locally - Rithum client unavailable'
-        };
-
-        // Attempt to update Rithum with tracking information
-        if (rithumClient && rithumOrderId) {
-            try {
-                const { statusResponse, trackingNumber: submittedTracking, carrier, lineItemCount } = await updateRithumOrderTracking(
-                    rithumClient,
-                    rithumOrderId,
-                    shipment,
-                    trackingInfo,
-                    shipstationClient,  // Pass ShipStation client
-                    shipmentId          // Pass shipment ID for label lookup
+                // Check if this shipment was already tracked
+                const existingIndex = trackingData.trackedOrders.findIndex(
+                    order => order.shipment.shipment_id === shipmentId
                 );
-                
-                trackedOrder.rithumUpdated = true;
-                trackedOrder.rithumUpdate.success = true;
-                trackedOrder.rithumUpdate.updatedAt = new Date().toISOString();
-                trackedOrder.rithumUpdate.trackingNumber = submittedTracking;
-                trackedOrder.rithumUpdate.carrier = carrier;
-                trackedOrder.rithumUpdate.lineItemCount = lineItemCount;
-                trackedOrder.rithumUpdate.responses = {
-                    status: statusResponse
-                };
 
-                trackedOrder.note = submittedTracking
-                    ? `Label created - tracking: ${submittedTracking} - order status updated in Rithum`
-                    : 'Label created - no tracking yet - order status updated in Rithum';
-
-                const logTrackingNumber = submittedTracking || 'N/A';
-                console.log(`   ✅ Updated Rithum order ${rithumOrderId}`);
-                console.log(`      Status: shipped`);
-                console.log(`      Tracking: ${logTrackingNumber}`);
-                console.log(`      Line Items: ${lineItemCount}`);
-            } catch (error) {
-                trackedOrder.rithumUpdated = false;
-                trackedOrder.rithumUpdate.error = {
-                    message: error.message,
-                    status: error.response?.status,
-                    data: error.response?.data
-                };
-                trackedOrder.note = 'Label created - tracking captured locally - failed to update Rithum';
-
-                console.error(`   ❌ Failed to update Rithum order ${rithumOrderId}:`, error.message);
-                if (error.response) {
-                    console.error('      Status:', error.response.status);
-                    console.error('      Response:', JSON.stringify(error.response.data, null, 2));
+                if (existingIndex >= 0) {
+                    // Update existing entry (label_created_v2 might come before fulfillment_shipped_v2)
+                    console.log(`      ⚠️  Shipment already tracked - updating entry`);
+                    // Only update if this is a more complete event (fulfillment_shipped_v2 takes precedence)
+                    const existing = trackingData.trackedOrders[existingIndex];
+                    if (existing.webhookEvent === 'fulfillment_shipped_v2') {
+                        console.log(`      ℹ️  Keeping fulfillment_shipped_v2 data (more complete)`);
+                        // Don't overwrite fulfillment_shipped_v2 with label_created_v2
+                    } else {
+                        trackingData.trackedOrders[existingIndex] = trackedOrder;
+                    }
+                } else {
+                    // Add new entry
+                    trackingData.trackedOrders.push(trackedOrder);
+                    trackingData.totalTracked = trackingData.trackedOrders.length;
                 }
+
+                trackingData.lastUpdated = new Date().toISOString();
+
+                // Save to file
+                await saveTrackedOrders(trackingData);
+
+                console.log(`      ✅ Label created order tracked successfully`);
+                console.log(`      📊 Total tracked orders: ${trackingData.totalTracked}`);
+                if (rithumOrderId) {
+                    console.log(`      🔗 Rithum Order ID: ${rithumOrderId}`);
+                    if (trackedOrder.rithumUpdated) {
+                        console.log('      📬 Rithum order updated successfully');
+                    } else if (trackedOrder.rithumUpdate.attempted) {
+                        console.log('      ⚠️  Failed to update Rithum order. See logs for details.');
+                    }
+                } else {
+                    console.log(`      ⚠️  Rithum Order ID not found in shipment`);
+                }
+
+                results.push({
+                    success: true,
+                    trackedOrder,
+                    shipmentId,
+                    trackingNumber: trackedOrder.tracking.tracking_number
+                });
+
+            } catch (shipmentError) {
+                console.error(`      ❌ Error processing shipment ${shipmentId}:`, shipmentError.message);
+                results.push({
+                    success: false,
+                    shipmentId,
+                    error: shipmentError.message
+                });
             }
-        } else if (!rithumClient) {
-            trackedOrder.rithumUpdate.attempted = false;
-            trackedOrder.rithumUpdate.error = {
-                message: 'Rithum client not configured'
-            };
-        } else {
-            trackedOrder.rithumUpdate.error = {
-                message: 'Rithum order ID not found on shipment'
-            };
         }
 
-        // Load existing tracked orders
-        const trackingData = await loadTrackedOrders();
-
-        // Check if this shipment was already tracked
-        const existingIndex = trackingData.trackedOrders.findIndex(
-            order => order.shipment.shipment_id === shipmentId
-        );
-
-        if (existingIndex >= 0) {
-            // Update existing entry (label_created_v2 might come before fulfillment_shipped_v2)
-            console.log(`   ⚠️  Shipment already tracked - updating entry`);
-            // Only update if this is a more complete event (fulfillment_shipped_v2 takes precedence)
-            const existing = trackingData.trackedOrders[existingIndex];
-            if (existing.webhookEvent === 'fulfillment_shipped_v2') {
-                console.log(`   ℹ️  Keeping fulfillment_shipped_v2 data (more complete)`);
-                // Don't overwrite fulfillment_shipped_v2 with label_created_v2
-            } else {
-                trackingData.trackedOrders[existingIndex] = trackedOrder;
-            }
-        } else {
-            // Add new entry
-            trackingData.trackedOrders.push(trackedOrder);
-            trackingData.totalTracked = trackingData.trackedOrders.length;
-        }
-
-        trackingData.lastUpdated = new Date().toISOString();
-
-        // Save to file
-        await saveTrackedOrders(trackingData);
-
-        console.log(`   ✅ Label created order tracked successfully`);
-        console.log(`   📊 Total tracked orders: ${trackingData.totalTracked}`);
-        if (rithumOrderId) {
-            console.log(`   🔗 Rithum Order ID: ${rithumOrderId}`);
-            if (trackedOrder.rithumUpdated) {
-                console.log('   📬 Rithum order updated successfully');
-            } else if (trackedOrder.rithumUpdate.attempted) {
-                console.log('   ⚠️  Failed to update Rithum order. See logs for details.');
-            }
-        } else {
-            console.log(`   ⚠️  Rithum Order ID not found in shipment`);
-        }
-
+        const successfulResults = results.filter(r => r.success);
+        const failedResults = results.filter(r => !r.success);
+        
+        console.log(`\n🏁 Batch processing complete: ${successfulResults.length} successful, ${failedResults.length} failed`);
+        
         return {
-            success: true,
-            trackedOrder,
-            shipmentId,
-            trackingNumber: trackedOrder.tracking.tracking_number
+            success: failedResults.length === 0, // Success only if all shipments processed
+            processedCount: successfulResults.length,
+            failedCount: failedResults.length,
+            results: results
         };
 
     } catch (error) {

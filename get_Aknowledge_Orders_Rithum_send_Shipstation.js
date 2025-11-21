@@ -4,6 +4,7 @@ const path = require('path');
 const OrderMapper = require('./src/services/orderMapper');
 const ShipStationClient = require('./src/services/shipstationClient');
 const RithumClient = require('./src/services/rithumClient');
+const CarrierSelector = require('./src/services/carrierSelector');
 const { shipstationConfig, validateConfig: validateShipStationConfig } = require('./src/config/shipstationConfig');
 const { rithumConfig, validateConfig: validateRithumConfig } = require('./src/config/rithumConfig');
 
@@ -28,6 +29,7 @@ async function fetchAndMapOrders() {
         let shipstationClient = null;
         let shipFromAddress = null;
         let warehouseId = null;
+        let carrierSelector = null;
         
         try {
             validateShipStationConfig();
@@ -38,6 +40,10 @@ async function fetchAndMapOrders() {
                 shipstationConfig.shipFrom
             );
             console.log('✅ ShipStation client initialized\n');
+            
+            // Initialize carrier selector
+            carrierSelector = new CarrierSelector(shipstationClient);
+            console.log('✅ Carrier selector initialized\n');
             
             // Fetch ship_from address from ShipStation warehouses API if not already configured
             if (!shipstationConfig.shipFrom && !shipstationConfig.warehouseId) {
@@ -186,35 +192,42 @@ async function fetchAndMapOrders() {
                     
                     console.log(`✅ Order ${i + 1}/${orders.length} (${orderId}): Mapped successfully`);
                     console.log(`   Status: ${mappingResult.mappedOrder.orderStatus}`);
+                    console.log(`   Order Number: ${mappingResult.mappedOrder.orderNumber}`);
+                    console.log(`   PO Number: ${order.poNumber || 'N/A'}`);
+                    if (mappingResult.mappedOrder.shipmentNumber) {
+                        console.log(`   Shipment Number: ${mappingResult.mappedOrder.shipmentNumber}`);
+                    }
                     // Create order in ShipStation
                     if (shipstationClient) {
                         try {
-                            // Check if order already exists in ShipStation before creating
-                            const orderNumber = mappingResult.mappedOrder.orderNumber;
-                            let existingShipment = null;
+                            // Comprehensive check if order already exists in ShipStation
+                            const orderCheckData = {
+                                orderNumber: mappingResult.mappedOrder.orderNumber,
+                                poNumber: order.poNumber,
+                                shipmentNumber: mappingResult.mappedOrder.shipmentNumber
+                            };
                             
-                            try {
-                                console.log(`   🔍 Checking if order already exists in ShipStation (order number: ${orderNumber})...`);
-                                existingShipment = await shipstationClient.getShipmentByExternalId(orderNumber);
-                                if (existingShipment && existingShipment.shipment_id) {
-                                    console.log(`   ⏭️  Order already exists in ShipStation (Shipment ID: ${existingShipment.shipment_id})`);
-                                    results.summary.skipped++;
-                                    mappedOrderData.shipstationCreated = false;
-                                    mappedOrderData.shipstationSkipped = true;
-                                    mappedOrderData.shipstationOrderId = existingShipment.sales_order_id || existingShipment.shipment_id || 'N/A';
-                                    mappedOrderData.shipstationOrderNumber = existingShipment.shipment_number || existingShipment.external_shipment_id || orderNumber;
-                                    mappedOrderData.shipstationShipmentId = existingShipment.shipment_id || 'N/A';
-                                    mappedOrderData.existingShipmentStatus = existingShipment.shipment_status || 'N/A';
-                                    mappedOrderData.skippedAt = new Date().toISOString();
-                                    results.mappedOrders.push(mappedOrderData);
-                                    continue; // Skip to next order
-                                }
-                            } catch (checkError) {
-                                if (checkError.response && checkError.response.status === 404) {
-                                    console.log(`   ✅ Order does not exist - proceeding with creation...`);
-                                } else {
-                                    console.log(`   ⚠️  Could not verify if order exists: ${checkError.message}`);
-                                }
+                            const existenceCheck = await shipstationClient.checkOrderExists(orderCheckData);
+                            
+                            if (existenceCheck.found) {
+                                const existingShipment = existenceCheck.shipment;
+                                console.log(`   ⏭️  Order already exists in ShipStation via ${existenceCheck.method}`);
+                                console.log(`   📋 Existing Shipment ID: ${existingShipment.shipment_id}, Status: ${existingShipment.shipment_status || 'N/A'}`);
+                                
+                                results.summary.skipped++;
+                                mappedOrderData.shipstationCreated = false;
+                                mappedOrderData.shipstationSkipped = true;
+                                mappedOrderData.shipstationOrderId = existingShipment.sales_order_id || existingShipment.shipment_id || 'N/A';
+                                mappedOrderData.shipstationOrderNumber = existingShipment.shipment_number || existingShipment.external_shipment_id || orderCheckData.orderNumber;
+                                mappedOrderData.shipstationShipmentId = existingShipment.shipment_id || 'N/A';
+                                mappedOrderData.existingShipmentStatus = existingShipment.shipment_status || 'N/A';
+                                mappedOrderData.duplicateCheckMethod = existenceCheck.method;
+                                mappedOrderData.duplicateCheckIdentifier = existenceCheck.identifier;
+                                mappedOrderData.skippedAt = new Date().toISOString();
+                                results.mappedOrders.push(mappedOrderData);
+                                continue; // Skip to next order
+                            } else {
+                                console.log(`   ✅ Order verified as new - proceeding with creation...`);
                             }
                             
                             const orderWithShipFrom = { ...mappingResult.mappedOrder };
@@ -226,10 +239,41 @@ async function fetchAndMapOrders() {
                                 console.log(`      ⚠️  No ship_from address or warehouse_id available - order may fail`);
                             }
                             
-                            // Add carrier ID to fix "carrier_id is required" error
-                            // Using primary USPS carrier (se-287927) since USPS Ground Advantage is most common
-                            orderWithShipFrom.carrierId = 'se-287927';
-                            console.log(`   🚚 Using carrier ID: ${orderWithShipFrom.carrierId} (Primary USPS)`);
+                            // 🚀 INTELLIGENT CARRIER SELECTION WITH RITHUM REQUIREMENTS
+                            // Select appropriate carrier based on order characteristics AND Rithum requirements
+                            let selectedCarrierId = null;
+                            
+                            if (carrierSelector) {
+                                try {
+                                    selectedCarrierId = await carrierSelector.selectCarrier(
+                                        mappingResult.mappedOrder,
+                                        mappingResult.mappedOrder.shipTo,
+                                        order  // Pass original Rithum order data for carrier requirements
+                                    );
+                                    
+                                    if (selectedCarrierId) {
+                                        console.log(`   🚚 Selected carrier: ${selectedCarrierId} (respects Rithum requirements)`);
+                                    } else {
+                                        console.log(`   ⚠️  No suitable carrier found via intelligent selection`);
+                                    }
+                                } catch (carrierError) {
+                                    console.error(`   ❌ Carrier selection failed: ${carrierError.message}`);
+                                    selectedCarrierId = null;
+                                }
+                            } else {
+                                console.log(`   ⚠️  Carrier selector not available`);
+                            }
+                            
+                            // 🛡️ FALLBACK CARRIER ASSIGNMENT
+                            // Ensure carrierId is always set to prevent "carrier_id is required" error
+                            if (!selectedCarrierId) {
+                                selectedCarrierId = 'se-287927'; // Primary USPS as ultimate fallback
+                                console.log(`   🚨 Using fallback carrier: ${selectedCarrierId} (Primary USPS)`);
+                                console.log(`   💡 Reason: Intelligent selection failed or unavailable`);
+                            }
+                            
+                            // Always assign the carrier ID
+                            orderWithShipFrom.carrierId = selectedCarrierId;
                             
                             const createdOrder = await shipstationClient.createOrder(orderWithShipFrom);
                             

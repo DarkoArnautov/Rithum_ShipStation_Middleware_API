@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-11-21T07:17:37.554Z",
+  "timestamp": "2025-11-21T08:14:32.978Z",
   "totalOrders": 0,
   "mappedOrders": [],
   "createdOrders": [],
@@ -11,6 +11,6 @@
     "skipped": 0,
     "creationFailed": 0
   },
-  "lastPosition": "z/2025/11/21/06/34/1763706868903-0174608",
+  "lastPosition": "z/2025/11/21/07/30/1763710215897-0000000",
   "streamId": "1df67f78-e9da-42f0-b03b-397dccbc8909"
 }
