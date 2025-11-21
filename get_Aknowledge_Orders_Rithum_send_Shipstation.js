@@ -226,6 +226,11 @@ async function fetchAndMapOrders() {
                                 console.log(`      ⚠️  No ship_from address or warehouse_id available - order may fail`);
                             }
                             
+                            // Add carrier ID to fix "carrier_id is required" error
+                            // Using primary USPS carrier (se-287927) since USPS Ground Advantage is most common
+                            orderWithShipFrom.carrierId = 'se-287927';
+                            console.log(`   🚚 Using carrier ID: ${orderWithShipFrom.carrierId} (Primary USPS)`);
+                            
                             const createdOrder = await shipstationClient.createOrder(orderWithShipFrom);
                             
                             let createdShipFrom = createdOrder.ship_from || null;

@@ -1,27 +1,7 @@
-/**
- * Step 1 Cron Job for Render - Runs continuously with internal scheduling
- * 
- * This version is designed for Render Background Workers that run continuously.
- * It uses node-cron to schedule the job internally instead of relying on external cron.
- * 
- * Usage on Render:
- *   Start Command: node cronjob_step1_render.js
- * 
- * The script will:
- *   1. Run immediately on startup
- *   2. Then schedule itself to run every 5 minutes (configurable via CRON_SCHEDULE env var)
- *   3. Keep the process running to handle scheduled executions
- */
-require('dotenv').config();
 
-// Import the main cron job function
+require('dotenv').config();
 const { fetchAndMapOrders } = require('./get_Aknowledge_Orders_Rithum_send_Shipstation');
 
-// Get interval from environment variable (default: every 5 minutes)
-// Format: "*/5 * * * *" = every 5 minutes (300000 ms)
-// Format: "*/30 * * * *" = every 30 minutes (1800000 ms)
-// Format: "0 * * * *" = every hour (3600000 ms)
-// Or use INTERVAL_MS directly: "300000" = 5 minutes
 const CRON_SCHEDULE = process.env.CRON_SCHEDULE || '*/5 * * * *';
 const INTERVAL_MS = process.env.INTERVAL_MS 
     ? parseInt(process.env.INTERVAL_MS) 
@@ -29,7 +9,6 @@ const INTERVAL_MS = process.env.INTERVAL_MS
         ? parseInt(CRON_SCHEDULE.match(/\*\/(\d+)/)?.[1] || '5') * 60 * 1000
         : 60 * 60 * 1000); // Default to 1 hour if pattern not recognized
 
-// Flag to prevent overlapping executions
 let isRunning = false;
 
 console.log('📦 Step 1 Cron Job - Render Version\n');
