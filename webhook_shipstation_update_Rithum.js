@@ -511,7 +511,28 @@ async function updateRithumOrderTracking(rithumClient, rithumOrderId, shipment, 
 async function loadTrackedOrders() {
     try {
         const data = await fs.readFile(TRACKING_FILE, 'utf8');
-        return JSON.parse(data);
+        const parsed = JSON.parse(data);
+        
+        // Validate and ensure proper structure
+        if (!parsed || typeof parsed !== 'object') {
+            console.warn(`⚠️  Invalid tracking file structure, reinitializing...`);
+            return {
+                trackedOrders: [],
+                lastUpdated: null,
+                totalTracked: 0
+            };
+        }
+        
+        // Ensure trackedOrders is an array
+        if (!Array.isArray(parsed.trackedOrders)) {
+            console.warn(`⚠️  trackedOrders field is not an array, reinitializing...`);
+            parsed.trackedOrders = [];
+        }
+        
+        // Ensure totalTracked is correct
+        parsed.totalTracked = parsed.trackedOrders.length;
+        
+        return parsed;
     } catch (error) {
         if (error.code === 'ENOENT') {
             // File doesn't exist yet - return empty structure
@@ -521,7 +542,15 @@ async function loadTrackedOrders() {
                 totalTracked: 0
             };
         }
-        throw error;
+        
+        // JSON parsing or other error - log and return empty structure
+        console.error(`⚠️  Error loading tracking file: ${error.message}`);
+        console.warn(`   Reinitializing tracking data structure...`);
+        return {
+            trackedOrders: [],
+            lastUpdated: null,
+            totalTracked: 0
+        };
     }
 }
 
@@ -869,9 +898,25 @@ async function processLabelCreatedWebhook(webhookData, shipstationClient, rithum
                 // Load existing tracked orders
                 const trackingData = await loadTrackedOrders();
 
+                // Ensure trackingData has the expected structure
+                if (!trackingData || typeof trackingData !== 'object') {
+                    console.warn(`      ⚠️  Invalid tracking data structure, reinitializing...`);
+                    trackingData = {
+                        trackedOrders: [],
+                        lastUpdated: null,
+                        totalTracked: 0
+                    };
+                }
+                
+                // Ensure trackedOrders is an array
+                if (!Array.isArray(trackingData.trackedOrders)) {
+                    console.warn(`      ⚠️  trackedOrders is not an array, reinitializing...`);
+                    trackingData.trackedOrders = [];
+                }
+
                 // Check if this shipment was already tracked
                 const existingIndex = trackingData.trackedOrders.findIndex(
-                    order => order.shipment.shipment_id === shipmentId
+                    order => order.shipment && order.shipment.shipment_id === shipmentId
                 );
 
                 if (existingIndex >= 0) {
@@ -918,6 +963,7 @@ async function processLabelCreatedWebhook(webhookData, shipstationClient, rithum
 
             } catch (shipmentError) {
                 console.error(`      ❌ Error processing shipment ${shipmentId}:`, shipmentError.message);
+                console.error(`         Stack trace:`, shipmentError.stack);
                 results.push({
                     success: false,
                     shipmentId,
@@ -1085,9 +1131,25 @@ async function processFulfillmentShippedWebhook(webhookData, shipstationClient, 
         // Load existing tracked orders
         const trackingData = await loadTrackedOrders();
 
+        // Ensure trackingData has the expected structure
+        if (!trackingData || typeof trackingData !== 'object') {
+            console.warn(`   ⚠️  Invalid tracking data structure, reinitializing...`);
+            trackingData = {
+                trackedOrders: [],
+                lastUpdated: null,
+                totalTracked: 0
+            };
+        }
+        
+        // Ensure trackedOrders is an array
+        if (!Array.isArray(trackingData.trackedOrders)) {
+            console.warn(`   ⚠️  trackedOrders is not an array, reinitializing...`);
+            trackingData.trackedOrders = [];
+        }
+
         // Check if this shipment was already tracked
         const existingIndex = trackingData.trackedOrders.findIndex(
-            order => order.shipment.shipment_id === shipmentId
+            order => order.shipment && order.shipment.shipment_id === shipmentId
         );
 
         if (existingIndex >= 0) {
