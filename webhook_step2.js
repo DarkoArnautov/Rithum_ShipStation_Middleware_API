@@ -385,9 +385,6 @@ async function updateRithumOrderTracking(rithumClient, rithumOrderId, shipment, 
     if (shipWeight !== null && shipWeight !== undefined) {
         shipmentData.shipments[0].shipWeight = parseFloat(shipWeight);
         
-        // Convert weight unit to Rithum format
-        // ShipStation uses: ounce, pound, gram, kilogram (singular, lowercase)
-        // Rithum expects uppercase: OZ, LB, G, KG (matching test-sync-shipment.js format)
         const weightUnitMap = {
             'oz': 'OZ',
             'ounce': 'OZ',

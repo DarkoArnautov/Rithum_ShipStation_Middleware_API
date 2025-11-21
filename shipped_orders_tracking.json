@@ -484,8 +484,5673 @@
         }
       },
       "note": "Label created - tracking: 9400150206242019519644 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:55:44.516Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921619145",
+        "shipment_number": "BOX.75766299.70039354",
+        "external_shipment_id": "1026734243",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:42:14.637Z",
+        "modified_at": "2025-11-20T18:52:36.317Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170990647",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-25T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "marissa rotondi",
+          "phone": "11917224466",
+          "email": null,
+          "company_name": null,
+          "address_line1": "2034 E 63RD ST",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "BROOKLYN",
+          "state_province": "NY",
+          "postal_code": "11234-5910",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026734243",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:55:49.371Z",
+        "trackingNumber": "9400150899561170990647",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170990647 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:55:51.241Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618711",
+        "shipment_number": "BOX.75770364.70030935",
+        "external_shipment_id": "1026767103",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:43.563Z",
+        "modified_at": "2025-11-20T18:52:34.87Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178611364",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Sarah Murray",
+          "phone": "19205091100",
+          "email": null,
+          "company_name": null,
+          "address_line1": "320 ROOSEVELT ST",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "FOND DU LAC",
+          "state_province": "WI",
+          "postal_code": "54935-2573",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026767103",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:55:53.696Z",
+        "trackingNumber": "9400150899563178611364",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178611364 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:55:55.610Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921619130",
+        "shipment_number": "BOX.75781512.69973431",
+        "external_shipment_id": "1026737307",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:42:13.687Z",
+        "modified_at": "2025-11-20T18:52:34.31Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171400241",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Hilary Baker",
+          "phone": "19798303903",
+          "email": null,
+          "company_name": null,
+          "address_line1": "2839 BAYSHORE TRAILS DR",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "TAMPA",
+          "state_province": "FL",
+          "postal_code": "33611-5525",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026737307",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:55:58.772Z",
+        "trackingNumber": "9400150899562171400241",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171400241 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:56:00.749Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618702",
+        "shipment_number": "BOX.75765712.70027048",
+        "external_shipment_id": "1026733924",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:42.71Z",
+        "modified_at": "2025-11-20T18:52:33.78Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171400197",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Tina Ponce",
+          "phone": "(559) 593-1544",
+          "email": null,
+          "company_name": null,
+          "address_line1": "625 BUSH ST APT 420",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "SAN FRANCISCO",
+          "state_province": "CA",
+          "postal_code": "94108-3571",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026733924",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:56:03.864Z",
+        "trackingNumber": "9400150899562171400197",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171400197 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:56:05.815Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921619117",
+        "shipment_number": "BOX.75770103.70028669",
+        "external_shipment_id": "1026735109",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:42:12.85Z",
+        "modified_at": "2025-11-21T04:36:49.23Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170990500",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Harley Chapman",
+          "phone": "9012910827",
+          "email": null,
+          "company_name": null,
+          "address_line1": "296 N WATKINS ST",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "MEMPHIS",
+          "state_province": "TN",
+          "postal_code": "38104-7104",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026735109",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:56:08.302Z",
+        "trackingNumber": "9400150899561170990500",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170990500 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:56:14.484Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618695",
+        "shipment_number": "BOX.75800043.69969036",
+        "external_shipment_id": "1026758774",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:41.337Z",
+        "modified_at": "2025-11-20T18:52:32.607Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178611258",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Sherrie Williams",
+          "phone": "18134867676",
+          "email": null,
+          "company_name": null,
+          "address_line1": "99 TITUS AVE",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "CARLE PLACE",
+          "state_province": "NY",
+          "postal_code": "11514-1314",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026758774",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:56:17.836Z",
+        "trackingNumber": "9400150899563178611258",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178611258 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:56:19.841Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921619111",
+        "shipment_number": "BOX.75775276.70034992",
+        "external_shipment_id": "1026736134",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:42:11.937Z",
+        "modified_at": "2025-11-20T18:52:32.2Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170990432",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Carie Strubbe",
+          "phone": "7012612210",
+          "email": null,
+          "company_name": null,
+          "address_line1": "46549 OTTER SHORES RD",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "VERGAS",
+          "state_province": "MN",
+          "postal_code": "56587-9409",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026736134",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:56:23.060Z",
+        "trackingNumber": "9400150899561170990432",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170990432 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:56:25.094Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618686",
+        "shipment_number": "BOX.75794732.70025671",
+        "external_shipment_id": "1026750857",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:40.32Z",
+        "modified_at": "2025-11-20T18:52:31.433Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170990388",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Aubrey Wood",
+          "phone": "11571331660",
+          "email": null,
+          "company_name": null,
+          "address_line1": "2221 LEELAND DR",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "FALLS CHURCH",
+          "state_province": "VA",
+          "postal_code": "22043-1951",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026750857",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:56:28.353Z",
+        "trackingNumber": "9400150899561170990388",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170990388 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:56:30.470Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921619102",
+        "shipment_number": "BOX.75786312.66896073",
+        "external_shipment_id": "1026738573",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:42:11.04Z",
+        "modified_at": "2025-11-20T18:52:31.123Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171400012",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Emily C DeCoster",
+          "phone": "(202) 213-8639",
+          "email": null,
+          "company_name": null,
+          "address_line1": "13203 ARCTIC AVE",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "ROCKVILLE",
+          "state_province": "MD",
+          "postal_code": "20853-3011",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026738573",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:56:33.632Z",
+        "trackingNumber": "9400150899562171400012",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 2,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171400012 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:56:35.576Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618665",
+        "shipment_number": "BOX.75765168.70013910",
+        "external_shipment_id": "1026733948",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:38.983Z",
+        "modified_at": "2025-11-20T18:52:30.26Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171399965",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Liz Koch",
+          "phone": "(513) 702-9062",
+          "email": null,
+          "company_name": null,
+          "address_line1": "4247 NORTH AVE APT 3",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "CINCINNATI",
+          "state_province": "OH",
+          "postal_code": "45236-3752",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026733948",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:56:38.332Z",
+        "trackingNumber": "9400150899562171399965",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171399965 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:56:42.261Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921619091",
+        "shipment_number": "BOX.75798093.69979331",
+        "external_shipment_id": "1026742676",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:42:10.133Z",
+        "modified_at": "2025-11-20T18:52:29.96Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178611098",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Deborah Fish",
+          "phone": "4797391575",
+          "email": null,
+          "company_name": null,
+          "address_line1": "3317 TULSA ST UNIT 9",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "FORT SMITH",
+          "state_province": "AR",
+          "postal_code": "72903-6840",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026742676",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:56:47.791Z",
+        "trackingNumber": "9400150899563178611098",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178611098 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:56:49.737Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921619077",
+        "shipment_number": "BOX.75798811.69908478",
+        "external_shipment_id": "1026743027",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:42:09.143Z",
+        "modified_at": "2025-11-20T18:52:28.93Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170990241",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Laura Shaffner",
+          "phone": "(240) 888-5397",
+          "email": null,
+          "company_name": null,
+          "address_line1": "711 CRABB AVE",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "ROCKVILLE",
+          "state_province": "MD",
+          "postal_code": "20850-1448",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026743027",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:56:53.070Z",
+        "trackingNumber": "9400150899561170990241",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170990241 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:56:55.895Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618649",
+        "shipment_number": "BOX.75787797.69995886",
+        "external_shipment_id": "1026740061",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:37.297Z",
+        "modified_at": "2025-11-20T18:52:28.757Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171399927",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Amy Crews",
+          "phone": "13362872757",
+          "email": null,
+          "company_name": null,
+          "address_line1": "903 LYTCHFIELD PL",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "WINSTON SALEM",
+          "state_province": "NC",
+          "postal_code": "27104-1257",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026740061",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:56:59.258Z",
+        "trackingNumber": "9400150899562171399927",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171399927 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:57:01.223Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921619066",
+        "shipment_number": "BOX.75782870.69985204",
+        "external_shipment_id": "1026737794",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:42:08.35Z",
+        "modified_at": "2025-11-20T18:52:27.883Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178611012",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Chancy Crowder",
+          "phone": "(850) 428-9778",
+          "email": null,
+          "company_name": null,
+          "address_line1": "321 OKALOOSA AVE",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "VALPARAISO",
+          "state_province": "FL",
+          "postal_code": "32580-1251",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026737794",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:57:04.712Z",
+        "trackingNumber": "9400150899563178611012",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178611012 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:57:06.724Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618641",
+        "shipment_number": "BOX.75771816.70021848",
+        "external_shipment_id": "1026749347",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:36.327Z",
+        "modified_at": "2025-11-20T18:52:27.573Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170990180",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Laura Steigerwald",
+          "phone": "2629034329",
+          "email": null,
+          "company_name": null,
+          "address_line1": "2613 DEL RAY AVE",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "LA CROSSE",
+          "state_province": "WI",
+          "postal_code": "54603-1168",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026749347",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:57:10.560Z",
+        "trackingNumber": "9400150899561170990180",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170990180 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:57:16.491Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921619057",
+        "shipment_number": "BOX.75780594.70001105",
+        "external_shipment_id": "1026738408",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:42:07.53Z",
+        "modified_at": "2025-11-20T18:52:26.757Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178610978",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Tracie Dinehart",
+          "phone": "6169023928",
+          "email": null,
+          "company_name": null,
+          "address_line1": "3975 N LAKESHORE DR",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "LUDINGTON",
+          "state_province": "MI",
+          "postal_code": "49431-9427",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026738408",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:57:23.902Z",
+        "trackingNumber": "9400150899563178610978",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178610978 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:57:25.820Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618625",
+        "shipment_number": "BOX.75763967.70077631",
+        "external_shipment_id": "1026732935",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:34.42Z",
+        "modified_at": "2025-11-20T18:52:26.437Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178610954",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Kristin Dworacek",
+          "phone": "3463475658",
+          "email": null,
+          "company_name": null,
+          "address_line1": "1710 S PARK SIDE DR",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "DEER PARK",
+          "state_province": "TX",
+          "postal_code": "77536-5426",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026732935",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:57:29.180Z",
+        "trackingNumber": "9400150899563178610954",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178610954 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:57:31.117Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921619046",
+        "shipment_number": "BOX.75764414.70058026",
+        "external_shipment_id": "1026733141",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:42:06.68Z",
+        "modified_at": "2025-11-20T18:52:25.663Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170990128",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Julia Lazo",
+          "phone": "(703) 447-0182",
+          "email": null,
+          "company_name": null,
+          "address_line1": "5905 MUNSON CT",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "FALLS CHURCH",
+          "state_province": "VA",
+          "postal_code": "22041-2442",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026733141",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:57:34.624Z",
+        "trackingNumber": "9400150899561170990128",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170990128 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:57:36.577Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618619",
+        "shipment_number": "BOX.75798205.69993222",
+        "external_shipment_id": "1026751972",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:33.22Z",
+        "modified_at": "2025-11-20T18:52:25.263Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171399774",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "EA Weeks",
+          "phone": "15088168063",
+          "email": null,
+          "company_name": null,
+          "address_line1": "6900 FORSYTH RD",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "MACON",
+          "state_province": "GA",
+          "postal_code": "31210-7213",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026751972",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:57:39.770Z",
+        "trackingNumber": "9400150899562171399774",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171399774 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:57:41.760Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921619033",
+        "shipment_number": "BOX.75777455.70005743",
+        "external_shipment_id": "1026737104",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:42:05.803Z",
+        "modified_at": "2025-11-20T18:52:24.59Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170990067",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Sydney Schuster",
+          "phone": "16786225748",
+          "email": null,
+          "company_name": null,
+          "address_line1": "101 SUMMIT APARTMENT DR",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "CORNELIA",
+          "state_province": "GA",
+          "postal_code": "30531-4134",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026737104",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:57:45.055Z",
+        "trackingNumber": "9400150899561170990067",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170990067 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:57:49.064Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618610",
+        "shipment_number": "BOX.75801016.69985494",
+        "external_shipment_id": "1026752198",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:32.21Z",
+        "modified_at": "2025-11-20T18:52:24.183Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171399736",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Maddie Nussbaum",
+          "phone": "16143458976",
+          "email": null,
+          "company_name": null,
+          "address_line1": "1444 CITY VIEW DR UNIT 433",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "COLUMBUS",
+          "state_province": "OH",
+          "postal_code": "43215-3359",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026752198",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:57:52.336Z",
+        "trackingNumber": "9400150899562171399736",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171399736 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:57:56.524Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921619023",
+        "shipment_number": "BOX.75764937.70056474",
+        "external_shipment_id": "1026733439",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:42:04.96Z",
+        "modified_at": "2025-11-20T18:52:23.503Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170990012",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Candy Wungnema",
+          "phone": "(775) 720-9391",
+          "email": null,
+          "company_name": null,
+          "address_line1": "1627 WALKER DR",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "CARSON CITY",
+          "state_province": "NV",
+          "postal_code": "89701-1981",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026733439",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:57:59.144Z",
+        "trackingNumber": "9400150899561170990012",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170990012 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:58:01.138Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618604",
+        "shipment_number": "BOX.75765157.70012314",
+        "external_shipment_id": "1026733767",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:31.077Z",
+        "modified_at": "2025-11-20T18:52:23.013Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170990005",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Kristin Reno",
+          "phone": "19037079471",
+          "email": null,
+          "company_name": null,
+          "address_line1": "1108 RIM OF THE WORLD DR",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "TOOL",
+          "state_province": "TX",
+          "postal_code": "75143-2289",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026733767",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:58:04.331Z",
+        "trackingNumber": "9400150899561170990005",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170990005 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:58:06.334Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921619012",
+        "shipment_number": "BOX.75781066.69999977",
+        "external_shipment_id": "1026737590",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:42:04.153Z",
+        "modified_at": "2025-11-20T18:52:22.433Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178610794",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Alison O’Brien",
+          "phone": "17038507216",
+          "email": null,
+          "company_name": null,
+          "address_line1": "20934 WESTERVILLE WAY",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "LEESBURG",
+          "state_province": "VA",
+          "postal_code": "20175-8616",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026737590",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:58:09.744Z",
+        "trackingNumber": "9400150899563178610794",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178610794 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:58:12.114Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618598",
+        "shipment_number": "BOX.75794353.69984982",
+        "external_shipment_id": "1026750611",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:30.19Z",
+        "modified_at": "2025-11-20T18:52:21.897Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170989962",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Heather Kirschenmann",
+          "phone": "3602594863",
+          "email": null,
+          "company_name": null,
+          "address_line1": "100 N 8TH AVE SW APT 3",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "TUMWATER",
+          "state_province": "WA",
+          "postal_code": "98512-6359",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026750611",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:58:15.498Z",
+        "trackingNumber": "9400150899561170989962",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 4,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170989962 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:58:19.392Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618999",
+        "shipment_number": "BOX.75780009.68649545",
+        "external_shipment_id": "1026738051",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:42:03.24Z",
+        "modified_at": "2025-11-20T18:52:21.153Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170989931",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Jane Ault",
+          "phone": "2059153035",
+          "email": null,
+          "company_name": null,
+          "address_line1": "11655 5800 RD",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "MONTROSE",
+          "state_province": "CO",
+          "postal_code": "81403-8038",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026738051",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:58:22.544Z",
+        "trackingNumber": "9400150899561170989931",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170989931 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:58:24.527Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618586",
+        "shipment_number": "BOX.75786026.69997373",
+        "external_shipment_id": "1026749786",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:29.227Z",
+        "modified_at": "2025-11-20T18:52:20.817Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171399606",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Lisa Williams",
+          "phone": "14026122335",
+          "email": null,
+          "company_name": null,
+          "address_line1": "7735 SPRING LAKE RD",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "MOUNDS VIEW",
+          "state_province": "MN",
+          "postal_code": "55112-5840",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026749786",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:58:27.939Z",
+        "trackingNumber": "9400150899562171399606",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 2,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171399606 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:58:32.038Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618980",
+        "shipment_number": "BOX.75801392.69514987",
+        "external_shipment_id": "1026759205",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:42:02.313Z",
+        "modified_at": "2025-11-20T18:52:20.077Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178610718",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Larita Romey",
+          "phone": "12106187500",
+          "email": null,
+          "company_name": null,
+          "address_line1": "9902 COVERED WAGON",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "CONVERSE",
+          "state_province": "TX",
+          "postal_code": "78109-1753",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026759205",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:58:34.718Z",
+        "trackingNumber": "9400150899563178610718",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178610718 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:58:36.694Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618576",
+        "shipment_number": "BOX.75792394.69976957",
+        "external_shipment_id": "1026740770",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:28.383Z",
+        "modified_at": "2025-11-20T18:52:19.707Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171399552",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Stephanie Keblish",
+          "phone": "(425) 736-2457",
+          "email": null,
+          "company_name": null,
+          "address_line1": "16332 SE 132ND ST",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "RENTON",
+          "state_province": "WA",
+          "postal_code": "98059-6913",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026740770",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:58:39.829Z",
+        "trackingNumber": "9400150899562171399552",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171399552 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:58:41.758Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618966",
+        "shipment_number": "BOX.75799479.69985250",
+        "external_shipment_id": "1026742334",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:42:01.367Z",
+        "modified_at": "2025-11-20T18:52:18.927Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171399538",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Kelly Young",
+          "phone": "15043458774",
+          "email": null,
+          "company_name": null,
+          "address_line1": "1142 WALNUT ST",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "SLIDELL",
+          "state_province": "LA",
+          "postal_code": "70460-2425",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026742334",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:58:44.542Z",
+        "trackingNumber": "9400150899562171399538",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171399538 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:58:48.707Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618565",
+        "shipment_number": "BOX.75768136.70034965",
+        "external_shipment_id": "1026749053",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:27.493Z",
+        "modified_at": "2025-11-20T18:52:18.627Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178610671",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Julia Sethna",
+          "phone": "16515280601",
+          "email": null,
+          "company_name": null,
+          "address_line1": "43 W 16TH ST APT 1D",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "NEW YORK",
+          "state_province": "NY",
+          "postal_code": "10011-6320",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026749053",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:58:52.115Z",
+        "trackingNumber": "9400150899563178610671",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178610671 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:58:54.063Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618950",
+        "shipment_number": "BOX.75774376.70015072",
+        "external_shipment_id": "1026735806",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:42:00.227Z",
+        "modified_at": "2025-11-20T18:52:17.79Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178610626",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Sarah Dahl",
+          "phone": "15073702853",
+          "email": null,
+          "company_name": null,
+          "address_line1": "11103 LAKEVIEW DR",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "MANHATTAN",
+          "state_province": "KS",
+          "postal_code": "66503-9110",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026735806",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:58:58.549Z",
+        "trackingNumber": "9400150899563178610626",
+        "carrier": "se-1015030",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "status": "pending",
+            "requestId": "a8ab3416-e802-4370-8c70-2fe49256ffd3",
+            "eventDate": "2025-11-21T04:59:00.304Z",
+            "messages": [
+              {
+                "code": "submitted",
+                "severity": "info",
+                "description": [
+                  "Asynchronous request submitted"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178610626 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:59:00.524Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618551",
+        "shipment_number": "BOX.75785220.69984651",
+        "external_shipment_id": "1026739246",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:26.627Z",
+        "modified_at": "2025-11-20T18:52:17.613Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170989795",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Erica Elia",
+          "phone": "4144774374",
+          "email": null,
+          "company_name": null,
+          "address_line1": "4628 N MURRAY AVE",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "WHITEFISH BAY",
+          "state_province": "WI",
+          "postal_code": "53211-1258",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026739246",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:59:06.201Z",
+        "trackingNumber": "9400150899561170989795",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170989795 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:59:08.344Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618935",
+        "shipment_number": "BOX.75789992.69975049",
+        "external_shipment_id": "1026740534",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:59.337Z",
+        "modified_at": "2025-11-20T18:52:16.547Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171399453",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Jennifer Dean",
+          "phone": "8048390259",
+          "email": null,
+          "company_name": null,
+          "address_line1": "7478 HOBBY HORSE LN",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "MECHANICSVLLE",
+          "state_province": "VA",
+          "postal_code": "23111-6433",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026740534",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:59:11.769Z",
+        "trackingNumber": "9400150899562171399453",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 2,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171399453 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:59:13.669Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618540",
+        "shipment_number": "BOX.75797805.69970835",
+        "external_shipment_id": "1026741675",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:25.82Z",
+        "modified_at": "2025-11-20T18:52:16.48Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178610558",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Andree Robards",
+          "phone": "15044602356",
+          "email": null,
+          "company_name": null,
+          "address_line1": "679 JEFFERSON ST",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "NEW ORLEANS",
+          "state_province": "LA",
+          "postal_code": "70121-1513",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026741675",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:59:16.981Z",
+        "trackingNumber": "9400150899563178610558",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178610558 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:59:20.965Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618922",
+        "shipment_number": "BOX.75791904.69975676",
+        "external_shipment_id": "1026758055",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:58.273Z",
+        "modified_at": "2025-11-20T18:52:15.34Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178610510",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Abigail Maroon",
+          "phone": "4404635993",
+          "email": null,
+          "company_name": null,
+          "address_line1": "5507 HERMAN AVE",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "CLEVELAND",
+          "state_province": "OH",
+          "postal_code": "44102-2107",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026758055",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:59:24.177Z",
+        "trackingNumber": "9400150899563178610510",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 2,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178610510 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:59:26.052Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618523",
+        "shipment_number": "BOX.75783896.70000419",
+        "external_shipment_id": "1026738337",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:24.907Z",
+        "modified_at": "2025-11-20T18:52:15.293Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178610503",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Chrissy Grogg",
+          "phone": "17572985383",
+          "email": null,
+          "company_name": null,
+          "address_line1": "421 BRANDON WAY",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "CHESAPEAKE",
+          "state_province": "VA",
+          "postal_code": "23320-3155",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026738337",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:59:28.823Z",
+        "trackingNumber": "9400150899563178610503",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178610503 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:59:30.771Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618905",
+        "shipment_number": "BOX.75786829.69133596",
+        "external_shipment_id": "1026738755",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:57.327Z",
+        "modified_at": "2025-11-20T18:52:14.237Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178610459",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Amanda Underwood",
+          "phone": "11262210894",
+          "email": null,
+          "company_name": null,
+          "address_line1": "2751 AVALON CT",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "MT PLEASANT",
+          "state_province": "WI",
+          "postal_code": "53406-6812",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026738755",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:59:34.042Z",
+        "trackingNumber": "9400150899563178610459",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178610459 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:59:35.970Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618512",
+        "shipment_number": "BOX.75775887.69948721",
+        "external_shipment_id": "1026736609",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:24.003Z",
+        "modified_at": "2025-11-20T18:52:14.173Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170989719",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Debra Powell",
+          "phone": "3204916741",
+          "email": null,
+          "company_name": null,
+          "address_line1": "43942 230TH ST",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "MORRIS",
+          "state_province": "MN",
+          "postal_code": "56267-5403",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026736609",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:59:41.575Z",
+        "trackingNumber": "9400150899561170989719",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170989719 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:59:43.587Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618884",
+        "shipment_number": "BOX.75778073.70001786",
+        "external_shipment_id": "1026757619",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:56.093Z",
+        "modified_at": "2025-11-20T18:52:13.09Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171399323",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Alex Palombo",
+          "phone": "2023743031",
+          "email": null,
+          "company_name": null,
+          "address_line1": "1221 S EADS ST APT 1320",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "ARLINGTON",
+          "state_province": "VA",
+          "postal_code": "22202-4724",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026757619",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:59:47.174Z",
+        "trackingNumber": "9400150899562171399323",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171399323 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:59:51.191Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618503",
+        "shipment_number": "BOX.75775412.70008042",
+        "external_shipment_id": "1026736871",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:23.03Z",
+        "modified_at": "2025-11-20T18:52:12.877Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178610398",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Gabrielle Codispoti",
+          "phone": "15162429484",
+          "email": null,
+          "company_name": null,
+          "address_line1": "608 COLONIAL PL",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "NORTH BALDWIN",
+          "state_province": "NY",
+          "postal_code": "11510-1717",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026736871",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T04:59:54.785Z",
+        "trackingNumber": "9400150899563178610398",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178610398 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T04:59:56.780Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618495",
+        "shipment_number": "BOX.75795222.69975202",
+        "external_shipment_id": "1026751055",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:22.133Z",
+        "modified_at": "2025-11-20T18:52:11.89Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178610350",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Catherine Benitez",
+          "phone": "4074486061",
+          "email": null,
+          "company_name": null,
+          "address_line1": "2349 BELLEFIELD CV",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "OVIEDO",
+          "state_province": "FL",
+          "postal_code": "32765-9609",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026751055",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:00:00.487Z",
+        "trackingNumber": "9400150899563178610350",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178610350 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:00:02.492Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618869",
+        "shipment_number": "BOX.75791356.69312896",
+        "external_shipment_id": "1026740894",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:55.257Z",
+        "modified_at": "2025-11-20T18:52:11.703Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170989641",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Lauren Winklbauer",
+          "phone": "2623060050",
+          "email": null,
+          "company_name": null,
+          "address_line1": "923 LINCOLN DR E",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "WEST BEND",
+          "state_province": "WI",
+          "postal_code": "53095-4716",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026740894",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:00:06.496Z",
+        "trackingNumber": "9400150899561170989641",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170989641 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:00:08.528Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618854",
+        "shipment_number": "BOX.75770781.70024841",
+        "external_shipment_id": "1026735331",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:54.143Z",
+        "modified_at": "2025-11-20T18:52:10.64Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171399231",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Polly Landgren",
+          "phone": "13609415210",
+          "email": null,
+          "company_name": null,
+          "address_line1": "824 PO BOX",
+          "address_line2": null,
+          "address_line3": null,
+          "city_locality": "STANWOOD",
+          "state_province": "WA",
+          "postal_code": "98292",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026735331",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:00:12.203Z",
+        "trackingNumber": "9400150899562171399231",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171399231 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:00:16.384Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618478",
+        "shipment_number": "BOX.75798581.69972673",
+        "external_shipment_id": "1026751460",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:21.143Z",
+        "modified_at": "2025-11-20T18:52:10.59Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170989603",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "JENALYN STEWART",
+          "phone": "17026041812",
+          "email": null,
+          "company_name": null,
+          "address_line1": "118 IRIDESCENT ST",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "HENDERSON",
+          "state_province": "NV",
+          "postal_code": "89012-5480",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026751460",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:00:19.925Z",
+        "trackingNumber": "9400150899561170989603",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170989603 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:00:23.933Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618839",
+        "shipment_number": "BOX.75792798.69920523",
+        "external_shipment_id": "1026740186",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:53.147Z",
+        "modified_at": "2025-11-20T18:52:09.513Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170989566",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Deanna Wheeler",
+          "phone": "12487192215",
+          "email": null,
+          "company_name": null,
+          "address_line1": "4795 WHITE TAIL CT",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "COMMERCE TWP",
+          "state_province": "MI",
+          "postal_code": "48382-5403",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026740186",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:00:27.317Z",
+        "trackingNumber": "9400150899561170989566",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170989566 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:00:29.269Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618466",
+        "shipment_number": "BOX.75799098.70000945",
+        "external_shipment_id": "1026742782",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:20.303Z",
+        "modified_at": "2025-11-20T18:52:09.417Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178610282",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Renee Russo",
+          "phone": "6464315606",
+          "email": null,
+          "company_name": null,
+          "address_line1": "5 TOWER RD",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "FREEHOLD",
+          "state_province": "NJ",
+          "postal_code": "07728-4380",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026742782",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:00:33.257Z",
+        "trackingNumber": "9400150899563178610282",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178610282 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:00:35.209Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618825",
+        "shipment_number": "BOX.75775878.70009123",
+        "external_shipment_id": "1026736227",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:52.05Z",
+        "modified_at": "2025-11-20T18:52:08.45Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178610244",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Sarah Jamison",
+          "phone": "12059198918",
+          "email": null,
+          "company_name": null,
+          "address_line1": "390 GLEN CROSS WAY",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "TRUSSVILLE",
+          "state_province": "AL",
+          "postal_code": "35173-6601",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026736227",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:00:38.580Z",
+        "trackingNumber": "9400150899563178610244",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178610244 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:00:40.538Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618450",
+        "shipment_number": "BOX.75785960.69987332",
+        "external_shipment_id": "1026738617",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:19.147Z",
+        "modified_at": "2025-11-20T18:52:08.357Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171399163",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Jennifer Fountain",
+          "phone": "13187808074",
+          "email": null,
+          "company_name": null,
+          "address_line1": "444 CLUBHOUSE DR APT 3D",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "GULF SHORES",
+          "state_province": "AL",
+          "postal_code": "36542-3459",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026738617",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:00:43.832Z",
+        "trackingNumber": "9400150899562171399163",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171399163 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:00:45.800Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618813",
+        "shipment_number": "BOX.75800454.69978562",
+        "external_shipment_id": "1026742898",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:51.24Z",
+        "modified_at": "2025-11-20T18:52:07.313Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171399132",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Michelle Dummar",
+          "phone": "4357733961",
+          "email": null,
+          "company_name": null,
+          "address_line1": "1335 N LILLIAN ST",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "STEPHENVILLE",
+          "state_province": "TX",
+          "postal_code": "76401-2349",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026742898",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:00:51.587Z",
+        "trackingNumber": "9400150899562171399132",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171399132 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:00:55.566Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618439",
+        "shipment_number": "BOX.75784880.69992509",
+        "external_shipment_id": "1026739108",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:18.193Z",
+        "modified_at": "2025-11-20T18:52:07.243Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170989504",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Taylor Lovin",
+          "phone": "7639540473",
+          "email": null,
+          "company_name": null,
+          "address_line1": "360 SPRING ST APT 104",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "SAINT PAUL",
+          "state_province": "MN",
+          "postal_code": "55102-4456",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026739108",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:00:59.225Z",
+        "trackingNumber": "9400150899561170989504",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170989504 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:01:01.408Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618801",
+        "shipment_number": "BOX.75772348.70039554",
+        "external_shipment_id": "1026735773",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:50.337Z",
+        "modified_at": "2025-11-20T18:52:05.973Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171399118",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Bonnie Clopton",
+          "phone": "14173193099",
+          "email": null,
+          "company_name": null,
+          "address_line1": "1915 W WOODLAND ST STE 132",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "SPRINGFIELD",
+          "state_province": "MO",
+          "postal_code": "65807-5944",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026735773",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:01:04.760Z",
+        "trackingNumber": "9400150899562171399118",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 2,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171399118 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:01:07.662Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618372",
+        "shipment_number": "BOX.75780340.69978678",
+        "external_shipment_id": "1026737383",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:12.657Z",
+        "modified_at": "2025-11-20T18:52:05.887Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171399101",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Jamie Hurst",
+          "phone": "(717) 398-5098",
+          "email": null,
+          "company_name": null,
+          "address_line1": "14 AUTUMN DR",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "GETTYSBURG",
+          "state_province": "PA",
+          "postal_code": "17325-7747",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026737383",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:01:10.953Z",
+        "trackingNumber": "9400150899562171399101",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171399101 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:01:13.084Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618783",
+        "shipment_number": "BOX.75773382.70036179",
+        "external_shipment_id": "1026735679",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:49.147Z",
+        "modified_at": "2025-11-20T18:52:04.84Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178610107",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Amanda Miller",
+          "phone": "7035425942",
+          "email": null,
+          "company_name": null,
+          "address_line1": "22866 CARTIER TER",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "BRAMBLETON",
+          "state_province": "VA",
+          "postal_code": "20148-5637",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026735679",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:01:16.288Z",
+        "trackingNumber": "9400150899563178610107",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 2,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178610107 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:01:18.714Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618357",
+        "shipment_number": "BOX.75797630.69580680",
+        "external_shipment_id": "1026741613",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:11.55Z",
+        "modified_at": "2025-11-20T18:52:04.73Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170989412",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Libbi Mosher",
+          "phone": "15184140675",
+          "email": null,
+          "company_name": null,
+          "address_line1": "88 SEAMAN AVE",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "CASTLETON",
+          "state_province": "NY",
+          "postal_code": "12033-1107",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026741613",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:01:24.115Z",
+        "trackingNumber": "9400150899561170989412",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170989412 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:01:28.065Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618771",
+        "shipment_number": "BOX.75799949.69975162",
+        "external_shipment_id": "1026743031",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:48.31Z",
+        "modified_at": "2025-11-20T18:52:03.637Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170989375",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Elizabeth Batliner",
+          "phone": "(619) 577-2980",
+          "email": null,
+          "company_name": null,
+          "address_line1": "8801 BLUE LAKE DR",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "SAN DIEGO",
+          "state_province": "CA",
+          "postal_code": "92119-3513",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026743031",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:01:31.493Z",
+        "trackingNumber": "9400150899561170989375",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170989375 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:01:33.412Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618337",
+        "shipment_number": "BOX.75767525.70037943",
+        "external_shipment_id": "1026734425",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:10.43Z",
+        "modified_at": "2025-11-20T18:52:03.597Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171399002",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Tracie Phillips",
+          "phone": "9795750866",
+          "email": null,
+          "company_name": null,
+          "address_line1": "1305 CHOQUETTE DR",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "AUSTIN",
+          "state_province": "TX",
+          "postal_code": "78757-2603",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026734425",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:01:36.929Z",
+        "trackingNumber": "9400150899562171399002",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171399002 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:01:38.912Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618760",
+        "shipment_number": "BOX.75786720.69981353",
+        "external_shipment_id": "1026739087",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:47.39Z",
+        "modified_at": "2025-11-20T18:52:02.577Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170989320",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Julie D Rogers",
+          "phone": "8173237029",
+          "email": null,
+          "company_name": null,
+          "address_line1": "906 WILLOW CREEK DR",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "MANSFIELD",
+          "state_province": "TX",
+          "postal_code": "76063-2858",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026739087",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:01:42.450Z",
+        "trackingNumber": "9400150899561170989320",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170989320 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:01:44.393Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618314",
+        "shipment_number": "BOX.75801089.69981837",
+        "external_shipment_id": "1026743078",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:09.383Z",
+        "modified_at": "2025-11-20T18:52:02.423Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170989313",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Sophia Kasian",
+          "phone": "7173434055",
+          "email": null,
+          "company_name": null,
+          "address_line1": "1400 HERITAGE LN",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "DAUPHIN",
+          "state_province": "PA",
+          "postal_code": "17018-9713",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026743078",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:01:47.964Z",
+        "trackingNumber": "9400150899561170989313",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170989313 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:01:49.938Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618749",
+        "shipment_number": "BOX.75789244.69127111",
+        "external_shipment_id": "1026740060",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:46.603Z",
+        "modified_at": "2025-11-20T18:52:01.403Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171398913",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Juliet Plemons",
+          "phone": "11865603802",
+          "email": null,
+          "company_name": null,
+          "address_line1": "5200 OLD MIDWAY RD",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "LENOIR CITY",
+          "state_province": "TN",
+          "postal_code": "37772-8200",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026740060",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:01:53.300Z",
+        "trackingNumber": "9400150899562171398913",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171398913 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:01:59.510Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618292",
+        "shipment_number": "BOX.75767638.70037475",
+        "external_shipment_id": "1026734462",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:08.303Z",
+        "modified_at": "2025-11-20T18:52:01.28Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170989252",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Tiffany McGee",
+          "phone": "5129704327",
+          "email": null,
+          "company_name": null,
+          "address_line1": "3207 PERRY LN",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "AUSTIN",
+          "state_province": "TX",
+          "postal_code": "78731-5328",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026734462",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:02:02.763Z",
+        "trackingNumber": "9400150899561170989252",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170989252 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:02:04.926Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618738",
+        "shipment_number": "BOX.75781907.69984663",
+        "external_shipment_id": "1026749742",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:45.537Z",
+        "modified_at": "2025-11-20T18:52:00.247Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170989221",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Danielle Trimner",
+          "phone": "16144069206",
+          "email": null,
+          "company_name": null,
+          "address_line1": "672 WIGAN CT",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "COLUMBUS",
+          "state_province": "OH",
+          "postal_code": "43230-3247",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026749742",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:02:08.743Z",
+        "trackingNumber": "9400150899561170989221",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 2,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170989221 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:02:10.582Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618274",
+        "shipment_number": "BOX.75774716.70036113",
+        "external_shipment_id": "1026735934",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:07.413Z",
+        "modified_at": "2025-11-20T18:52:00.09Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899563178609934",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Leah Wright",
+          "phone": "12156202626",
+          "email": null,
+          "company_name": null,
+          "address_line1": "17 W WILMOT AVE",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "HAVERTOWN",
+          "state_province": "PA",
+          "postal_code": "19083-4623",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026735934",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:02:14.141Z",
+        "trackingNumber": "9400150899563178609934",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899563178609934 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:02:16.206Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618722",
+        "shipment_number": "BOX.75788384.69970876",
+        "external_shipment_id": "1026740459",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:44.513Z",
+        "modified_at": "2025-11-20T18:51:59.17Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899561170989160",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Kelly Beachy",
+          "phone": "7073637608",
+          "email": null,
+          "company_name": null,
+          "address_line1": "13834 S CAMINO ACELGA",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "SAHUARITA",
+          "state_province": "AZ",
+          "postal_code": "85629-7882",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026740459",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:02:19.437Z",
+        "trackingNumber": "9400150899561170989160",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 2,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899561170989160 - order status updated in Rithum"
+    },
+    {
+      "timestamp": "2025-11-21T05:02:21.314Z",
+      "webhookEvent": "fulfillment_shipped_v2",
+      "shipment": {
+        "shipment_id": "se-921618256",
+        "shipment_number": "BOX.75773767.70040146",
+        "external_shipment_id": "1026735642",
+        "shipment_status": "label_purchased",
+        "created_at": "2025-11-14T16:41:06.393Z",
+        "modified_at": "2025-11-20T18:51:58.997Z"
+      },
+      "tracking": {
+        "tracking_number": "9400150899562171398838",
+        "carrier_id": "se-1015030",
+        "carrier_name": "se-1015030",
+        "ship_date": "2025-11-20T00:00:00Z",
+        "packages": [
+          {
+            "package_id": "se-162103",
+            "tracking_number": null,
+            "carrier": null,
+            "dimensions": {
+              "unit": "inch",
+              "length": 12,
+              "width": 9,
+              "height": 2
+            },
+            "weight": {
+              "value": 4,
+              "unit": "ounce",
+              "display": "4 ounce"
+            }
+          }
+        ]
+      },
+      "shipping": {
+        "ship_to": {
+          "geolocation": null,
+          "instructions": null,
+          "name": "Andrea Bonaventura",
+          "phone": "2024419148",
+          "email": null,
+          "company_name": null,
+          "address_line1": "3767 KELLER AVE",
+          "address_line2": "",
+          "address_line3": null,
+          "city_locality": "ALEXANDRIA",
+          "state_province": "VA",
+          "postal_code": "22302-1814",
+          "country_code": "US",
+          "address_residential_indicator": "yes"
+        },
+        "ship_from": {
+          "instructions": null,
+          "name": "JaxKelly Inc",
+          "phone": "6199558475",
+          "email": "info@jaxkelly.com",
+          "company_name": "JAXKELLY",
+          "address_line1": "2555 State Street",
+          "address_line2": "suite 102",
+          "address_line3": null,
+          "city_locality": "San Diego",
+          "state_province": "CA",
+          "postal_code": "92101",
+          "country_code": "US",
+          "address_residential_indicator": "no"
+        }
+      },
+      "rithumOrderId": "1026735642",
+      "rithumUpdated": true,
+      "rithumUpdate": {
+        "attempted": true,
+        "success": true,
+        "updatedAt": "2025-11-21T05:02:24.085Z",
+        "trackingNumber": "9400150899562171398838",
+        "carrier": "USPS",
+        "error": null,
+        "lineItemCount": 1,
+        "responses": {
+          "status": {
+            "skipped": true,
+            "reason": "Duplicate tracking on completed order"
+          }
+        }
+      },
+      "note": "Fulfillment shipped - tracking: 9400150899562171398838 - order status updated in Rithum"
     }
   ],
-  "lastUpdated": "2025-11-14T11:31:51.604Z",
-  "totalTracked": 5
+  "lastUpdated": "2025-11-21T05:02:24.088Z",
+  "totalTracked": 70
 }

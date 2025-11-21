@@ -305,6 +305,11 @@ class ShipStationClient {
         if (orderData.serviceCode) {
             shipment.service_code = orderData.serviceCode;
         }
+        
+        // Add carrier_id if provided
+        if (orderData.carrierId) {
+            shipment.carrier_id = orderData.carrierId;
+        }
 
         return shipment;
     }
