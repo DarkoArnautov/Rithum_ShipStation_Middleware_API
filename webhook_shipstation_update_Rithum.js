@@ -1387,7 +1387,9 @@ module.exports = {
     trackShippedOrder,
     processWebhookEvent,
     getTrackingSummary,
-    loadTrackedOrders
+    loadTrackedOrders,
+    updateRithumOrderTracking,
+    mapToRithumShippingMethod
 };
 
 // Run if called directly
